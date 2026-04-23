@@ -82,3 +82,55 @@ El comando usa el sistema i18n del framework: los mensajes aparecen en el idioma
 ## Cuándo purgar `evidence/`
 
 Cuando el ticket se archiva (`openspec archive CHANGE-XXX` o cierre manual en Asana), se puede borrar la carpeta de evidence. El historial queda en el propio ticket y en los commits del PR mergeado.
+
+---
+
+## Healing Log (`evidence/[feature]/healing.jsonl`)
+
+Cada feature mantiene además un log en formato JSONL con las acciones correctivas automáticas que se ejecutan durante su ciclo (reintentos de tests, arreglos de lint, regeneraciones de migraciones, rollbacks, etc.). Útil para observabilidad retrospectiva: permite contestar a *"¿qué ha tenido que auto-corregir este `implementar` antes de pasar?"*
+
+### Formato de cada entrada
+
+Una línea por evento, objeto JSON:
+
+```json
+{"ts":"2026-04-23T18:51:00Z","phase":"implementar","severity":"warn","action":"retry_test","detail":"Test falló, reintento 1 de 3","file":"tests/RedisCacheTest.php"}
+```
+
+| Campo | Tipo | Obligatorio | Descripción |
+|-------|------|-------------|-------------|
+| `ts` | string ISO | sí | Marca de tiempo UTC |
+| `phase` | string | sí | Comando en el que ocurrió (`planificar`, `implementar`, `verify`, etc.) |
+| `severity` | `info` / `warn` / `error` | sí | Gravedad |
+| `action` | string | sí | Identificador del tipo de corrección (`retry_test`, `fix_lint`, ...) |
+| `detail` | string | no | Descripción humana |
+| `file` | string | no | Archivo implicado, si aplica |
+
+### Comando `scripts/quality-healing.sh`
+
+Tres verbos:
+
+```bash
+# Añadir una entrada
+bash scripts/quality-healing.sh log \
+  --feature app-tienda-23 \
+  --phase implementar \
+  --severity warn \
+  --action retry_test \
+  --detail "Test redis-cache falló, reintento 1 de 3" \
+  --file tests/RedisCacheTest.php
+
+# Mostrar las últimas N entradas (20 por defecto)
+bash scripts/quality-healing.sh show --feature app-tienda-23 --last 50
+
+# Ver estadísticas: total + por severity / phase / action
+bash scripts/quality-healing.sh stats --feature app-tienda-23
+```
+
+El helper usa el mismo sistema i18n: los mensajes de salida aparecen en el idioma configurado en la instalación (es/en).
+
+### Qué comandos lo deberían usar
+
+- `implementar` cuando una validación falla y se reintenta
+- `planificar` si tiene que reescribir un plan detectando inconsistencias
+- Cualquier script de validación (pre-commit, post-test) que aplique una corrección automática

@@ -122,6 +122,26 @@
       "missing_slug": "Falta el nombre de la feature.",
       "invalid_slug": "El slug solo puede contener minúsculas, números y guiones:",
       "usage": "Uso: bash scripts/quality-baseline.sh [init|snapshot|new-evidence FEATURE-SLUG]"
+    },
+    "healing": {
+      "log_done": "Entrada añadida a",
+      "missing_feature": "Falta el argumento --feature",
+      "missing_phase": "Falta el argumento --phase",
+      "missing_action": "Falta el argumento --action",
+      "severity_invalid": "Severity no válido (info/warn/error):",
+      "no_evidence": "No existe carpeta evidence para la feature:",
+      "run_new_evidence_first": "Ejecuta primero: bash scripts/quality-baseline.sh new-evidence FEATURE-SLUG",
+      "no_log": "No hay healing.jsonl todavía para:",
+      "jq_required": "Este comando requiere 'jq'. Instálalo con: brew install jq",
+      "entries": "entradas",
+      "total_entries": "Total",
+      "by_severity": "Por severidad",
+      "by_phase": "Por fase",
+      "by_action": "Por acción",
+      "usage_log": "Uso: bash scripts/quality-healing.sh log --feature SLUG --phase P --severity S --action A --detail D [--file F]",
+      "usage_show": "Uso: bash scripts/quality-healing.sh show --feature SLUG [--last N]",
+      "usage_stats": "Uso: bash scripts/quality-healing.sh stats --feature SLUG",
+      "usage": "Uso: bash scripts/quality-healing.sh [log|show|stats] --feature SLUG ..."
     }
   }
 }
