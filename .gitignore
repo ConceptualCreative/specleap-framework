@@ -30,6 +30,10 @@ specs/
 context/*.md
 !context/.gitkeep
 
+# Quality evidence (regenerable outputs per feature)
+.quality/evidence/*
+!.quality/evidence/.gitkeep
+
 # Temporary
 tmp/
 *.tmp

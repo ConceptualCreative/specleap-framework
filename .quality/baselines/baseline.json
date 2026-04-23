@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "updated_at": "2026-04-23",
+  "thresholds": {
+    "coverage_min": 80,
+    "coverage_target": 90,
+    "complexity_max_per_function": 10,
+    "duplicates_max_pct": 3
+  },
+  "repo_snapshot": {
+    "loc_total": 21981,
+    "files_count": 92,
+    "agents_count": 3,
+    "commands_count": 9,
+    "skills_count": 34
+  }
+}

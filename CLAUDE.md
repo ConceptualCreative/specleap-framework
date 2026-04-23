@@ -113,6 +113,18 @@ Adopt these roles when executing commands:
 
 ---
 
+## Quality Baseline and Evidence
+
+SpecLeap versions quality thresholds and preserves audit evidence per feature:
+
+- **`.quality/baselines/baseline.json`** — shared thresholds (coverage 80/90%, complexity 10, duplicates 3%) plus a repo snapshot. Versioned.
+- **`.quality/evidence/[feature-slug]/`** — per-feature audit trail (ticket metadata, test outputs, security scans, decision log). NOT versioned; regenerated per feature.
+- **`scripts/quality-baseline.sh`** — helper with three verbs: `init`, `snapshot`, `new-evidence [slug]`.
+
+See `.quality/README.md` for usage details.
+
+---
+
 ## Standards (Always Apply)
 
 Read and follow these standards for ALL code:

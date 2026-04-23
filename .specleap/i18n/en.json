@@ -106,5 +106,22 @@
     "validating": "Validating structure...",
     "generating_json": "Generating JSON...",
     "complete": "✅ Parsing completed"
+  },
+  "quality": {
+    "baseline": {
+      "init_start": "Initializing quality baseline...",
+      "init_done": "Baseline created at .quality/baselines/baseline.json",
+      "already_exists": "Baseline already exists, not overwriting:",
+      "snapshot_start": "Generating repository snapshot...",
+      "snapshot_done": "Snapshot updated",
+      "missing_baseline": ".quality/baselines/baseline.json is missing",
+      "run_init_first": "Run first: bash scripts/quality-baseline.sh init",
+      "jq_required": "This command requires 'jq'. Install it with: brew install jq",
+      "evidence_start": "Creating evidence folder for",
+      "evidence_done": "Evidence structure created at",
+      "missing_slug": "Missing feature slug.",
+      "invalid_slug": "Slug can only contain lowercase letters, numbers and hyphens:",
+      "usage": "Usage: bash scripts/quality-baseline.sh [init|snapshot|new-evidence FEATURE-SLUG]"
+    }
   }
 }
