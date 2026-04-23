@@ -142,6 +142,14 @@
       "usage_show": "Uso: bash scripts/quality-healing.sh show --feature SLUG [--last N]",
       "usage_stats": "Uso: bash scripts/quality-healing.sh stats --feature SLUG",
       "usage": "Uso: bash scripts/quality-healing.sh [log|show|stats] --feature SLUG ..."
+    },
+    "spec_guard": {
+      "blocked_header": "SpecLeap: escritura bloqueada en rama protegida",
+      "blocked_branch": "Estás en la rama protegida:",
+      "hint_create_branch": "Crea una feature branch antes de escribir código:",
+      "hint_command": "git checkout -b feature/[proyecto]-[ticket]-[descripción]",
+      "hint_example": "Ejemplo: git checkout -b feature/app-tienda-23-cart",
+      "hint_flow": "Flujo: feature → stage → main (vía PR)"
     }
   }
 }

@@ -118,10 +118,36 @@ Adopt these roles when executing commands:
 SpecLeap versions quality thresholds and preserves audit evidence per feature:
 
 - **`.quality/baselines/baseline.json`** — shared thresholds (coverage 80/90%, complexity 10, duplicates 3%) plus a repo snapshot. Versioned.
-- **`.quality/evidence/[feature-slug]/`** — per-feature audit trail (ticket metadata, test outputs, security scans, decision log). NOT versioned; regenerated per feature.
+- **`.quality/evidence/[feature-slug]/`** — per-feature audit trail (ticket metadata, test outputs, security scans, decision log, healing telemetry). NOT versioned; regenerated per feature.
 - **`scripts/quality-baseline.sh`** — helper with three verbs: `init`, `snapshot`, `new-evidence [slug]`.
+- **`scripts/quality-healing.sh`** — helper that appends JSONL healing entries to `.quality/evidence/[slug]/healing.jsonl`. Verbs: `log`, `show`, `stats`.
 
 See `.quality/README.md` for usage details.
+
+---
+
+## Spec-guard Hook
+
+A Claude Code `PreToolUse` hook blocks `Write`/`Edit`/`NotebookEdit` on files under `src/`, `app/`, `tests/`, `test/` or `lib/` when the current git branch is one of the protected ones (`main`, `stage`, `develop`). This enforces the "no code without an active feature branch" rule.
+
+- **Hook:** `.claude/hooks/spec-guard.sh`
+- **Template config:** `.claude/settings.json.template`
+- **Philosophy:** fail-open — if the hook hits an internal error (no git repo, no jq, malformed stdin), it exits 0 (allow). It only blocks when it is certain the rule applies.
+- **Bypass for framework maintenance:** docs (`*.md`), root configs (`package.json`, `.env`), `scripts/` and framework context files (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `codex.md`) are never blocked.
+
+### Manual activation in a consumer project
+
+Copy these two files into the consumer project root:
+
+```bash
+mkdir -p .claude/hooks
+cp /path/to/specleap-framework/.claude/hooks/spec-guard.sh .claude/hooks/spec-guard.sh
+chmod +x .claude/hooks/spec-guard.sh
+```
+
+Then merge `.claude/settings.json.template` content into the project's `.claude/settings.json` (create the file if it doesn't exist). If the file already has `hooks.PreToolUse` entries, append the new matcher rather than overwrite.
+
+Automatic integration via `setup.sh` is planned for a later release.
 
 ---
 

@@ -134,3 +134,11 @@ El helper usa el mismo sistema i18n: los mensajes de salida aparecen en el idiom
 - `implementar` cuando una validación falla y se reintenta
 - `planificar` si tiene que reescribir un plan detectando inconsistencias
 - Cualquier script de validación (pre-commit, post-test) que aplique una corrección automática
+
+---
+
+## Hook `spec-guard`
+
+SpecLeap incluye un hook `PreToolUse` de Claude Code en `.claude/hooks/spec-guard.sh` que bloquea escrituras (`Write`, `Edit`, `NotebookEdit`) sobre código de aplicación (`src/`, `app/`, `tests/`, `test/`, `lib/`) cuando la rama git actual es una de las protegidas (`main`, `stage`, `develop`).
+
+Refuerza el invariante SDD "sin feature branch, no se escribe código". La activación en un proyecto cliente es manual (ver `CLAUDE.md` sección "Spec-guard Hook"). Este hook no lee ni escribe en `.quality/` — actúa directamente sobre la operación de escritura, y el usuario ve el bloqueo en el chat de Claude.

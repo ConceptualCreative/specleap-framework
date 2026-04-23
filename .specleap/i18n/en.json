@@ -142,6 +142,14 @@
       "usage_show": "Usage: bash scripts/quality-healing.sh show --feature SLUG [--last N]",
       "usage_stats": "Usage: bash scripts/quality-healing.sh stats --feature SLUG",
       "usage": "Usage: bash scripts/quality-healing.sh [log|show|stats] --feature SLUG ..."
+    },
+    "spec_guard": {
+      "blocked_header": "SpecLeap: write blocked on protected branch",
+      "blocked_branch": "You are on protected branch:",
+      "hint_create_branch": "Create a feature branch before writing code:",
+      "hint_command": "git checkout -b feature/[project]-[ticket]-[description]",
+      "hint_example": "Example: git checkout -b feature/app-tienda-23-cart",
+      "hint_flow": "Flow: feature → stage → main (via PR)"
     }
   }
 }
