@@ -47,7 +47,7 @@ SKILLS=(
     # Frontend (1) - jeffallan/claude-skills
     "jeffallan/claude-skills:skills/typescript-pro:typescript-pro"
     
-    # ━━━ TIER 2 Skills (13 nuevas) ━━━
+    # ━━━ TIER 2 Skills (14 nuevas) ━━━
     
     # Design/Frontend (3) - vercel-labs
     "vercel-labs/agent-skills:skills/web-design-guidelines:web-design-guidelines"

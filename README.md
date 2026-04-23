@@ -301,7 +301,7 @@ specleap/
 │   └── DOCS.md
 ├── scripts/                      # Automatización
 │   ├── generate-contrato.sh      # Cuestionario interactivo ⭐
-│   ├── generate-jira-structure.sh
+│   ├── generate-asana-structure.sh
 │   ├── analyze-project.sh
 │   ├── setup-mcp.sh              # Install Asana + Skills
 │   └── install-skills.sh         # Agent Skills installer

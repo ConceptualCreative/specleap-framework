@@ -35,8 +35,8 @@ proyectos/[project]/
 
 Use these commands in chat with your AI assistant:
 
-- **`refinar SCRUM-XX`** — Refine user story from Jira
-- **`planificar SCRUM-XX`** — Generate implementation plan
+- **`refinar [proyecto]-XXX`** — Refine user story from Asana
+- **`planificar [proyecto]-XXX`** — Generate implementation plan
 - **`implementar @plan.md`** — Execute implementation
 - **`explicar [concept]`** — Explain code or architecture
 - **`documentar`** — Update technical docs

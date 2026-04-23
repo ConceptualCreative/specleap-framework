@@ -27,8 +27,8 @@ Choose from existing projects or create new one.
 ### Step 3: Execute Commands
 
 Available commands:
-- `refinar SCRUM-XX` → Refine Jira ticket
-- `planificar SCRUM-XX` → Create implementation plan
+- `refinar [proyecto]-XXX` → Refine Asana ticket
+- `planificar [proyecto]-XXX` → Create implementation plan
 - `implementar @plan.md` → Execute plan
 - `explicar [topic]` → Explain code/architecture
 - `documentar` → Update documentation
@@ -92,10 +92,10 @@ AI: [List projects] "¿Qué proyecto?"
 User: app-tienda y desarrollo
 AI: [Load context] "Proyecto cargado. ¿Qué ticket?"
 
-User: planificar SCRUM-23
-AI: [Generate plan] "Plan creado en specs/SCRUM-23_backend.md"
+User: planificar app-tienda-23
+AI: [Generate plan] "Plan creado en specs/app-tienda-23_backend.md"
 
-User: implementar @SCRUM-23_backend.md
+User: implementar @app-tienda-23_backend.md
 AI: [Execute] "Código implementado. PR creado."
 ```
 

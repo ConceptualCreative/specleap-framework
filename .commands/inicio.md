@@ -645,12 +645,12 @@ proyectos/casa-de-peli/
    Abre `CONTRATO.md` para revisar el contrato completo
 
 2. **Crear tickets en Asana:**
-   Lee `.commandscrear-tickets.md` y ejecuta
+   Lee `.commands/crear-tickets.md` y ejecuta
 
 3. **Empezar desarrollo:**
    Elige un ticket:
-   - `refinar SCRUM-XX` — Refinar user story
-   - `planificar SCRUM-XX` — Generar plan de implementación
+   - `refinar [proyecto]-XXX` — Refinar user story
+   - `planificar [proyecto]-XXX` — Generar plan de implementación
    - `implementar @plan.md` — Ejecutar el plan
 
 **¿Quieres crear ahora los tickets en Asana?**
@@ -666,7 +666,7 @@ proyectos/casa-de-peli/
 ✅ Perfecto. Voy a crear los tickets ahora...
 ```
 
-**Acción:** Leer `.commandscrear-tickets.md` y ejecutar las instrucciones paso a paso.
+**Acción:** Leer `.commands/crear-tickets.md` y ejecutar las instrucciones paso a paso.
 
 #### Si el usuario responde "No":
 
@@ -676,7 +676,7 @@ proyectos/casa-de-peli/
 **Para crearlos después, escribe:**
 
 ```
-Lee .commandscrear-tickets.md y ejecuta
+Lee .commands/crear-tickets.md y ejecuta
 ```
 
 **O desde terminal:**
@@ -690,11 +690,11 @@ cd proyectos/[nombre-proyecto]
 
 | Comando | Cómo ejecutarlo |
 |---------|-----------------|
-| Crear tickets Asana | `Lee .commandscrear-tickets.md y ejecuta` |
-| Refinar story | `Lee .commandsrefinar.md y ejecuta` |
-| Planificar implementación | `Lee .commandsplanificar.md y ejecuta` |
-| Implementar | `Lee .commandsimplementar.md y ejecuta` |
-| Adoptar proyecto legacy | `Lee .commandsadoptar.md y ejecuta` |
+| Crear tickets Asana | `Lee .commands/crear-tickets.md y ejecuta` |
+| Refinar story | `Lee .commands/refinar.md y ejecuta` |
+| Planificar implementación | `Lee .commands/planificar.md y ejecuta` |
+| Implementar | `Lee .commands/implementar.md y ejecuta` |
+| Adoptar proyecto legacy | `Lee .commands/adoptar.md y ejecuta` |
 
 ¿Hay algo más en lo que pueda ayudarte?
 ```
@@ -750,12 +750,12 @@ Responde A o B:
 **¿Qué ticket vas a trabajar?**
 
 Opciones:
-- Dime el ID del ticket (ejemplo: SCRUM-23)
+- Dime el ID del ticket (ejemplo: app-tienda-23)
 - O describe la tarea que vas a hacer
 
 **Comandos disponibles:**
-- `refinar SCRUM-XX` — Refinar user story
-- `planificar SCRUM-XX` — Generar plan de implementación
+- `refinar [proyecto]-XXX` — Refinar user story
+- `planificar [proyecto]-XXX` — Generar plan de implementación
 - `implementar @plan.md` — Ejecutar el plan
 - `explicar [concepto]` — Explicar código o arquitectura
 ```
@@ -782,7 +782,7 @@ Archivos del proyecto:
 
 ## Flujo C: Adoptar Proyecto Legacy
 
-Ver `.commandsadoptar.md` para el flujo completo de adopción.
+Ver `.commands/adoptar.md` para el flujo completo de adopción.
 
 ---
 
@@ -820,5 +820,5 @@ Ver `.commandsadoptar.md` para el flujo completo de adopción.
 - **Preguntas:** `scripts/lib/questions.json` (58 preguntas completas)
 - **Template:** `proyectos/_template/CONTRATO.md`
 - **Agentes:** `.agents/backend.md`, `.agents/frontend.md`, `.agents/producto.md`
-- **Otros Comandos:** `.commandsrefinar.md`, `.commandsplanificar.md`, etc.
+- **Otros Comandos:** `.commands/refinar.md`, `.commands/planificar.md`, etc.
 - **Standards:** `specs/base-standards.mdc`

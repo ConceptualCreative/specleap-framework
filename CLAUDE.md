@@ -52,9 +52,9 @@ When the user says **"Hola"** (case-insensitive), execute `.commands/inicio.md`:
 
 ---
 
-## Slash Command Detection (CRITICAL)
+## Command Detection (CRITICAL)
 
-**When the user writes a SINGLE slash command** (e.g., just `refinar` or `crear-tickets`), **AUTOMATICALLY**:
+**When the user writes a SINGLE command keyword** (e.g., just `refinar` or `crear-tickets`), **AUTOMATICALLY**:
 
 1. **Detect the command** from the message
 2. **Read the corresponding `.commands/*.md` file**
@@ -64,7 +64,7 @@ When the user says **"Hola"** (case-insensitive), execute `.commands/inicio.md`:
 
 | User writes | Read this file | Then execute |
 |-------------|----------------|--------------|
-| `/inicio` or `Hola` | `.commands/inicio.md` | Start workflow |
+| `inicio` or `Hola` | `.commands/inicio.md` | Start workflow |
 | `ayuda`, `help`, `comandos` | `.commands/ayuda.md` | List ALL available commands |
 | `refinar` | `.commands/refinar.md` | Refine user story |
 | `planificar` | `.commands/planificar.md` | Generate backlog |
@@ -75,9 +75,11 @@ When the user says **"Hola"** (case-insensitive), execute `.commands/inicio.md`:
 | `adoptar` | `.commands/adoptar.md` | Adopt legacy project |
 
 **Rules:**
-- If user writes `/comando` alone → read `.commands/comando.md` immediately
-- If user writes `/comando` + context → read file + use context
+- If user writes `comando` alone → read `.commands/comando.md` immediately
+- If user writes `comando` + context → read file + use context
 - NEVER ask "should I read the file?" — just read it
+
+**Format note:** Commands are plain keywords (no `/`, no `.`). The `/` prefix is reserved by Claude Code for its own native slash commands (`/help`, `/clear`, `/model`, etc.), so SpecLeap commands must be written without it to avoid collision. The `.commands/file.md` path is an internal file reference, not a command syntax.
 
 ---
 
@@ -85,8 +87,8 @@ When the user says **"Hola"** (case-insensitive), execute `.commands/inicio.md`:
 
 | Command | Description | Agente |
 |---------|-------------|--------|
-| `refinar PROJ-XXX` | Refine Asana user story | producto.md |
-| `planificar PROJ-XXX` | Generate implementation plan | backend.md / frontend.md |
+| `refinar [proyecto]-XXX` | Refine Asana user story | producto.md |
+| `planificar [proyecto]-XXX` | Generate implementation plan | backend.md / frontend.md |
 | `implementar @plan.md` | Execute plan: branch + code + tests + PR | backend.md / frontend.md |
 | `explicar [concepto]` | Explain code/architecture/decisions | neutral |
 | `documentar` | Update technical documentation | neutral |
@@ -259,16 +261,16 @@ User: "app-tienda y desarrollo"
 AI: [Load proyectos/app-tienda/CONTRATO.md + context/]
     "✅ Proyecto app-tienda cargado. ¿Qué ticket trabajarás?"
 
-User: "PROJ-123"
+User: "app-tienda-23"
 AI: "¿Refinar o planificar directamente?"
 
-User: "planificar PROJ-123"
+User: "planificar app-tienda-23"
 AI: [Adopt .agents/backend.md]
     [Read CONTRATO + context + ticket]
-    [Generate plan in specs/PROJ-123_backend.md]
+    [Generate plan in specs/app-tienda-23_backend.md]
     "📋 Plan creado. Revisar antes de implementar."
 
-User: "implementar @PROJ-123_backend.md"
+User: "implementar @app-tienda-23_backend.md"
 AI: [Adopt .agents/backend.md]
     [Execute plan step by step]
     [Tests, commit, push, PR]
@@ -300,8 +302,8 @@ See: `openspec/cli/README.md`
 
 MUST use for:
 - `crear-tickets` — Generate all tickets from CONTRATO.md
-- `refinar PROJ-XXX` — Read and enrich ticket
-- `planificar PROJ-XXX` — Read ticket for plan generation
+- `refinar [proyecto]-XXX` — Read and enrich ticket
+- `planificar [proyecto]-XXX` — Read ticket for plan generation
 - `implementar` — Update ticket status during implementation
 - Automatic updates: "To Do" → "In Progress" → "In Review" → "Done"
 

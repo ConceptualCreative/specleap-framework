@@ -52,11 +52,11 @@ Read these files before writing code:
 | Command | File | Description |
 |---------|------|-------------|
 | "Hola" | `.commands/inicio.md` | Initialize session |
-| `refinar SCRUM-XX` | `.commandsrefinar.md` | Refine user story |
-| `planificar SCRUM-XX` | `.commandsplanificar.md` | Create implementation plan |
-| `implementar @plan.md` | `.commandsimplementar.md` | Execute plan |
-| `explicar [topic]` | `.commandsexplicar.md` | Explain code/architecture |
-| `documentar` | `.commandsdocumentar.md` | Update documentation |
+| `refinar [proyecto]-XXX` | `.commands/refinar.md` | Refine user story |
+| `planificar [proyecto]-XXX` | `.commands/planificar.md` | Create implementation plan |
+| `implementar @plan.md` | `.commands/implementar.md` | Execute plan |
+| `explicar [topic]` | `.commands/explicar.md` | Explain code/architecture |
+| `documentar` | `.commands/documentar.md` | Update documentation |
 
 ---
 
@@ -118,15 +118,15 @@ User: app-tienda y desarrollo
 AI: Load CONTRATO.md + context/
     "¿Qué ticket trabajarás?"
 
-User: refinar SCRUM-23
+User: refinar app-tienda-23
 AI: [Adopt .agents/producto.md]
-    Refine user story → Update Jira
+    Refine user story → Update Asana
 
-User: planificar SCRUM-23
+User: planificar app-tienda-23
 AI: [Adopt .agents/backend.md]
     Generate plan → Save to specs/
 
-User: implementar @SCRUM-23_backend.md
+User: implementar @app-tienda-23_backend.md
 AI: [Adopt .agents/backend.md]
     Create branch → Code → Tests → PR
 ```
@@ -135,7 +135,7 @@ AI: [Adopt .agents/backend.md]
 
 ## MCP Integrations (If Available)
 
-- **Jira MCP** — Read/update tickets
+- **Asana MCP** — Read/update tickets
 - **Context7 MCP** — Fetch library docs (Laravel, React)
 
 ---
