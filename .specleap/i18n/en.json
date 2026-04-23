@@ -62,7 +62,7 @@
     "detecting_type": "🔎 Detecting project type...",
     "generating_tasks": "📋 Generating tasks...",
     "estimating_effort": "⏱️  Estimating effort...",
-    "creating_effort": "🏗️  Creating structure...",
+    "creating_structure": "🏗️  Creating structure...",
     "parsing_contract": "📄 Parsing CONTRACT.md...",
     "generating_backlog": "📊 Generating backlog...",
     "error": "❌ Error",

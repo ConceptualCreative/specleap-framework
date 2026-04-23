@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.3] - 2026-04-23
+
+### Changed
+
+- **Repository ownership transferred** from `iapanderson/specleap-framework` to `ConceptualCreative/specleap-framework`. Old URLs keep working via GitHub 301 redirect.
+- Migrated residual Jira / SCRUM references to Asana / `[proyecto]-XXX` across `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `codex.md`, `README.md`.
+- Renamed "Slash Command Detection" section in `CLAUDE.md` to "Command Detection"; added a format note clarifying that commands are plain keywords with no `/` or `.` prefix to avoid collision with Claude Code native slash commands.
+- Fixed 11 broken `.commandsXXX.md` paths in `.commands/inicio.md`.
+- Updated `package.json` author metadata to `Styng Arias <developers@conceptualcreative.com>` and repository URLs to `ConceptualCreative/specleap-framework`.
+- Renamed `generate-jira-structure.sh` reference to `generate-asana-structure.sh` in README tree diagram.
+- Fixed TIER 2 comment in `scripts/install-skills.sh` (13 → 14 new skills).
+- Redesigned `README.md` from 624 to 248 lines: removed all decorative emojis, added table of contents, consolidated validation pipeline into a single table, flat TIER 1 / TIER 2 skill tables.
+- Fixed legacy i18n key typo: `scripts.creating_effort` → `scripts.creating_structure` in `en.json`.
+- Updated Agent Skills count message in `setup.sh` (20 → 34).
+
+### Added
+
+#### Quality infrastructure
+
+- **`.quality/` directory** with versioned `baselines/baseline.json` (coverage min 80 / target 90, complexity 10 per function, duplicates max 3%) and per-feature `evidence/[slug]/` folder for audit trail (gitignored).
+- **`scripts/quality-baseline.sh`** — helper with three verbs: `init`, `snapshot`, `new-evidence [slug]`. Populates `repo_snapshot` (LOC, files, agents, commands, skills) and creates evidence stubs for each feature.
+- **`scripts/quality-healing.sh`** — healing telemetry log with three verbs: `log`, `show`, `stats`. JSONL format per feature at `.quality/evidence/[slug]/healing.jsonl` with fields `ts`, `phase`, `severity`, `action`, `detail`, `file`.
+
+#### Spec-guard hook
+
+- **`.claude/hooks/spec-guard.sh`** — `PreToolUse` hook that blocks `Write` / `Edit` / `NotebookEdit` on files under `src/`, `app/`, `tests/`, `test/`, `lib/` when the current git branch is `main`, `stage` or `develop`. Fail-open on internal errors (no git, no jq, malformed stdin). Pedagogical block message suggests creating a `feature/[proyecto]-[ticket]-[desc]` branch and recalls the `feature → stage → main` flow.
+- **`.claude/settings.json.template`** — hook wiring snippet that consumer projects merge into their own `.claude/settings.json`.
+
+#### Compliance audit
+
+- **`compliance` command** (`.commands/compliance.md`) — conversational trigger (`compliance`, `auditoria`, `audit`) that runs the self-audit and reports back.
+- **`scripts/compliance-audit.sh`** — six-dimension self-audit with 0–100 score per dimension and averaged total:
+  - *Version* — `package.json` version vs last git tag
+  - *Skills* — `~/.skills/` count vs README / baseline counters
+  - *i18n* — key parity between `es.json` and `en.json`
+  - *Hooks* — `spec-guard.sh` present, shebang, executable, referenced in settings template
+  - *Baseline* — `repo_snapshot` freshness (≤20% drift)
+  - *Docs* — no legacy brand residuals in root `*.md`
+- Writes per-run JSON detail to `.quality/evidence/compliance/audit-TS.json` (gitignored).
+
+#### Internationalisation
+
+- New namespaces `quality.baseline`, `quality.healing`, `quality.spec_guard`, `quality.compliance` in `.specleap/i18n/es.json` and `en.json`. All new runtime messages go through the existing `t "key.path"` helper.
+
+### Removed
+
+- References to `openclaw` in `scripts/setup-mcp.sh` and `.commands/planificar.md` (legacy orchestration tool, no longer relevant to the public framework).
+
+---
+
 ## [2.1.1] - 2026-04-04
 
 ### Added

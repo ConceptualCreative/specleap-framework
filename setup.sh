@@ -72,7 +72,7 @@ if [ "$LANG" = "es" ]; then
     MSG_REQUIREMENTS="Verificando requisitos del sistema..."
     MSG_GITHUB="Paso 2/6: Configuración GitHub"
     MSG_ASANA="Paso 3/6: Configuración Asana (Obligatorio)"
-    MSG_SKILLS="Paso 4/6: Agent Skills (20 skills)"
+    MSG_SKILLS="Paso 4/6: Agent Skills (34 skills)"
     MSG_CODERABBIT="Paso 5/6: CodeRabbit"
     MSG_FINAL="Paso 6/6: Finalizando"
     MSG_SUCCESS="✅ ¡Instalación completa!"
@@ -84,7 +84,7 @@ else
     MSG_REQUIREMENTS="Checking system requirements..."
     MSG_GITHUB="Step 2/6: GitHub Setup"
     MSG_ASANA="Step 3/6: Asana Setup (Required)"
-    MSG_SKILLS="Step 4/6: Agent Skills (20 skills)"
+    MSG_SKILLS="Step 4/6: Agent Skills (34 skills)"
     MSG_CODERABBIT="Step 5/6: CodeRabbit"
     MSG_FINAL="Step 6/6: Finishing"
     MSG_SUCCESS="✅ Installation complete!"
@@ -290,7 +290,7 @@ echo ""
 sleep 1
 
 # ============================================
-# PASO 4: Agent Skills (20 TIER 1)
+# PASO 4: Agent Skills (34 skills: 20 TIER 1 + 14 TIER 2)
 # ============================================
 
 echo -e "${CYAN}${LINE}${NC}"

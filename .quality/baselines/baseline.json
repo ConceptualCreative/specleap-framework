@@ -8,10 +8,10 @@
     "duplicates_max_pct": 3
   },
   "repo_snapshot": {
-    "loc_total": 21981,
-    "files_count": 92,
+    "loc_total": 23060,
+    "files_count": 100,
     "agents_count": 3,
-    "commands_count": 9,
+    "commands_count": 10,
     "skills_count": 34
   }
 }
