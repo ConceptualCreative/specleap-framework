@@ -20,15 +20,16 @@
   "homepage": "https://specleap.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iapanderson/specleap-framework.git"
+    "url": "https://github.com/ConceptualCreative/specleap-framework.git"
   },
   "bugs": {
-    "url": "https://github.com/iapanderson/specleap-framework/issues"
+    "url": "https://github.com/ConceptualCreative/specleap-framework/issues"
   },
   "license": "MIT",
   "author": {
-    "name": "SpecLeap Community",
-    "url": "https://specleap.com"
+    "name": "Styng Arias",
+    "email": "developers@conceptualcreative.com",
+    "url": "https://conceptualcreative.com"
   },
   "bin": "bin/specleap",
   "scripts": {

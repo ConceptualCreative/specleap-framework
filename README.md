@@ -55,7 +55,7 @@ npx specleap-framework@latest
 ### Opción 2: Clonar desde GitHub
 
 ```bash
-git clone https://github.com/iapanderson/specleap-framework.git
+git clone https://github.com/ConceptualCreative/specleap-framework.git
 cd specleap-framework/
 bash setup.sh
 ```
@@ -615,9 +615,9 @@ MIT License - Ver [LICENSE](LICENSE)
 ## 🔗 Enlaces
 
 - 🌐 **Website:** [specleap.com](https://specleap.com)
-- 📦 **GitHub:** [github.com/iapanderson/specleap](https://github.com/iapanderson/specleap-framework)
+- 📦 **GitHub:** [github.com/ConceptualCreative/specleap-framework](https://github.com/ConceptualCreative/specleap-framework)
 - 💬 **Comunidad:** (próximamente Discord/Slack)
-- 📧 **Contacto:** [Abrir Issue en GitHub](https://github.com/iapanderson/specleap-framework/issues)
+- 📧 **Contacto:** [Abrir Issue en GitHub](https://github.com/ConceptualCreative/specleap-framework/issues)
 
 ---
 

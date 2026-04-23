@@ -408,7 +408,7 @@ if [ "$JIRA_INSTALLED" = false ]; then
             exit 1
         fi
     else
-        # OpenClaw, Cursor, Continue: Solicitar credenciales
+        # Cursor, Continue: Solicitar credenciales
         echo -e "${BLUE}🔐 Configuración de Asana${NC}"
         echo ""
         
@@ -451,7 +451,7 @@ if [ "$JIRA_INSTALLED" = false ]; then
             # Verificar si existe el archivo
             if [ ! -f "$CONFIG_PATH" ]; then
                 echo -e "${YELLOW}⚠️  $CONFIG_PATH no existe. Creando...${NC}"
-                mkdir -p ~/.openclaw
+                mkdir -p "$(dirname "$CONFIG_PATH")"
                 echo '{"agents":{"main":{}}}' > "$CONFIG_PATH"
             fi
             

@@ -218,7 +218,7 @@ Edita `scripts/generate-asana-structure.sh`:
 ### "Script no encontrado"
 
 ```bash
-cd ~/.openclaw/workspace/specleap
+cd ~/specleap-framework
 ls scripts/generate-asana-structure.sh
 # Si no existe, verifica instalación
 ```

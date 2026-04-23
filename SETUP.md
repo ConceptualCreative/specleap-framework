@@ -5,7 +5,7 @@
 ### Paso 1: Clonar el repositorio
 
 ```bash
-git clone https://github.com/iapanderson/specleap-framework.git
+git clone https://github.com/ConceptualCreative/specleap-framework.git
 cd specleap-framework
 ```
 
