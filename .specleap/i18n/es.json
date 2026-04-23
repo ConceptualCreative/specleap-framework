@@ -150,6 +150,28 @@
       "hint_command": "git checkout -b feature/[proyecto]-[ticket]-[descripción]",
       "hint_example": "Ejemplo: git checkout -b feature/app-tienda-23-cart",
       "hint_flow": "Flujo: feature → stage → main (vía PR)"
+    },
+    "compliance": {
+      "header": "SpecLeap Compliance Audit",
+      "version": "Version",
+      "skills": "Skills",
+      "i18n": "i18n",
+      "hooks": "Hooks",
+      "baseline": "Baseline",
+      "docs": "Docs",
+      "total": "Total",
+      "observations": "Observaciones",
+      "details_saved": "Detalle guardado en:",
+      "version_mismatch": "Versión del package.json no coincide con el último tag:",
+      "skills_mismatch": "Conteo de skills discrepa:",
+      "i18n_missing_file": "Falta archivo de i18n (es.json o en.json)",
+      "i18n_missing_key": "Clave ausente en",
+      "hook_missing": "Falta el archivo del hook:",
+      "hook_not_shebang": "Falta shebang correcto en:",
+      "hook_not_exec": "No es ejecutable (chmod +x):",
+      "hook_not_in_template": "Hook no referenciado en settings.json.template",
+      "baseline_stale": "repo_snapshot desactualizado (ejecuta: bash scripts/quality-baseline.sh snapshot)",
+      "docs_residual": "Residuo de marca pasada en"
     }
   }
 }

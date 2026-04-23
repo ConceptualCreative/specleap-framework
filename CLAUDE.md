@@ -73,6 +73,7 @@ When the user says **"Hola"** (case-insensitive), execute `.commands/inicio.md`:
 | `explicar` | `.commands/explicar.md` | Explain concept |
 | `documentar` | `.commands/documentar.md` | Update docs |
 | `adoptar` | `.commands/adoptar.md` | Adopt legacy project |
+| `compliance`, `auditoria`, `audit` | `.commands/compliance.md` | Run framework self-audit (6 dimensions, 0-100 score) |
 
 **Rules:**
 - If user writes `comando` alone → read `.commands/comando.md` immediately
