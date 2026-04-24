@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.4] - 2026-04-24
+
+### Fixed
+
+- **`scripts/install-skills.sh`** — replaced four occurrences of `((VAR++))` counter increments with `VAR=$((VAR + 1))` plain assignments. The post-increment form returns exit code 1 when the variable starts at 0 (arithmetic expression evaluates to 0 → bash interprets as false), which under `set -e` killed the installer after the first skill. Installation now completes all 34 skills as expected on bash 3.2+ (macOS default) and newer shells. Reported by a collaborator during smoke testing.
+
 ## [2.1.3] - 2026-04-23
 
 ### Changed
