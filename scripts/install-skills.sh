@@ -109,31 +109,31 @@ for i in "${!SKILLS[@]}"; do
     # Skip si ya existe
     if [ -d "$SKILLS_DIR/$name" ]; then
         echo -e "${YELLOW}SKIP${NC} (already installed)"
-        ((SKIPPED++))
+        SKIPPED=$((SKIPPED + 1))
         continue
     fi
-    
+
     # Clonar repo si no existe
     repo_dir="$TMP_DIR/$(echo $repo | tr '/' '_')"
     if [ ! -d "$repo_dir" ]; then
         if ! git clone -q "https://github.com/$repo.git" "$repo_dir" 2>/dev/null; then
             echo -e "${RED}FAIL${NC} (repo not accessible)"
-            ((FAILED++))
+            FAILED=$((FAILED + 1))
             continue
         fi
     fi
-    
+
     # Verificar SKILL.md
     if [ ! -f "$repo_dir/$path/SKILL.md" ]; then
         echo -e "${RED}FAIL${NC} (SKILL.md not found)"
-        ((FAILED++))
+        FAILED=$((FAILED + 1))
         continue
     fi
-    
+
     # Copiar skill
     cp -r "$repo_dir/$path" "$SKILLS_DIR/$name"
     echo -e "${GREEN}OK${NC}"
-    ((INSTALLED++))
+    INSTALLED=$((INSTALLED + 1))
 done
 
 echo ""
