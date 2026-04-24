@@ -1,10 +1,26 @@
-# SpecLeap Framework
+<p align="center">
+  <img src="assets/specleap-logo.png" alt="SpecLeap Framework" width="420" />
+</p>
 
-> Framework de Spec-Driven Development para desarrollo asistido por IA.
+<p align="center">
+  <strong>Framework de Spec-Driven Development para desarrollo asistido por IA.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ConceptualCreative/specleap-framework/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-3b82f6.svg" alt="MIT License" /></a>
+  <a href="https://www.npmjs.com/package/specleap-framework"><img src="https://img.shields.io/npm/v/specleap-framework.svg?color=22c55e&label=npm" alt="npm version" /></a>
+  <img src="https://img.shields.io/badge/agents-3-6366f1" alt="3 agents" />
+  <img src="https://img.shields.io/badge/commands-10-f97316" alt="10 commands" />
+  <img src="https://img.shields.io/badge/skills-34-22c55e" alt="34 Agent Skills" />
+  <img src="https://img.shields.io/badge/hooks-1-ec4899" alt="1 hook" />
+  <img src="https://img.shields.io/badge/rules-4-eab308" alt="4 rules" />
+  <img src="https://img.shields.io/badge/built%20for-Claude%20Code-000000" alt="Built for Claude Code" />
+  <a href="https://ko-fi.com/specleap"><img src="https://img.shields.io/badge/Ko--fi-Support%20SpecLeap-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
+</p>
 
 SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 34 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
 
-**Versión actual:** 2.1.1 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
+**Versión actual:** 2.1.3 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
 
 ---
 
