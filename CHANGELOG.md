@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.6] - 2026-04-24
+
+### Changed
+
+- **`package.json` `bin` field** — switched from string form `"bin": "bin/specleap"` to object form `"bin": { "specleap": "bin/specleap" }`. This makes `npx specleap` work directly; previously the string form made npm link the executable as `specleap-framework` (the package name), forcing users to type `npx specleap-framework` — longer and counter-intuitive.
+- **`package.json` `repository.url`** — added the `git+` prefix (`git+https://github.com/…`) to comply with the canonical [package.json spec](https://docs.npmjs.com/cli/configuring-npm/package-json#repository) and silence the normalization warning npm emitted on every publish.
+
+### Fixed
+
+- **`.gitignore`** — added `**/__pycache__/` and `**/*.pyc` so Python bytecode generated at runtime by the `ui-ux-pro-max` skill never sneaks into the repo. Companion to the `.npmignore` rule already shipping since v2.1.5 that keeps the tarball clean.
+- **Removed tracked `.pyc` artifacts** from `.claude/skills/ui-ux-pro-max/scripts/__pycache__/` that had slipped into the repo before the gitignore rule existed.
+
+### Notes
+
+- No behavioral change to scripts, agents, commands, i18n or validation pipeline. Pure maintenance release to polish the packaging.
+
 ## [2.1.5] - 2026-04-24
 
 ### Fixed

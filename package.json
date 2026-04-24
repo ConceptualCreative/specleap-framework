@@ -1,6 +1,6 @@
 {
   "name": "specleap-framework",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Spec-Driven Development Framework — Transform VSCode, Cursor, JetBrains into spec-first development machines",
   "keywords": [
     "spec-driven-development",
@@ -20,7 +20,7 @@
   "homepage": "https://specleap.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ConceptualCreative/specleap-framework.git"
+    "url": "git+https://github.com/ConceptualCreative/specleap-framework.git"
   },
   "bugs": {
     "url": "https://github.com/ConceptualCreative/specleap-framework/issues"
@@ -31,7 +31,9 @@
     "email": "developers@conceptualcreative.com",
     "url": "https://conceptualcreative.com"
   },
-  "bin": "bin/specleap",
+  "bin": {
+    "specleap": "bin/specleap"
+  },
   "scripts": {
     "setup": "bash setup.sh",
     "skills": "bash scripts/install-skills.sh",
