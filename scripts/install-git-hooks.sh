@@ -132,10 +132,74 @@ EOF
 
 chmod +x "$HOOKS_DIR/pre-commit"
 
+# Crear pre-push hook (bloquea push directo a main/stage)
+cat > "$HOOKS_DIR/pre-push" << 'EOF'
+#!/bin/bash
+# SpecLeap Pre-Push Hook
+# Bloquea pushes directos a las ramas protegidas (main, stage).
+# Defensa local — equivalente a un Branch Protection Rule, mientras
+# el repo sea privado en plan free (los Rulesets de GitHub solo están
+# disponibles con Pro o repo público).
+
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+PROTECTED_BRANCHES=("main" "stage")
+
+# git pre-push hooks reciben argumentos: <remote> <url>
+# y por stdin líneas: <local_ref> <local_sha> <remote_ref> <remote_sha>
+remote="$1"
+url="$2"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+    # remote_ref es del estilo refs/heads/main, refs/heads/stage, refs/heads/feature/...
+    branch_name="${remote_ref#refs/heads/}"
+
+    for protected in "${PROTECTED_BRANCHES[@]}"; do
+        if [ "$branch_name" = "$protected" ]; then
+            echo ""
+            echo -e "${RED}╔═════════════════════════════════════════════════════════╗${NC}"
+            echo -e "${RED}║ SpecLeap: push directo a rama protegida BLOQUEADO       ║${NC}"
+            echo -e "${RED}╚═════════════════════════════════════════════════════════╝${NC}"
+            echo ""
+            echo -e "  Rama destino: ${YELLOW}$branch_name${NC}"
+            echo -e "  Remote:       ${YELLOW}$remote${NC} ($url)"
+            echo ""
+            echo "  El flujo SpecLeap requiere pull requests para integrar cambios:"
+            echo "    feature/<proyecto>-<ticket>-<desc>  →  stage  →  main"
+            echo ""
+            echo "  Pasos:"
+            echo "    1. Crea una feature branch:"
+            echo -e "       ${GREEN}git checkout -b feature/[proyecto]-[ticket]-[desc]${NC}"
+            echo ""
+            echo "    2. Haz tus commits ahí y pushea esa branch:"
+            echo -e "       ${GREEN}git push -u origin feature/[proyecto]-[ticket]-[desc]${NC}"
+            echo ""
+            echo "    3. Abre PR contra ${YELLOW}stage${NC} en GitHub."
+            echo ""
+            echo "  Si necesitas saltarte esto (emergencia, NO recomendado):"
+            echo "    git push --no-verify"
+            echo ""
+            echo "  Más info: CONTRIBUTING.md"
+            echo ""
+            exit 1
+        fi
+    done
+done
+
+exit 0
+EOF
+
+chmod +x "$HOOKS_DIR/pre-push"
+
 echo "✅ Git hooks instalados exitosamente"
 echo ""
-echo "📝 Hook instalado: pre-commit"
-echo "   → Valida linters, formatters y specs antes de cada commit"
+echo "📝 Hooks instalados:"
+echo "   • pre-commit  — valida linters, formatters y specs antes de cada commit"
+echo "   • pre-push    — bloquea pushes directos a main y stage (flujo feature → stage → main)"
 echo ""
-echo "💡 Para saltarte la validación (NO recomendado):"
-echo "   git commit --no-verify -m \"mensaje\""
+echo "💡 Para saltarte una validación (NO recomendado):"
+echo "   git commit --no-verify -m \"mensaje\"   # bypassea pre-commit"
+echo "   git push --no-verify                  # bypassea pre-push"
