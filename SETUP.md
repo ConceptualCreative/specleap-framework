@@ -170,29 +170,32 @@ git push origin main
 
 ---
 
-### 3. Agent Skills (20 Skills Profesionales)
+### 3. Agent Skills (34 profesionales)
 
-**¿Qué son?** Extensiones para Claude/Cursor que aplican best practices automáticamente.
+Extensiones para Claude/Cursor que aplican best practices automáticamente al contexto de cada tarea.
 
-#### Instalación automática:
+Instalación:
 
 ```bash
-bash scripts/setup-mcp.sh
+bash scripts/install-skills.sh
 ```
 
-**Qué instala:**
-- 🔒 5 skills seguridad (SAST, STRIDE, OWASP)
-- 🔄 3 skills consistencia (verification-before-completion ⭐)
-- 🎨 6 skills diseño (Vercel-style, Tailwind, UI/UX)
-- 🛠️ 6 skills backend/dev (Laravel, React, TDD, API design)
+Se descargan e instalan 34 skills en `~/.skills/` (20 TIER 1 más 14 TIER 2):
 
-**Ver skills instaladas:**
+- **Consistencia (6):** `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `code-reviewer`, `debugging-wizard`
+- **Backend (6):** `laravel-specialist`, `api-designer`, `database-optimizer`, `python-pro`, `react-expert`, `typescript-pro`
+- **Diseño y frontend (7):** `frontend-design`, `canvas-design`, `algorithmic-art`, `skill-creator`, `web-design-guidelines`, `vercel-composition-patterns`, `agent-browser`
+- **DevOps (5):** `devops-engineer`, `cloud-architect`, `architecture-designer`, `terraform-engineer`, `monitoring-expert`
+- **Mobile (2):** `react-native-expert`, `flutter-expert`
+- **Testing (3):** `test-driven-development`, `playwright-expert`, `test-master`
+- **Seguridad (2):** `security-reviewer`, `gdpr-dsgvo-expert`
+- **Documentación y otros (3):** `code-documenter`, `brainstorming`, `pdf`
+
+Verificar lo instalado:
 
 ```bash
 ls ~/.skills/
 ```
-
-**Más info:** Ver [docs/SKILLS-REFERENCE.md](docs/SKILLS-REFERENCE.md)
 
 ---
 

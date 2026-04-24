@@ -53,7 +53,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- References to `openclaw` in `scripts/setup-mcp.sh` and `.commands/planificar.md` (legacy orchestration tool, no longer relevant to the public framework).
+- **`scripts/setup-mcp.sh`** — obsolete Jira-MCP installer that contradicted the actual Asana-via-API flow handled by `setup.sh`. It claimed to install the Asana client but in practice prompted for Atlassian credentials and wrote a Jira MCP block into IDE config. Removed entirely; Asana is wired through `setup.sh` (direct API + token in `.env`), not through MCP.
+- References to `openclaw` in `.commands/planificar.md` (legacy orchestration tool, no longer relevant to the public framework).
+- Historical `CHANGELOG.md` entry no longer spells out the concrete personal emails that had been removed in v2.0; rewritten to "Legacy personal emails (removed)".
+
+### Fixed
+
+- **`SETUP.md`** Agent Skills section: updated from "20 Skills" to "34 profesionales" (20 TIER 1 + 14 TIER 2), pointed to `scripts/install-skills.sh` (the real installer), removed decorative emojis and the reference to `docs/SKILLS-REFERENCE.md` (deleted in v2.0).
+- **`scripts/README.md`**: removed the obsolete `setup-mcp.sh` section and updated `install-skills.sh` description to 34 skills with full category breakdown.
+- **`.gitignore`**: added `.specleap/config.json` (generated per-user by `setup.sh`, contains `github_user` and `asana_workspace`; must never be committed).
 
 ---
 
@@ -161,7 +169,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All mentions of:
   - conceptualcreative.com domains
   - Private Atlassian URLs
-  - Personal emails (p.anderson@, gidharvey@)
+  - Legacy personal emails (removed)
   - Internal project names
 
 ### Fixed - 2026-03-20

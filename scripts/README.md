@@ -41,40 +41,28 @@ git commit --no-verify -m "mensaje"
 
 ---
 
-### `setup-mcp.sh`
-
-**Propósito:** Instalación rápida de dependencias SpecLeap
-
-**Uso:**
-```bash
-bash scripts/setup-mcp.sh
-```
-
-**Instala:**
-- ✅ Cliente Asana (npm global)
-- ✅ 20 Agent Skills TIER 1
-- ✅ Context7 MCP (opcional)
-
-**Tiempo:** ~5 minutos
-
----
-
 ### `install-skills.sh`
 
-**Propósito:** Instalar Agent Skills manualmente
+**Propósito:** Instalar los 34 Agent Skills del framework en `~/.skills/`.
 
 **Uso:**
 ```bash
 bash scripts/install-skills.sh
 ```
 
-**Instala:** 20 Agent Skills TIER 1 en `~/.skills/`
+**Instala:** 34 skills (20 TIER 1 + 14 TIER 2).
 
-**Skills incluidas:**
-- 5 skills de seguridad (SAST, STRIDE, OWASP)
-- 3 skills de consistencia (verification-before-completion, DRY)
-- 6 skills de diseño (Vercel-style, Tailwind, shadcn/ui)
-- 6 skills de backend/dev (Laravel, React, TDD, API design)
+**Categorías:**
+- Consistencia: `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `code-reviewer`, `debugging-wizard`
+- Backend: `laravel-specialist`, `api-designer`, `database-optimizer`, `python-pro`, `react-expert`, `typescript-pro`
+- Diseño y frontend: `frontend-design`, `canvas-design`, `algorithmic-art`, `skill-creator`, `web-design-guidelines`, `vercel-composition-patterns`, `agent-browser`
+- DevOps: `devops-engineer`, `cloud-architect`, `architecture-designer`, `terraform-engineer`, `monitoring-expert`
+- Mobile: `react-native-expert`, `flutter-expert`
+- Testing: `test-driven-development`, `playwright-expert`, `test-master`
+- Seguridad: `security-reviewer`, `gdpr-dsgvo-expert`
+- Documentación y otros: `code-documenter`, `brainstorming`, `pdf`
+
+El script detecta las skills ya instaladas y las salta. Puede volver a ejecutarse con seguridad.
 
 ---
 
