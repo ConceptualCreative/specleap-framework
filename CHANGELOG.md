@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.5] - 2026-04-24
+
+### Fixed
+
+- **npm tarball packaging** — the v2.1.4 tarball was missing critical files. Added `.specleap/i18n/**` (ES/EN translations used by `setup.sh` and runtime scripts), `.specleap/i18n.sh` (loader), `openspec/**` (optional formal CLI + templates + examples), and `CHANGELOG.md` to the `files` whitelist in `package.json`. Without `.specleap/i18n/`, the setup process would fall back to raw keys instead of localized messages. Without `openspec/**`, the documented formal CLI was unreachable from npm-installed copies.
+- **`.npmignore`** — the overly broad `.specleap/` exclusion was replaced with a precise `.specleap/config.json` exclusion (only the actual secret). Added `**/__pycache__/` and `**/*.pyc` to prevent Python bytecode leaking into the published package.
+
+### Notes
+
+- Version 2.1.4 was tagged locally and pushed to the private GitHub repo but **never published to npm**, so no user ever received the incomplete tarball. The tag `v2.1.4` remains in GitHub as historical marker of the install-skills.sh fix commit, while `v2.1.5` is the first release published to the npm registry after the ownership transfer to ConceptualCreative.
+
 ## [2.1.4] - 2026-04-24
 
 ### Fixed
