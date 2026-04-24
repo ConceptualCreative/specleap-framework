@@ -130,13 +130,13 @@ if [[ "$CREATE_PR" == true ]]; then
     
     step "Creando Pull Request..."
     
-    # Extract Jira key from proposal
-    JIRA_KEY=$(grep -oP 'Jira.*\|\s*\K[A-Z]+-\d+' "$CHANGE_DIR/proposal.md" || echo "")
-    
+    # Extract ticket id from proposal
+    TICKET_ID=$(grep -oP 'Ticket.*\|\s*\K[a-zA-Z0-9-]+-\d+' "$CHANGE_DIR/proposal.md" || echo "")
+
     # PR title
     PR_TITLE="$CHANGE_ID: $CHANGE_NAME"
-    if [[ -n "$JIRA_KEY" ]]; then
-        PR_TITLE="$JIRA_KEY — $CHANGE_NAME"
+    if [[ -n "$TICKET_ID" ]]; then
+        PR_TITLE="$TICKET_ID — $CHANGE_NAME"
     fi
     
     # PR body from proposal
@@ -157,7 +157,7 @@ Ver \`tasks.md\` para resultados completos.
 
 ## Referencias
 - Propuesta: openspec/changes/$CHANGE_ID-$CHANGE_NAME/
-$(if [[ -n "$JIRA_KEY" ]]; then echo "- Jira: $JIRA_KEY"; fi)
+$(if [[ -n "$TICKET_ID" ]]; then echo "- Ticket: $TICKET_ID"; fi)
 
 ---
 **Code Review:** CodeRabbit está activo. Revisa comentarios automáticos.

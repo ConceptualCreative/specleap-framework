@@ -96,7 +96,7 @@ Cuando se te pide planificar un ticket frontend:
 - Lee `proyectos/[proyecto]/context/architecture.md`
 - Lee `proyectos/[proyecto]/context/tech-stack.md`
 - Lee `proyectos/[proyecto]/context/conventions.md`
-- Lee el ticket de Jira (vía MCP si está disponible)
+- Lee la tarea de Asana (vía ASANA_ACCESS_TOKEN)
 
 ### 2. Generar Design System (CRÍTICO)
 
@@ -563,7 +563,7 @@ Tu mensaje final DEBE incluir:
 - **Bash** — Ejecutar comandos del sistema
 - **Read** — Leer archivos del proyecto
 - **Write** — Crear el archivo del plan
-- **MCP Jira** — Leer tickets de Jira (si está configurado)
+- **Asana API** — Leer tareas de Asana (via ASANA_ACCESS_TOKEN)
 - **MCP Context7** — Consultar docs de React/Vite (si está configurado)
 
 ---

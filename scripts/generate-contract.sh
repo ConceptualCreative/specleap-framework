@@ -197,10 +197,10 @@ constraints:
   budget_limit: ""
   out_of_scope: []
   
-jira:
-  project_key: ""
-  epic_count: 0
-  story_count: 0
+asana:
+  workspace_id: ""
+  section_count: 0
+  task_count: 0
   synced_at: ""
 ---
 EOF

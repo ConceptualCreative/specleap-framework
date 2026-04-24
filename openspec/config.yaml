@@ -41,8 +41,8 @@ id_format:
   change: "CHANGE-{number:04d}"    # CHANGE-0001
   task: "TASK-{number:03d}"        # TASK-001
 
-# Integración con Jira
-jira:
+# Integración con ticket tracker
+tracker:
   enabled: true
   project_key: "PROJ"              # Cambiar por proyecto
   epic_prefix: "Epic: "

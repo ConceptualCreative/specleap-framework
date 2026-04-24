@@ -280,9 +280,9 @@ cat proyectos/casa-de-peli/CONTRATO.md
 
 ## 🔧 Próximos Pasos (Fase 3)
 
-- [ ] Parser CONTRATO → Jira (`parse-contract-to-jira.sh`)
+- [ ] Parser CONTRATO → Asana (`parse-contract-to-asana.sh`)
 - [ ] Integración con `planificar`
-- [ ] Sincronización bidireccional Jira ↔ CONTRATO
+- [ ] Sincronización bidireccional Asana ↔ CONTRATO
 
 ## 📚 Referencias
 

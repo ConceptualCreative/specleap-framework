@@ -138,7 +138,7 @@ openspec new --auto <título> [opciones]
 |--------|------|-------------|
 | `--auto` | — | Generar ID automáticamente |
 | `--from <file>` | string | Crear desde user story refinada |
-| `--jira <key>` | string | Asociar con ticket Jira (ej: PROJ-123) |
+| `--ticket <id>` | string | Asociar con ID del ticket (ej: app-tienda-23) |
 | `--priority <level>` | string | Prioridad: critical\|high\|medium\|low |
 | `--author <name>` | string | Autor (default: git user) |
 | `-h, --help` | — | Mostrar ayuda |
@@ -152,11 +152,11 @@ openspec new CHANGE-001 "Implementar autenticación JWT"
 # ID automático
 openspec new --auto "Sistema de notificaciones"
 
-# Con Jira y prioridad
-openspec new --auto "Login social" --jira PROJ-123 --priority high
+# Con ticket y prioridad
+openspec new --auto "Login social" --ticket app-tienda-23 --priority high
 
 # Desde user story refinada
-openspec new --auto "Auth" --from us-refined.md --jira PROJ-456
+openspec new --auto "Auth" --from us-refined.md --ticket app-tienda-24
 ```
 
 ### Output
@@ -436,7 +436,7 @@ openspec code-review CHANGE-004 --create-pr --base main
 1. ✅ Ejecuta `openspec verify` primero
 2. ✅ Pushea branch a remoto
 3. ✅ Crea Pull Request (si `--create-pr`)
-4. ✅ Extrae Jira key de proposal.md para título PR
+4. ✅ Extrae ticket id de proposal.md para título PR
 5. ✅ CodeRabbit hace review automático
 6. ✅ Actualiza estado: `in_progress` → `testing`
 
@@ -444,7 +444,7 @@ openspec code-review CHANGE-004 --create-pr --base main
 
 **Título:**
 ```
-PROJ-123 — Implementar Autenticación JWT
+app-tienda-23 — Implementar Autenticación JWT
 ```
 
 **Body:**
@@ -465,7 +465,7 @@ Ver `tasks.md` para resultados completos.
 
 ## Referencias
 - Propuesta: openspec/changes/CHANGE-001/
-- Jira: PROJ-123
+- Ticket: app-tienda-23
 
 ---
 **Code Review:** CodeRabbit está activo.

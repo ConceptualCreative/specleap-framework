@@ -66,7 +66,7 @@ openspec code-review CHANGE-001 --create-pr
 
 ```bash
 # Empezar desde cero
-openspec new --auto "Mi Feature" --jira PROJ-XXX
+openspec new --auto "Mi Feature" --ticket [proyecto]-XXX
 openspec ff CHANGE-XXX
 # ... editar manualmente ...
 openspec apply CHANGE-XXX

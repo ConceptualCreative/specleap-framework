@@ -50,7 +50,7 @@ Los valores por defecto salen del estándar general del framework. Cada proyecto
 
 Ejemplos:
 - `evidence/app-tienda-23/`
-- `evidence/channel-pms-107/`
+- `evidence/api-backend-45/`
 
 ## Comando `scripts/quality-baseline.sh`
 

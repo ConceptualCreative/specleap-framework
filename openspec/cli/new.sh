@@ -18,7 +18,7 @@ USAGE:
 OPTIONS:
     --auto              Generar ID automáticamente
     --from <file>       Crear desde user story refinada
-    --jira <key>        Asociar con ticket Jira
+    --ticket <id>       Asociar con un ID de ticket (ej: app-tienda-23)
     --priority <level>  Prioridad (critical/high/medium/low)
     --author <name>     Autor (default: git user)
     -h, --help          Mostrar ayuda
@@ -32,7 +32,7 @@ DESCRIPTION:
 
 EXAMPLES:
     openspec new CHANGE-001 "Implementar autenticación JWT"
-    openspec new --auto "Sistema de notificaciones" --jira PROJ-123
+    openspec new --auto "Sistema de notificaciones" --ticket app-tienda-23
     openspec new CHANGE-002 --from stories/auth-refined.md
 
 OUTPUT:
@@ -50,7 +50,7 @@ CHANGE_ID=""
 TITLE=""
 AUTO_ID=false
 FROM_FILE=""
-JIRA_KEY=""
+TICKET_ID=""
 PRIORITY="medium"
 AUTHOR=$(git config user.name 2>/dev/null || echo "Unknown")
 
@@ -68,8 +68,8 @@ while [[ $# -gt 0 ]]; do
             FROM_FILE="$2"
             shift 2
             ;;
-        --jira)
-            JIRA_KEY="$2"
+        --ticket)
+            TICKET_ID="$2"
             shift 2
             ;;
         --priority)
@@ -149,7 +149,7 @@ sed -i.bak \
     -e "s/Título del Cambio/$TITLE/g" \
     -e "s/YYYY-MM-DD/$DATE/g" \
     -e "s/nombre/$AUTHOR/g" \
-    -e "s/PROJ-XXX/${JIRA_KEY:-PROJ-XXX}/g" \
+    -e "s/TICKET-XXX/${TICKET_ID:-TICKET-XXX}/g" \
     -e "s/medium/$PRIORITY/g" \
     "$CHANGE_DIR/proposal.md"
 rm "$CHANGE_DIR/proposal.md.bak"
@@ -176,7 +176,7 @@ sed -i.bak \
     -e "s/CHANGE-XXX/$CHANGE_ID/g" \
     -e "s/Título del Cambio/$TITLE/g" \
     -e "s/YYYY-MM-DD/$DATE/g" \
-    -e "s/PROJ-XXX/${JIRA_KEY:-PROJ-XXX}/g" \
+    -e "s/TICKET-XXX/${TICKET_ID:-TICKET-XXX}/g" \
     "$CHANGE_DIR/tasks.md"
 rm "$CHANGE_DIR/tasks.md.bak"
 
@@ -204,7 +204,7 @@ cat > "$CHANGE_DIR/README.md" <<EOF
 | Autor | $AUTHOR |
 | Fecha | $DATE |
 | Prioridad | $PRIORITY |
-| Jira | ${JIRA_KEY:-N/A} |
+| Ticket | ${TICKET_ID:-N/A} |
 
 ## Archivos
 

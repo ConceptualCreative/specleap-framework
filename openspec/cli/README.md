@@ -35,7 +35,7 @@ ln -s $(pwd)/openspec/cli/openspec /usr/local/bin/openspec
 openspec enrich "Como usuario quiero hacer login" --output us-refined.md
 
 # 2. Crear propuesta
-openspec new --auto "Implementar autenticación JWT" --from us-refined.md --jira PROJ-123
+openspec new --auto "Implementar autenticación JWT" --from us-refined.md --ticket app-tienda-23
 
 # 3. (Opcional) Generar propuesta completa con AI
 openspec ff CHANGE-001
@@ -68,7 +68,7 @@ openspec archive CHANGE-001
 ```bash
 # Generar todo automáticamente
 openspec enrich "Sistema de notificaciones push" | \
-openspec new --auto --from - --jira PROJ-456
+openspec new --auto --from - --ticket app-tienda-24
 openspec ff CHANGE-002
 openspec apply CHANGE-002
 ```
@@ -100,7 +100,7 @@ openspec report --format json --output report.json
 Edita `openspec/config.yaml` para personalizar:
 
 - Estados de specs y changes
-- Integración con Jira
+- Integración con ticket tracker (Asana recomendado en SpecLeap; el CLI es agnóstico al backend)
 - Umbrales de testing
 - Formato de IDs
 

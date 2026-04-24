@@ -39,7 +39,7 @@ Si hay trabajo en progreso sin commit → preguntar antes de continuar.
 ### Paso 4: Verificar Ticket
 
 ```
-¿Hay un ticket en Jira asociado a esta tarea?
+¿Hay un ticket en Asana asociado a esta tarea?
 ```
 
 - **Sí** → Usar el ID del ticket (SCRUM-XX) en rama y commits
@@ -82,7 +82,7 @@ Dejar nota clara de:
 ## Flujo Completo de Feature
 
 ```
-1. TICKET (Jira)
+1. TICKET (Asana)
    └── Crear/asignar ticket SCRUM-XX
 
 2. SPEC (SpecLeap)
@@ -113,7 +113,7 @@ Dejar nota clara de:
 8. POST-DESARROLLO
    ├── Actualizar context/ si hubo decisiones
    ├── Actualizar spec si cambió
-   └── Cerrar ticket en Jira
+   └── Cerrar ticket en Asana
 ```
 
 ---

@@ -324,7 +324,7 @@ Cuando se te pide refinar una user story (comando `refinar`):
 
 ### 1. Leer Contexto
 
-- Lee el ticket de Jira original
+- Lee la tarea de Asana original
 - Lee `proyectos/[proyecto]/CONTRATO.md` para entender el proyecto
 - Lee `proyectos/[proyecto]/context/` para conocer stack y decisiones
 - Identifica el módulo al que pertenece
@@ -363,22 +363,20 @@ Expande la user story siguiendo el template completo, incluyendo:
 - Requisitos no funcionales
 - Estimación y riesgos
 
-### 5. Actualizar Jira (Si MCP está disponible)
+### 5. Actualizar Asana (Si ASANA_ACCESS_TOKEN está disponible)
 
-Si tienes acceso al MCP de Jira:
+Si tienes acceso a Asana:
 
 1. Actualiza el ticket con el contenido enriquecido
 2. Usa secciones claras con headings (h2, h3)
 3. Formatea código en bloques code
 4. Aplica listas y tablas donde ayude
-5. Transi
-
-ciona el ticket a "Refinado" o "Ready for Dev"
+5. Transiciona el ticket a "Refinado" o "Ready for Dev"
 
 Si NO tienes acceso al MCP:
 
 1. Guarda el contenido enriquecido en `proyectos/[proyecto]/specs/[TICKET-ID]_refined.md`
-2. Proporciona el contenido al usuario para que lo copie manualmente a Jira
+2. Proporciona el contenido al usuario para que lo copie manualmente a Asana
 
 ---
 
@@ -459,7 +457,7 @@ Cuando refinas una user story:
 3. **Haz preguntas** si es necesario
 4. **Presenta** la user story refinada completa
 5. **Destaca** puntos críticos
-6. **Confirma** antes de actualizar Jira
+6. **Confirma** antes de actualizar Asana
 
 **Ejemplo:**
 > "He refinado la user story SCRUM-23. La original era muy escueta (solo 2 líneas).
@@ -470,7 +468,7 @@ Cuando refinas una user story:
 > - Flujo de usuario paso a paso
 > - Estimación: 3 días (backend 1.5d, frontend 1d, testing 0.5d)
 >
-> ¿Apruebas que actualice el ticket en Jira?"
+> ¿Apruebas que actualice la tarea en Asana?"
 
 ---
 
@@ -494,7 +492,7 @@ Tu mensaje final DEBE incluir:
 
 🔄 **Próximo paso:**
 - [ ] Revisar refinamiento
-- [ ] Actualizar Jira (o copiar manualmente)
+- [ ] Actualizar Asana (o copiar manualmente)
 - [ ] Ejecutar `planificar [TICKET-ID]` cuando esté listo
 ```
 
@@ -502,7 +500,7 @@ Tu mensaje final DEBE incluir:
 
 ## Herramientas Disponibles
 
-- **MCP Jira** — Leer y actualizar tickets (si está configurado)
+- **Asana API** — Leer y actualizar tareas (si ASANA_ACCESS_TOKEN está configurado)
 - **Read** — Leer archivos del proyecto
 - **Write** — Guardar user story refinada localmente
 - **Bash** — Ejecutar comandos del sistema

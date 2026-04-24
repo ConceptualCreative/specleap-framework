@@ -7,7 +7,7 @@
 | Estado | draft / review / approved / rejected |
 | Autor | nombre |
 | Prioridad | critical / high / medium / low |
-| Jira | PROJ-XXX |
+| Ticket | TICKET-XXX |
 
 ## Resumen Ejecutivo
 

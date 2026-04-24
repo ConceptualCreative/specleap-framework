@@ -63,6 +63,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`scripts/README.md`**: removed the obsolete `setup-mcp.sh` section and updated `install-skills.sh` description to 34 skills with full category breakdown.
 - **`.gitignore`**: added `.specleap/config.json` (generated per-user by `setup.sh`, contains `github_user` and `asana_workspace`; must never be committed).
 
+### Changed (deep cleanup pass)
+
+A thorough pre-release audit revealed ~60 additional legacy references missed by the first cleanup pass. This round completes the migration:
+
+- **`openspec/` CLI made tracker-agnostic** instead of Jira-coupled. The flag `--jira <key>` becomes `--ticket <id>`, variable `JIRA_KEY` becomes `TICKET_ID`, function `parse_jira_key()` becomes `parse_ticket_id()`. Regex updated from `[A-Z]+-[0-9]+` to `[a-zA-Z0-9-]+-[0-9]+` so it accepts the SpecLeap convention `app-tienda-23`, `channel-pms-107`, etc.
+- Templates (`openspec/templates/proposal.md`, `tasks.md`, `.coderabbit.yaml`) now use `TICKET-XXX` as the neutral placeholder (git-friendly for branch names, no brackets).
+- Examples in `openspec/examples/CHANGE-SAMPLE-001-user-authentication/` rewritten to use `app-tienda-NN` tickets instead of `PROJ-NNN`.
+- `.agents/backend.md`, `.agents/frontend.md`, `.agents/producto.md` updated (13 Jira mentions across the three roles) to use Asana terminology and the real `ASANA_ACCESS_TOKEN` flow instead of a fictional "Jira MCP".
+- `.cursorrules`, `.continuerules`, `.clinerules`, `.continue/rules/04-git-workflow.md`, `.github/copilot-instructions.md`, `.coderabbit.yaml` updated with Asana/ticket terminology and `app-tienda-23` example.
+- `rules/git-workflow.md`, `rules/session-protocol.md` updated to mention Asana explicitly.
+- `scripts/generate-contract.sh` YAML frontmatter block `jira: {...}` replaced with `asana: {...}` (workspace_id, section_count, task_count, synced_at).
+- `scripts/lib/render-contrato.py` and `.continuerules` had residual "ArchSpec" branding in headers/titles; now "SpecLeap".
+- `.quality/README.md` example `channel-pms-107` (a real internal project name leaked) replaced with neutral `api-backend-45`.
+
+### Removed (deep cleanup pass)
+
+- **`scripts/lib/jira-project-utils.sh`** (222 lines) — Jira project utilities. No caller imported it (`grep -r` returned 0 usages).
+- **`scripts/test-cuestionario.sh`** (428 lines) — Jira-oriented test harness that referenced the already-renamed `generate-jira-structure.sh` (now `generate-asana-structure.sh`) and had no invocations anywhere in the repo.
+
+### Fixed (deep cleanup pass)
+
+- `.agents/producto.md` line 374: the word "Transiciona" was split across a blank line ("Transi\n\nciona"); restored as a single word.
+
 ---
 
 ## [2.1.1] - 2026-04-04

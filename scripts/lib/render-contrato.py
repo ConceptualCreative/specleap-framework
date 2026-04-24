@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ArchSpec — Renderizador de CONTRATO.md
+SpecLeap — Renderizador de CONTRATO.md
 Convierte respuestas planas (project.name) a estructura anidada y renderiza con Jinja2
 """
 

@@ -37,7 +37,7 @@ tipo(alcance): descripción en español
 
 ## Qué se hizo
 ## Por qué
-## Refs: Jira/Spec
+## Refs: Asana/Spec
 ```
 
 Tipos: feat, fix, refactor, docs, test, chore, style, perf

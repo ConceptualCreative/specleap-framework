@@ -161,8 +161,8 @@ Los cambios en specs se visualizan en Git diffs:
 4. **Implementar** → Desarrollo según spec
 5. **Cerrar** → Estado `implemented` + link al PR de código
 
-## Integración con Jira
+## Integración con Ticket Tracker
 
-- Cada spec genera un ticket en Jira
+- Cada spec genera un ticket en el tracker configurado (Asana por defecto en SpecLeap)
 - El ticket incluye link a la spec en el repo
 - Los cambios de spec se comentan en el ticket

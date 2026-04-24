@@ -12,18 +12,18 @@
 
 Total de tareas: X  
 Estimación total: X story points  
-Jira Epic: PROJ-XXX
+Ticket Epic: [proyecto]-XXX
 
 ## Tareas
 
 ### 🏗️ Setup & Scaffolding
 
 #### TASK-001: Crear estructura base
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 1 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente / 🔄 En progreso / ✅ Completada
-- **Branch:** `feat/PROJ-XXX-estructura-base`
+- **Branch:** `feat/TICKET-XXX-estructura-base`
 
 **Subtareas:**
 - [ ] Crear carpeta de feature
@@ -40,11 +40,11 @@ Jira Epic: PROJ-XXX
 ### 📊 Backend / API
 
 #### TASK-002: Implementar modelo de datos
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 2 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente
-- **Branch:** `feat/PROJ-XXX-modelo-datos`
+- **Branch:** `feat/TICKET-XXX-modelo-datos`
 
 **Subtareas:**
 - [ ] Crear entidades/modelos
@@ -59,11 +59,11 @@ Jira Epic: PROJ-XXX
 ---
 
 #### TASK-003: Implementar endpoints API
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 3 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente
-- **Branch:** `feat/PROJ-XXX-api-endpoints`
+- **Branch:** `feat/TICKET-XXX-api-endpoints`
 
 **Subtareas:**
 - [ ] POST /api/recurso
@@ -82,11 +82,11 @@ Jira Epic: PROJ-XXX
 ### 🎨 Frontend / UI
 
 #### TASK-004: Implementar componentes UI
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 3 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente
-- **Branch:** `feat/PROJ-XXX-ui-components`
+- **Branch:** `feat/TICKET-XXX-ui-components`
 
 **Subtareas:**
 - [ ] Componente de lista
@@ -104,11 +104,11 @@ Jira Epic: PROJ-XXX
 ### 🧪 Testing
 
 #### TASK-005: Tests unitarios
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 2 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente
-- **Branch:** `feat/PROJ-XXX-unit-tests`
+- **Branch:** `feat/TICKET-XXX-unit-tests`
 
 **Cobertura requerida:**
 - [ ] Lógica de negocio: 80%+
@@ -118,11 +118,11 @@ Jira Epic: PROJ-XXX
 ---
 
 #### TASK-006: Tests de integración
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 2 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente
-- **Branch:** `feat/PROJ-XXX-integration-tests`
+- **Branch:** `feat/TICKET-XXX-integration-tests`
 
 **Escenarios:**
 - [ ] Happy path completo
@@ -134,11 +134,11 @@ Jira Epic: PROJ-XXX
 ### 📚 Documentación
 
 #### TASK-007: Documentación técnica
-- **Jira:** PROJ-XXX
+- **Ticket:** [proyecto]-XXX
 - **Estimación:** 1 SP
 - **Asignado:** @nombre
 - **Estado:** ⬜ Pendiente
-- **Branch:** `docs/PROJ-XXX-documentacion`
+- **Branch:** `docs/TICKET-XXX-documentacion`
 
 **Subtareas:**
 - [ ] README del módulo

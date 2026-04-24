@@ -62,9 +62,9 @@ tipo/TICKET-ID-descripcion-corta
 
 **Ejemplos:**
 ```
-feature/SCRUM-23-integracion-jira
-fix/SCRUM-45-error-login-timeout
-refactor/SCRUM-12-optimizar-queries
+feature/app-tienda-23-integracion-tracker
+fix/app-tienda-45-error-login-timeout
+refactor/app-tienda-12-optimizar-queries
 ```
 
 ### 5. Formato de Commits

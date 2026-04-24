@@ -12,14 +12,14 @@
 
 Total de tareas: 12  
 Estimación total: 21 story points  
-Jira Epic: PROJ-123
+Ticket Epic: app-tienda-23
 
 ## Tareas
 
 ### 🏗️ Setup & Scaffolding
 
 #### TASK-001: Crear migración de login_attempts
-- **Jira:** PROJ-124
+- **Ticket:** app-tienda-24
 - **Estimación:** 1 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -39,7 +39,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-002: Generar par de claves RSA para JWT
-- **Jira:** PROJ-125
+- **Ticket:** app-tienda-25
 - **Estimación:** 1 SP
 - **Asignado:** @devops
 - **Estado:** ✅ Completada
@@ -62,7 +62,7 @@ Jira Epic: PROJ-123
 ### 📊 Backend / API
 
 #### TASK-003: Implementar UserRepository
-- **Jira:** PROJ-126
+- **Ticket:** app-tienda-26
 - **Estimación:** 2 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -82,7 +82,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-004: Implementar JWTService
-- **Jira:** PROJ-127
+- **Ticket:** app-tienda-27
 - **Estimación:** 3 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -104,7 +104,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-005: Implementar AuthService
-- **Jira:** PROJ-128
+- **Ticket:** app-tienda-28
 - **Estimación:** 3 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -125,7 +125,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-006: Implementar RateLimitMiddleware
-- **Jira:** PROJ-129
+- **Ticket:** app-tienda-29
 - **Estimación:** 2 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -147,7 +147,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-007: Implementar AuthController
-- **Jira:** PROJ-130
+- **Ticket:** app-tienda-30
 - **Estimación:** 3 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -170,7 +170,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-008: Implementar AuthMiddleware
-- **Jira:** PROJ-131
+- **Ticket:** app-tienda-31
 - **Estimación:** 2 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -194,7 +194,7 @@ Jira Epic: PROJ-123
 ### 🧪 Testing
 
 #### TASK-009: Tests unitarios
-- **Jira:** PROJ-132
+- **Ticket:** app-tienda-32
 - **Estimación:** 2 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -211,7 +211,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-010: Tests de integración
-- **Jira:** PROJ-133
+- **Ticket:** app-tienda-33
 - **Estimación:** 2 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -233,7 +233,7 @@ Jira Epic: PROJ-123
 ### 📚 Documentación
 
 #### TASK-011: Documentación de API (OpenAPI)
-- **Jira:** PROJ-134
+- **Ticket:** app-tienda-34
 - **Estimación:** 1 SP
 - **Asignado:** @backend-dev
 - **Estado:** ✅ Completada
@@ -253,7 +253,7 @@ Jira Epic: PROJ-123
 ---
 
 #### TASK-012: Actualizar README y guías
-- **Jira:** PROJ-135
+- **Ticket:** app-tienda-35
 - **Estimación:** 1 SP
 - **Asignado:** @tech-writer
 - **Estado:** ✅ Completada
@@ -421,11 +421,11 @@ flowchart TD
 
 ### Mejoras Futuras (fuera de alcance)
 
-- [ ] Migrar rate limiting a Redis (PROJ-140)
-- [ ] Implementar 2FA (PROJ-141)
-- [ ] OAuth / Social login (PROJ-142)
-- [ ] Recuperación de contraseña (PROJ-143)
-- [ ] Rotación automática de claves RSA (PROJ-144)
+- [ ] Migrar rate limiting a Redis (app-tienda-40)
+- [ ] Implementar 2FA (app-tienda-41)
+- [ ] OAuth / Social login (app-tienda-42)
+- [ ] Recuperación de contraseña (app-tienda-43)
+- [ ] Rotación automática de claves RSA (app-tienda-44)
 
 ---
 

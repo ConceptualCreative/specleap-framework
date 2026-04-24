@@ -229,8 +229,7 @@ chat:
   auto_reply: true
   art: false
   integrations:
-    jira:
-      usage: "enabled"
+    # Ticket tracker integration — uses TICKET_ID field extracted from proposal.md
     linear:
       usage: "disabled"
 
@@ -250,8 +249,7 @@ knowledge_base:
     scope: "global"
   issues:
     scope: "global"
-  jira:
-    usage: "enabled"
+  # Ticket tracker integration — uses TICKET_ID field extracted from proposal.md
   pull_requests:
     scope: "global"
 

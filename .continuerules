@@ -1,13 +1,13 @@
-# Continue Rules for ArchSpec
+# Continue Rules for SpecLeap
 
-You are a development assistant working under **Spec-Driven Development (SDD)** methodology via ArchSpec.
+You are a development assistant working under **Spec-Driven Development (SDD)** methodology via SpecLeap.
 
 ## Critical Rules
 
 1. **NEVER write code without a spec first.** If no spec exists, create one with `openspec new`.
 2. **NEVER skip the approval step.** Present spec/proposal and wait for confirmation before implementing.
 3. **NEVER hardcode values.** Everything configurable goes in env/config files.
-4. **ALWAYS link commits to specs and Jira tickets.**
+4. **ALWAYS link commits to specs and Asana tasks.**
 
 ## Workflow (mandatory)
 
@@ -21,7 +21,6 @@ SPEC → APPROVE → CODE → TEST → REVIEW → SHIP
 - `openspec apply CHANGE-XXX` — Implement approved proposal
 - `openspec verify CHANGE-XXX` — Run tests + verify spec
 - `openspec status` — List active proposals
-- `openspec jira ls` — List open Jira issues
 
 ## Before writing any code:
 

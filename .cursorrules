@@ -30,7 +30,7 @@ Primero la especificación, luego el código. Nunca al revés.
 ## Commits
 Formato: `tipo(alcance): descripción en español`
 Tipos: feat, fix, refactor, docs, test, chore, style, perf
-Incluir: refs a Jira y Spec
+Incluir: refs a Asana y Spec
 
 ## Testing Report (OBLIGATORIO)
 Cada feature documenta:

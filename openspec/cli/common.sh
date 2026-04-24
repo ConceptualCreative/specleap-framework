@@ -153,10 +153,10 @@ git_has_changes() {
     ! git_is_clean
 }
 
-# Jira integration helpers
-parse_jira_key() {
+# Ticket integration helpers
+parse_ticket_id() {
     local text="$1"
-    if [[ $text =~ ([A-Z]+-[0-9]+) ]]; then
+    if [[ $text =~ ([a-zA-Z0-9-]+-[0-9]+) ]]; then
         echo "${BASH_REMATCH[1]}"
     fi
 }

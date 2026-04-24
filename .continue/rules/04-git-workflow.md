@@ -25,7 +25,7 @@ tipo(alcance): descripción corta en español
 - Tests añadidos/modificados
 
 ## Refs
-- Jira: PROJ-XXX
+- Asana: [proyecto]-XXX
 - Spec: openspec/specs/functional/FXXX-nombre.spec.md
 ```
 
@@ -45,13 +45,13 @@ tipo(alcance): descripción corta en español
 ## Branch Naming
 
 ```
-tipo/JIRA-XXX-descripcion-corta
+tipo/[proyecto]-XXX-descripcion-corta
 ```
 
 Ejemplos:
-- `feat/PROJ-123-user-authentication`
-- `fix/PROJ-456-login-redirect`
-- `refactor/PROJ-789-cleanup-utils`
+- `feat/app-tienda-23-user-authentication`
+- `fix/app-tienda-24-login-redirect`
+- `refactor/app-tienda-25-cleanup-utils`
 
 ## Reglas
 

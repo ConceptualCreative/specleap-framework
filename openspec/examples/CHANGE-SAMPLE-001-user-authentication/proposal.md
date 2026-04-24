@@ -7,7 +7,7 @@
 | Estado | completed |
 | Autor | SpecLeap Contributor |
 | Prioridad | high |
-| Jira | PROJ-123 |
+| Ticket | app-tienda-23 |
 
 ## Resumen Ejecutivo
 

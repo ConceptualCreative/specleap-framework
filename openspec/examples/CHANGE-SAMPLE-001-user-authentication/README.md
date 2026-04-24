@@ -52,7 +52,7 @@ openspec enrich "Como usuario quiero hacer login" \
 ```bash
 openspec new --auto "Implementar autenticación JWT" \
   --from 01-refined-user-story.md \
-  --jira PROJ-123 \
+  --ticket app-tienda-23 \
   --priority high
 ```
 
@@ -313,7 +313,7 @@ Puedes sustituir con:
    - `CHANGE-BE-001` (Backend)
    - `CHANGE-INFRA-001` (Infraestructura)
 
-2. **Jira integration:**
+2. **Ticket integration:**
    - Vincular `CHANGE-XXX` con Epics/Stories
    - Sincronizar estados
 
