@@ -1,0 +1,831 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "total_questions": 58,
+    "checkpoint_interval": 10,
+    "description": "Interactive questionnaire to generate CONTRATO.md in SpecLeap"
+  },
+  "questions": [
+    {
+      "id": "project.type",
+      "number": 1,
+      "section": "Project Type",
+      "text": "What kind of project is this?",
+      "type": "select",
+      "options": [
+        "nuevo",
+        "existente"
+      ],
+      "required": true,
+      "help": "nuevo = from scratch | existente = adopt a legacy project into SpecLeap",
+      "example": "nuevo"
+    },
+    {
+      "id": "project.path",
+      "number": 2,
+      "section": "Project Type",
+      "text": "Path to the existing project?",
+      "type": "string",
+      "required": false,
+      "skip_if": {
+        "project.type": "nuevo"
+      },
+      "help": "Absolute or relative path to the legacy project directory",
+      "example": "/Users/me/my-legacy-project"
+    },
+    {
+      "id": "project.name",
+      "number": 3,
+      "section": "Project Information",
+      "text": "Project name? (slug-style: lowercase, numbers and hyphens only)",
+      "type": "string",
+      "validation": {
+        "pattern": "^[a-z0-9-]+$",
+        "min_length": 3,
+        "max_length": 50
+      },
+      "required": true,
+      "default": null,
+      "help": "Examples: my-online-store, rest-users-api, admin-dashboard",
+      "example": "my-project"
+    },
+    {
+      "id": "project.display_name",
+      "number": 4,
+      "section": "Project Information",
+      "text": "Full display name?",
+      "type": "string",
+      "validation": {
+        "min_length": 3,
+        "max_length": 100
+      },
+      "required": true,
+      "default": null,
+      "help": "The name users will see. Can have uppercase, spaces and special characters.",
+      "example": "My Awesome Project"
+    },
+    {
+      "id": "project.responsible",
+      "number": 5,
+      "section": "Project Information",
+      "text": "Who owns this project?",
+      "type": "string",
+      "required": true,
+      "default": null,
+      "help": "Name of the product owner, tech lead or main person in charge.",
+      "example": "Jane Doe"
+    },
+    {
+      "id": "identity.objective",
+      "number": 6,
+      "section": "Project Identity",
+      "text": "What does this project do? (1-2 sentences, max 200 characters)",
+      "type": "text",
+      "validation": {
+        "max_length": 200
+      },
+      "required": true,
+      "help": "Brief description of the main purpose.",
+      "example": "E-commerce platform for selling artisan products with inventory management and online payments"
+    },
+    {
+      "id": "identity.problem_solved",
+      "number": 7,
+      "section": "Project Identity",
+      "text": "What problem does it solve?",
+      "type": "text",
+      "validation": {
+        "max_length": 300
+      },
+      "required": true,
+      "help": "The pain point or need your project addresses.",
+      "example": "Artisans have no easy way to sell online without technical knowledge or high costs"
+    },
+    {
+      "id": "identity.target_audience",
+      "number": 8,
+      "section": "Project Identity",
+      "text": "Who is the target user?",
+      "type": "select",
+      "options": [
+        "personal",
+        "team",
+        "public",
+        "niche"
+      ],
+      "required": true,
+      "help": "personal = just you | team = your team | public = anyone | niche = specific audience",
+      "example": "public"
+    },
+    {
+      "id": "identity.competitors",
+      "number": 9,
+      "section": "Project Identity",
+      "text": "References or competitors? (optional, comma-separated)",
+      "type": "string",
+      "required": false,
+      "default": "",
+      "help": "Similar products that inspire you.",
+      "example": "Shopify, WooCommerce, Etsy"
+    },
+    {
+      "id": "stack.backend.framework",
+      "number": 10,
+      "section": "Tech Stack — Backend",
+      "text": "Backend framework?",
+      "type": "select",
+      "options": [
+        "laravel",
+        "nodejs",
+        "python",
+        "rails",
+        "django",
+        "otro"
+      ],
+      "required": true,
+      "help": "Main server-side framework.",
+      "example": "laravel"
+    },
+    {
+      "id": "stack.backend.language",
+      "number": 11,
+      "section": "Tech Stack — Backend",
+      "text": "Backend language and version?",
+      "type": "string",
+      "required": true,
+      "help": "Examples: PHP 8.3, TypeScript, Python 3.11, Ruby 3.x",
+      "example": "PHP 8.3",
+      "auto_suggest": {
+        "laravel": "PHP 8.3",
+        "nodejs": "TypeScript",
+        "python": "Python 3.11",
+        "django": "Python 3.11",
+        "rails": "Ruby 3.2"
+      }
+    },
+    {
+      "id": "stack.backend.version",
+      "number": 12,
+      "section": "Tech Stack — Backend",
+      "text": "Backend framework version?",
+      "type": "string",
+      "required": true,
+      "help": "Specific framework version.",
+      "example": "11.x",
+      "auto_suggest": {
+        "laravel": "11.x",
+        "nodejs": "20.x",
+        "python": "3.11",
+        "django": "5.x",
+        "rails": "7.x"
+      }
+    },
+    {
+      "id": "stack.database.engine",
+      "number": 13,
+      "section": "Tech Stack — Database",
+      "text": "Database engine?",
+      "type": "select",
+      "options": [
+        "postgresql",
+        "mysql",
+        "mongodb",
+        "sqlite",
+        "otro"
+      ],
+      "required": true,
+      "help": "Main database for the project.",
+      "example": "postgresql"
+    },
+    {
+      "id": "stack.database.version",
+      "number": 14,
+      "section": "Tech Stack — Database",
+      "text": "Database version?",
+      "type": "string",
+      "required": true,
+      "help": "Specific version.",
+      "example": "16.x",
+      "auto_suggest": {
+        "postgresql": "16.x",
+        "mysql": "8.0",
+        "mongodb": "7.x",
+        "sqlite": "3.x"
+      }
+    },
+    {
+      "id": "stack.frontend.framework",
+      "number": 15,
+      "section": "Tech Stack — Frontend",
+      "text": "Frontend framework?",
+      "type": "select",
+      "options": [
+        "react",
+        "vue",
+        "angular",
+        "svelte",
+        "nextjs",
+        "ninguno"
+      ],
+      "required": true,
+      "help": "ninguno = backend/API only without visual interface.",
+      "example": "react"
+    },
+    {
+      "id": "stack.frontend.language",
+      "number": 16,
+      "section": "Tech Stack — Frontend",
+      "text": "Frontend language?",
+      "type": "select",
+      "options": [
+        "typescript",
+        "javascript"
+      ],
+      "required": false,
+      "skip_if": {
+        "stack.frontend.framework": "none"
+      },
+      "help": "TypeScript is recommended for medium/large projects.",
+      "example": "typescript"
+    },
+    {
+      "id": "stack.frontend.build_tool",
+      "number": 17,
+      "section": "Tech Stack — Frontend",
+      "text": "Frontend build tool?",
+      "type": "select",
+      "options": [
+        "vite",
+        "webpack",
+        "parcel",
+        "esbuild"
+      ],
+      "required": false,
+      "skip_if": {
+        "stack.frontend.framework": "none"
+      },
+      "help": "Vite is the fastest and most modern (recommended).",
+      "example": "vite"
+    },
+    {
+      "id": "stack.frontend.ui_library",
+      "number": 18,
+      "section": "Tech Stack — Frontend",
+      "text": "UI/CSS library?",
+      "type": "select",
+      "options": [
+        "tailwind",
+        "mui",
+        "antd",
+        "bootstrap",
+        "chakra",
+        "custom"
+      ],
+      "required": false,
+      "skip_if": {
+        "stack.frontend.framework": "none"
+      },
+      "help": "Tailwind is utility-first and very popular today.",
+      "example": "tailwind"
+    },
+    {
+      "id": "stack.devops.hosting",
+      "number": 19,
+      "section": "Tech Stack — DevOps",
+      "text": "Where will the project be hosted?",
+      "type": "select",
+      "options": [
+        "aws",
+        "digitalocean",
+        "hostinger",
+        "vercel",
+        "railway",
+        "local",
+        "otro"
+      ],
+      "required": true,
+      "help": "Hosting/cloud provider.",
+      "example": "digitalocean"
+    },
+    {
+      "id": "stack.devops.ci_cd",
+      "number": 20,
+      "section": "Tech Stack — DevOps",
+      "text": "CI/CD?",
+      "type": "select",
+      "options": [
+        "github-actions",
+        "gitlab-ci",
+        "jenkins",
+        "ninguno"
+      ],
+      "required": true,
+      "help": "Continuous integration and automated deployment system.",
+      "example": "github-actions"
+    },
+    {
+      "id": "stack.devops.containers",
+      "number": 21,
+      "section": "Tech Stack — DevOps",
+      "text": "Will you use containers?",
+      "type": "select",
+      "options": [
+        "docker",
+        "kubernetes",
+        "ninguno"
+      ],
+      "required": true,
+      "help": "Docker for development, Kubernetes for scalable production.",
+      "example": "docker"
+    },
+    {
+      "id": "features.core",
+      "number": 22,
+      "section": "Core Features",
+      "text": "List of main features (comma-separated, min 1, max 10)",
+      "type": "array",
+      "validation": {
+        "min_items": 1,
+        "max_items": 10,
+        "separator": ","
+      },
+      "required": true,
+      "help": "The ESSENTIAL features the MVP MUST have.",
+      "example": "User authentication, Dashboard, Product management, Shopping cart, Checkout"
+    },
+    {
+      "id": "features.secondary",
+      "number": 23,
+      "section": "Core Features",
+      "text": "Secondary features (nice-to-have, optional, comma-separated)",
+      "type": "array",
+      "validation": {
+        "min_items": 0,
+        "max_items": 10,
+        "separator": ","
+      },
+      "required": false,
+      "default": [],
+      "help": "Desirable but non-critical features for the MVP.",
+      "example": "Live chat, Review system, Personalized recommendations"
+    },
+    {
+      "id": "features.auth.enabled",
+      "number": 24,
+      "section": "User System",
+      "text": "Does it require user authentication?",
+      "type": "boolean",
+      "required": true,
+      "help": "Should users be able to sign up and log in?",
+      "example": "yes"
+    },
+    {
+      "id": "features.auth.methods",
+      "number": 25,
+      "section": "User System",
+      "text": "Authentication methods (comma-separated)",
+      "type": "multiselect",
+      "options": [
+        "email_password",
+        "oauth_google",
+        "oauth_github",
+        "oauth_facebook",
+        "magic_link"
+      ],
+      "skip_if": {
+        "features.auth.enabled": false
+      },
+      "required": false,
+      "help": "email_password is the minimum. OAuth adds social login.",
+      "example": "email_password, oauth_google"
+    },
+    {
+      "id": "features.auth.two_factor",
+      "number": 26,
+      "section": "User System",
+      "text": "Two-factor authentication (2FA)?",
+      "type": "boolean",
+      "skip_if": {
+        "features.auth.enabled": false
+      },
+      "required": false,
+      "default": false,
+      "help": "Extra security via SMS code or authenticator app.",
+      "example": "no"
+    },
+    {
+      "id": "users.registration",
+      "number": 27,
+      "section": "User System",
+      "text": "Can users register themselves?",
+      "type": "boolean",
+      "required": true,
+      "help": "If false, users must be created manually by an admin.",
+      "example": "yes"
+    },
+    {
+      "id": "users.roles",
+      "number": 28,
+      "section": "User System",
+      "text": "User roles (comma-separated)",
+      "type": "array",
+      "validation": {
+        "min_items": 1,
+        "max_items": 10,
+        "separator": ","
+      },
+      "required": true,
+      "help": "Types of users with different permissions.",
+      "example": "admin, user, guest"
+    },
+    {
+      "id": "features.admin_panel.enabled",
+      "number": 29,
+      "section": "Admin Panel",
+      "text": "Admin panel?",
+      "type": "boolean",
+      "required": true,
+      "help": "Interface to manage users, content and configuration.",
+      "example": "yes"
+    },
+    {
+      "id": "features.admin_panel.level",
+      "number": 30,
+      "section": "Admin Panel",
+      "text": "Admin panel scope",
+      "type": "select",
+      "options": [
+        "completo",
+        "básico",
+        "ninguno"
+      ],
+      "skip_if": {
+        "features.admin_panel.enabled": false
+      },
+      "required": false,
+      "help": "completo = full CRUD | básico = view-only | ninguno = no panel",
+      "example": "completo"
+    },
+    {
+      "id": "features.file_uploads.enabled",
+      "number": 31,
+      "section": "File Uploads",
+      "text": "File uploads (images, documents, etc.)?",
+      "type": "boolean",
+      "required": true,
+      "help": "Can users upload files?",
+      "example": "yes"
+    },
+    {
+      "id": "features.file_uploads.storage",
+      "number": 32,
+      "section": "File Uploads",
+      "text": "Where are files stored?",
+      "type": "select",
+      "options": [
+        "local",
+        "s3",
+        "cloudinary",
+        "otro"
+      ],
+      "skip_if": {
+        "features.file_uploads.enabled": false
+      },
+      "required": false,
+      "help": "local = on the server | s3/cloudinary = cloud storage",
+      "example": "s3"
+    },
+    {
+      "id": "features.payments.enabled",
+      "number": 33,
+      "section": "Payments",
+      "text": "Payment system?",
+      "type": "boolean",
+      "required": true,
+      "help": "Will users pay inside the platform?",
+      "example": "yes"
+    },
+    {
+      "id": "features.payments.providers",
+      "number": 34,
+      "section": "Payments",
+      "text": "Payment providers (comma-separated)",
+      "type": "multiselect",
+      "options": [
+        "stripe",
+        "paypal",
+        "mercadopago",
+        "redsys",
+        "otro"
+      ],
+      "skip_if": {
+        "features.payments.enabled": false
+      },
+      "required": false,
+      "help": "Stripe is the most widely used and complete.",
+      "example": "stripe, paypal"
+    },
+    {
+      "id": "features.notifications.email",
+      "number": 35,
+      "section": "Notifications",
+      "text": "Email notifications?",
+      "type": "boolean",
+      "required": true,
+      "help": "Automated emails (welcome, password reset, etc.).",
+      "example": "yes"
+    },
+    {
+      "id": "features.notifications.push",
+      "number": 36,
+      "section": "Notifications",
+      "text": "Push notifications?",
+      "type": "boolean",
+      "required": true,
+      "help": "Browser or mobile app notifications.",
+      "example": "no"
+    },
+    {
+      "id": "features.notifications.in_app",
+      "number": 37,
+      "section": "Notifications",
+      "text": "In-app notifications?",
+      "type": "boolean",
+      "required": true,
+      "help": "Notifications inside the interface (bell icon with counter).",
+      "example": "yes"
+    },
+    {
+      "id": "design.visual_style",
+      "number": 38,
+      "section": "Design",
+      "text": "Visual style",
+      "type": "select",
+      "options": [
+        "minimal",
+        "modern",
+        "professional",
+        "creative",
+        "playful"
+      ],
+      "required": true,
+      "help": "Overall aesthetic of the interface.",
+      "example": "modern"
+    },
+    {
+      "id": "design.primary_color",
+      "number": 39,
+      "section": "Design",
+      "text": "Primary color (hex code, e.g. #3B82F6)",
+      "type": "string",
+      "validation": {
+        "pattern": "^#[0-9A-Fa-f]{6}$"
+      },
+      "required": false,
+      "default": "#3B82F6",
+      "help": "Main brand color (buttons, links, etc.).",
+      "example": "#3B82F6"
+    },
+    {
+      "id": "design.dark_mode",
+      "number": 40,
+      "section": "Design",
+      "text": "Dark mode?",
+      "type": "boolean",
+      "required": true,
+      "help": "Alternative dark theme.",
+      "example": "no"
+    },
+    {
+      "id": "design.responsive",
+      "number": 41,
+      "section": "Design",
+      "text": "Responsive (mobile/tablet/desktop)?",
+      "type": "boolean",
+      "required": true,
+      "help": "Adapts to all screen sizes.",
+      "example": "yes"
+    },
+    {
+      "id": "architecture.pattern",
+      "number": 42,
+      "section": "Architecture",
+      "text": "Architecture pattern",
+      "type": "select",
+      "options": [
+        "mvc",
+        "ddd",
+        "clean",
+        "hexagonal",
+        "otro"
+      ],
+      "required": true,
+      "help": "mvc = Model-View-Controller (Laravel default) | ddd = Domain-Driven Design",
+      "example": "mvc"
+    },
+    {
+      "id": "architecture.separation",
+      "number": 43,
+      "section": "Architecture",
+      "text": "Backend/frontend separation",
+      "type": "select",
+      "options": [
+        "monolith",
+        "separated",
+        "microservices"
+      ],
+      "required": true,
+      "help": "monolith = all together | separated = API + frontend separated | microservices = independent services",
+      "example": "separated"
+    },
+    {
+      "id": "deployment.ssl",
+      "number": 44,
+      "section": "Deployment",
+      "text": "Mandatory HTTPS?",
+      "type": "boolean",
+      "required": true,
+      "help": "Always recommended for production.",
+      "example": "yes"
+    },
+    {
+      "id": "deployment.custom_domain",
+      "number": 45,
+      "section": "Deployment",
+      "text": "Custom domain (optional)",
+      "type": "string",
+      "required": false,
+      "default": "",
+      "help": "Example: www.mystore.com",
+      "example": "www.myproject.com"
+    },
+    {
+      "id": "deployment.environments",
+      "number": 46,
+      "section": "Deployment",
+      "text": "Deployment environments (comma-separated)",
+      "type": "array",
+      "validation": {
+        "min_items": 1,
+        "max_items": 5,
+        "separator": ","
+      },
+      "required": true,
+      "help": "Typically: development, staging, production",
+      "example": "development, staging, production"
+    },
+    {
+      "id": "security.level",
+      "number": 47,
+      "section": "Security",
+      "text": "Security level",
+      "type": "select",
+      "options": [
+        "básico",
+        "medio",
+        "alto"
+      ],
+      "required": true,
+      "help": "básico = standard | medio = + auditing | alto = + end-to-end encryption",
+      "example": "medio"
+    },
+    {
+      "id": "security.gdpr_compliant",
+      "number": 48,
+      "section": "Security",
+      "text": "GDPR/RGPD compliance?",
+      "type": "boolean",
+      "required": true,
+      "help": "Required if you have users in Europe.",
+      "example": "yes"
+    },
+    {
+      "id": "security.sensitive_data",
+      "number": 49,
+      "section": "Security",
+      "text": "Handles sensitive data (medical, financial, etc.)?",
+      "type": "boolean",
+      "required": true,
+      "help": "Requires extra security and regulatory compliance.",
+      "example": "no"
+    },
+    {
+      "id": "performance.load_time_target",
+      "number": 50,
+      "section": "Performance",
+      "text": "Target load time",
+      "type": "select",
+      "options": [
+        "< 1s",
+        "< 2s",
+        "< 3s",
+        "no crítico"
+      ],
+      "required": true,
+      "help": "Initial load time of the main page.",
+      "example": "< 2s"
+    },
+    {
+      "id": "performance.api_response_target",
+      "number": 51,
+      "section": "Performance",
+      "text": "Target API response time",
+      "type": "select",
+      "options": [
+        "< 100ms",
+        "< 200ms",
+        "< 500ms",
+        "no crítico"
+      ],
+      "required": true,
+      "help": "Response time of critical endpoints.",
+      "example": "< 200ms"
+    },
+    {
+      "id": "performance.concurrent_users",
+      "number": 52,
+      "section": "Performance",
+      "text": "Expected concurrent users (number)",
+      "type": "number",
+      "validation": {
+        "min": 0,
+        "max": 1000000
+      },
+      "required": true,
+      "help": "How many simultaneous users you expect at launch.",
+      "example": "100"
+    },
+    {
+      "id": "testing.unit",
+      "number": 53,
+      "section": "Testing",
+      "text": "Unit tests?",
+      "type": "boolean",
+      "required": true,
+      "help": "Tests for individual functions and classes.",
+      "example": "yes"
+    },
+    {
+      "id": "testing.integration",
+      "number": 54,
+      "section": "Testing",
+      "text": "Integration tests?",
+      "type": "boolean",
+      "required": true,
+      "help": "Tests for interaction between modules/APIs.",
+      "example": "yes"
+    },
+    {
+      "id": "testing.e2e",
+      "number": 55,
+      "section": "Testing",
+      "text": "End-to-end tests?",
+      "type": "boolean",
+      "required": true,
+      "help": "Tests for full user flows (Playwright, Cypress).",
+      "example": "no"
+    },
+    {
+      "id": "testing.coverage_target",
+      "number": 56,
+      "section": "Testing",
+      "text": "Target test coverage (0-100%)",
+      "type": "number",
+      "validation": {
+        "min": 0,
+        "max": 100
+      },
+      "required": false,
+      "default": 0,
+      "help": "Percentage of code covered by tests. 80% is a good target.",
+      "example": "80"
+    },
+    {
+      "id": "constraints.time_limit",
+      "number": 57,
+      "section": "Constraints",
+      "text": "Delivery deadline (optional)",
+      "type": "string",
+      "required": false,
+      "default": "",
+      "help": "Examples: 2 weeks, 3 months, none",
+      "example": "3 months"
+    },
+    {
+      "id": "constraints.out_of_scope",
+      "number": 58,
+      "section": "Constraints",
+      "text": "Out of scope (things NOT included, comma-separated, optional)",
+      "type": "array",
+      "validation": {
+        "min_items": 0,
+        "max_items": 10,
+        "separator": ","
+      },
+      "required": false,
+      "default": [],
+      "help": "Features explicitly excluded from the project.",
+      "example": "Social media integration, Native mobile app, Multi-language support"
+    }
+  ]
+}

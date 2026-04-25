@@ -10,15 +10,20 @@ set -euo pipefail
 # ============================================================================
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-QUESTIONS_FILE="$SCRIPT_DIR/lib/questions.json"
 SESSIONS_DIR="$SCRIPT_DIR/.sessions"
 TEMPLATE_FILE="$SCRIPT_DIR/../proyectos/_template/CONTRATO.md"
 TEMPLATE_LEGACY_FILE="$SCRIPT_DIR/../proyectos/_template/CONTRATO-LEGACY.md"
 VALIDATE_LIB="$SCRIPT_DIR/lib/validate.sh"
 ANALYZE_SCRIPT="$SCRIPT_DIR/analyze-project.sh"
 
-# Cargar sistema i18n
+# Cargar sistema i18n (define SPECLEAP_LANG y la función t())
 source "$SCRIPT_DIR/../.specleap/i18n.sh"
+
+# Cuestionario localizado: questions.<lang>.json (es por defecto, fallback si EN no existe)
+QUESTIONS_FILE="$SCRIPT_DIR/lib/questions.${SPECLEAP_LANG}.json"
+if [ ! -f "$QUESTIONS_FILE" ]; then
+    QUESTIONS_FILE="$SCRIPT_DIR/lib/questions.es.json"
+fi
 
 # Cargar funciones de validación
 source "$VALIDATE_LIB"
