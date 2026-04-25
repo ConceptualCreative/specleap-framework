@@ -37,6 +37,7 @@ SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo
 - [IDEs Compatibles](#ides-compatibles)
 - [Dos Modos de Trabajo](#dos-modos-de-trabajo)
 - [Documentación](#documentación)
+- [Preguntas Frecuentes (FAQ)](#preguntas-frecuentes-faq)
 - [Licencia y Contribución](#licencia-y-contribución)
 
 ---
@@ -241,6 +242,19 @@ Ambos modos coexisten. Lo habitual es trabajar conversacionalmente en el día a 
 - `.agents/` — Definiciones de los tres roles especializados
 - `rules/` — Standards globales por tecnología
 - `proyectos/_template/CONTRATO.md` — Plantilla de contrato
+
+---
+
+## Preguntas Frecuentes (FAQ)
+
+Las preguntas habituales están respondidas en archivos dedicados:
+
+- **Español:** [docs/faq.es.md](docs/faq.es.md)
+- **English:** [docs/faq.en.md](docs/faq.en.md)
+
+Cubren temas como vendor lock-in, cuándo SDD se rentabiliza, compatibilidad con asistentes que no son Claude Code, escalado en equipo, y cómo SDD complementa (no reemplaza) a TDD/Agile/Scrum.
+
+Si tu pregunta no está cubierta, abre un issue en GitHub o escribe a `info@specleap.com`.
 
 ---
 
