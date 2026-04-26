@@ -8,7 +8,40 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec code-review — Request a CodeRabbit review
+
+USAGE:
+    openspec code-review <CHANGE-ID> [options]
+
+OPTIONS:
+    --create-pr         Create the Pull Request automatically
+    --base <branch>     Base branch for the PR (default: develop)
+    --draft             Create the PR as draft
+    -h, --help          Show help
+
+DESCRIPTION:
+    Requests a code review for a proposal:
+    1. Verifies tests pass (openspec verify)
+    2. Creates PR on GitHub (if --create-pr)
+    3. CodeRabbit reviews automatically
+    4. Generates a review report
+
+EXAMPLES:
+    openspec code-review CHANGE-001
+    openspec code-review CHANGE-002 --create-pr
+    openspec code-review CHANGE-003 --create-pr --draft
+
+PREREQUISITES:
+    - Feature branch created
+    - Tests passing
+    - GitHub CLI configured (gh)
+    - CodeRabbit active in the repo
+
+EOF
+    else
+        cat <<EOF
 openspec code-review — Solicitar review de CodeRabbit
 
 USAGE:
@@ -39,6 +72,7 @@ PREREQUISITES:
     - CodeRabbit activo en el repo
 
 EOF
+    fi
 }
 
 # Parse arguments

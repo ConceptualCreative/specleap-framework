@@ -8,7 +8,42 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec enrich — Refine a user story with AI
+
+USAGE:
+    openspec enrich <user-story> [options]
+    openspec enrich --file <path>
+
+OPTIONS:
+    --file <path>       Read user story from file
+    --output <path>     Save the result (default: STDOUT)
+    --model <model>     AI model to use (default: auto)
+    -h, --help          Show help
+
+DESCRIPTION:
+    Takes a plain user story and enriches it with:
+    - Technical context
+    - Detailed acceptance criteria
+    - Identified edge cases
+    - Complexity estimate
+
+EXAMPLE:
+    openspec enrich "As a user I want to log in"
+    openspec enrich --file stories/US-123.md --output stories/US-123-refined.md
+
+OUTPUT:
+    Refined user story in markdown with:
+    - Title and description
+    - Business context
+    - Acceptance criteria (GIVEN/WHEN/THEN)
+    - Additional use cases
+    - Initial estimate
+
+EOF
+    else
+        cat <<EOF
 openspec enrich — Refinar user story con AI
 
 USAGE:
@@ -41,6 +76,7 @@ OUTPUT:
     - Estimación inicial
 
 EOF
+    fi
 }
 
 # Parse arguments

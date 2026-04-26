@@ -8,7 +8,44 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec new — Create a new change proposal
+
+USAGE:
+    openspec new [CHANGE-ID] <title> [options]
+    openspec new --auto <title>
+
+OPTIONS:
+    --auto              Generate ID automatically
+    --from <file>       Create from a refined user story
+    --ticket <id>       Associate with a ticket ID (e.g. app-tienda-23)
+    --priority <level>  Priority (critical/high/medium/low)
+    --author <name>     Author (default: git user)
+    -h, --help          Show help
+
+DESCRIPTION:
+    Creates a new change proposal with the full structure:
+    - proposal.md (WHAT and WHY)
+    - design.md (HOW — technical)
+    - tasks.md (Tasks and Testing Report)
+    - specs/ (Delta specs if applicable)
+
+EXAMPLES:
+    openspec new CHANGE-001 "Implement JWT authentication"
+    openspec new --auto "Notification system" --ticket app-tienda-23
+    openspec new CHANGE-002 --from stories/auth-refined.md
+
+OUTPUT:
+    openspec/changes/CHANGE-XXX-name/
+    ├── proposal.md
+    ├── design.md
+    ├── tasks.md
+    └── specs/  (if applicable)
+
+EOF
+    else
+        cat <<EOF
 openspec new — Crear nueva propuesta de cambio
 
 USAGE:
@@ -43,6 +80,7 @@ OUTPUT:
     └── specs/  (si aplica)
 
 EOF
+    fi
 }
 
 # Parse arguments

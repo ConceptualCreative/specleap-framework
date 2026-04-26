@@ -8,7 +8,40 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec ff — Fast-forward: generate the complete proposal with AI
+
+USAGE:
+    openspec ff <CHANGE-ID> [options]
+
+OPTIONS:
+    --model <model>     AI model to use (default: auto)
+    --skip-proposal     Skip proposal.md generation
+    --skip-design       Skip design.md generation
+    --skip-tasks        Skip tasks.md generation
+    -h, --help          Show help
+
+DESCRIPTION:
+    Automatically generates with AI:
+    - Full proposal.md (if a base user story is available)
+    - Technical design.md (architecture, API, data)
+    - Broken-down tasks.md (tasks + estimates)
+
+    IMPORTANT: Review and adjust the AI output before applying.
+
+EXAMPLES:
+    openspec ff CHANGE-001
+    openspec ff CHANGE-002 --model anthropic/claude-sonnet-4
+    openspec ff CHANGE-003 --skip-tasks
+
+PREREQUISITES:
+    - Proposal created via: openspec new
+    - At least a proposal.md with basic context
+
+EOF
+    else
+        cat <<EOF
 openspec ff — Fast-forward: generar propuesta completa con AI
 
 USAGE:
@@ -39,6 +72,7 @@ PREREQUISITES:
     - Al menos proposal.md con contexto básico
 
 EOF
+    fi
 }
 
 # Parse arguments

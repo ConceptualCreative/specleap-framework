@@ -8,7 +8,40 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec report — Generate testing report
+
+USAGE:
+    openspec report [CHANGE-ID] [options]
+
+OPTIONS:
+    --format <fmt>      Output format (markdown|json|text)
+    --output <file>     Output file (default: STDOUT)
+    -h, --help          Show help
+
+DESCRIPTION:
+    Generates a Testing Report automatically from test results:
+    - Runs the test suite
+    - Parses results (PHPUnit, Jest, etc.)
+    - Generates the report in the specified format
+    - Updates tasks.md if a CHANGE-ID is provided
+
+EXAMPLES:
+    openspec report
+    openspec report CHANGE-001
+    openspec report --format json --output report.json
+    openspec report CHANGE-002 --format markdown
+
+OUTPUT (markdown):
+    ## Testing Report
+    | Suite | Tests | Passed | Failed | Coverage |
+    |-------|-------|--------|--------|----------|
+    | Unit | X | X | 0 | XX% |
+
+EOF
+    else
+        cat <<EOF
 openspec report — Generar testing report
 
 USAGE:
@@ -39,6 +72,7 @@ OUTPUT (markdown):
     | Unit | X | X | 0 | XX% |
 
 EOF
+    fi
 }
 
 # Parse arguments
