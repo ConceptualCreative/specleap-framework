@@ -8,7 +8,39 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec verify — Verify tests and specs
+
+USAGE:
+    openspec verify <CHANGE-ID> [options]
+
+OPTIONS:
+    --skip-tests        Skip test execution
+    --skip-specs        Skip spec validation
+    --coverage <min>    Minimum required coverage (default: 80)
+    -h, --help          Show help
+
+DESCRIPTION:
+    Verifies a proposal meets requirements before PR:
+    1. Runs the test suite (unit + integration)
+    2. Validates minimum coverage
+    3. Checks that specs are up to date
+    4. Generates Testing Report
+
+EXAMPLES:
+    openspec verify CHANGE-001
+    openspec verify CHANGE-002 --skip-specs
+    openspec verify CHANGE-003 --coverage 90
+
+OUTPUT:
+    - Testing Report updated in tasks.md
+    - Verification summary on STDOUT
+    - Exit code 0 if all OK, 1 if failures
+
+EOF
+    else
+        cat <<EOF
 openspec verify — Verificar tests y specs
 
 USAGE:
@@ -38,6 +70,7 @@ OUTPUT:
     - Exit code 0 si todo OK, 1 si hay fallos
 
 EOF
+    fi
 }
 
 # Parse arguments

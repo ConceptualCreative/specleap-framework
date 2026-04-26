@@ -8,7 +8,34 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec status — View proposal status
+
+USAGE:
+    openspec status [options]
+
+OPTIONS:
+    --all               Show all (including completed)
+    --state <state>     Filter by state
+    --format <fmt>      Format (table|json|list)
+    -h, --help          Show help
+
+DESCRIPTION:
+    Shows the current status of all active proposals.
+
+EXAMPLES:
+    openspec status
+    openspec status --all
+    openspec status --state in_progress
+    openspec status --format json
+
+STATES:
+    draft, review, approved, in_progress, testing, completed, archived, rejected
+
+EOF
+    else
+        cat <<EOF
 openspec status — Ver estado de propuestas
 
 USAGE:
@@ -33,6 +60,7 @@ STATES:
     draft, review, approved, in_progress, testing, completed, archived, rejected
 
 EOF
+    fi
 }
 
 # Parse arguments
