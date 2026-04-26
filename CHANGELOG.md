@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.7] - 2026-04-25
+
+### Added
+
+- **Bilingual setup questionnaire** (Phase 1 of i18n rollout) — `scripts/lib/questions.json` was split into `questions.es.json` and `questions.en.json`, both with all 58 questions. `generate-contrato.sh` now resolves the file at runtime from `SPECLEAP_LANG` (set by `setup.sh` from the user's choice or by `.specleap/config.json`), falling back to Spanish if the requested locale file is missing. Question IDs, numbers, options, validations and conditional logic (`skip_if`, `auto_suggest`) are preserved verbatim across both files for behavioural parity.
+- **Bilingual openspec CLI `--help` output** (Phase 2 of i18n rollout) — the `usage()` function in all nine subcommands (`apply`, `archive`, `code-review`, `enrich`, `ff`, `new`, `report`, `status`, `verify`) now prints English when `SPECLEAP_LANG=en`. A new `cli_lang()` helper in `openspec/cli/common.sh` resolves the active language from the env var, then `.specleap/config.json`, then falls back to `es`. Spanish output is byte-identical to the previous version, so existing users see no change.
+- **Bilingual FAQ** documenting the eight most common questions (vendor lock-in, SDD vs vibe coding, project size threshold, working without Claude Code, switching AI providers mid-project, Asana requirement, team scaling, relation to TDD/Agile/Scrum). Lives at `docs/faq.es.md` and `docs/faq.en.md`, linked from the README. Same content also rendered as a public section on `specleap.com/#faq` and `specleap.com/en/#faq`.
+- **Branch protection workflow** — new `pre-push` git hook installed alongside `pre-commit` by `scripts/install-git-hooks.sh`. The hook blocks direct pushes to `main` and `stage`, redirecting contributors to the documented `feature → stage → main` flow. Bypassable with `--no-verify` for emergencies. Companion document `CONTRIBUTING.md` describes the workflow, commit conventions and hook setup.
+
+### Notes
+
+- The `.specleap/i18n/{es,en}.json` runtime catalog and the `t()` helper in `.specleap/i18n.sh` continue to be used for short labels and runtime messages. The bilingual files added in this release (`questions.<lang>.json`) follow the project's separate-files convention for larger localised content.
+- The repository now has a `stage` branch as a permanent integration target; release tags are cut from `main` after a `stage → main` merge.
+- This release is the first to ship the openspec CLI with English `--help` to npm. Local i18n catalog (`.specleap/i18n/`) was already in the v2.1.5 tarball.
+
 ## [2.1.6] - 2026-04-24
 
 ### Changed
