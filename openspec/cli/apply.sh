@@ -8,7 +8,42 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec apply — Implement an approved proposal
+
+USAGE:
+    openspec apply <CHANGE-ID> [options]
+
+OPTIONS:
+    --no-branch         Do not create a Git branch
+    --base <branch>     Base branch (default: develop)
+    --dry-run           Simulate without making changes
+    -h, --help          Show help
+
+DESCRIPTION:
+    Implements an approved proposal:
+    1. Creates a Git branch (feat/CHANGE-ID-name)
+    2. Applies delta specs (if any)
+    3. Generates scaffolding from design.md
+    4. Updates status to "in_progress"
+
+    NOTE: Does not generate code automatically.
+          Use an AI assistant (Continue, Copilot) to implement against specs.
+
+EXAMPLES:
+    openspec apply CHANGE-001
+    openspec apply CHANGE-002 --base main
+    openspec apply CHANGE-003 --dry-run
+
+PREREQUISITES:
+    - Proposal completed and reviewed
+    - Git repository initialised
+    - Base branch already exists
+
+EOF
+    else
+        cat <<EOF
 openspec apply — Implementar propuesta aprobada
 
 USAGE:
@@ -41,6 +76,7 @@ PREREQUISITES:
     - Base branch existente
 
 EOF
+    fi
 }
 
 # Parse arguments

@@ -16,6 +16,29 @@ warning() { echo -e "${YELLOW}⚠${NC} $*"; }
 error() { echo -e "${RED}✗${NC} $*" >&2; }
 step() { echo -e "${CYAN}→${NC} $*"; }
 
+# Detectar idioma activo del usuario.
+# Orden de precedencia:
+#   1. Variable de entorno SPECLEAP_LANG (export SPECLEAP_LANG=en)
+#   2. Campo "language" en .specleap/config.json (escrito por setup.sh)
+#   3. Fallback: "es"
+# Devuelve por stdout el código de idioma ("es" o "en"). Pensado para usarse
+# como `if [ "$(cli_lang)" = "en" ]; then ... else ... fi` en heredocs largos.
+cli_lang() {
+    if [ -n "${SPECLEAP_LANG:-}" ]; then
+        echo "$SPECLEAP_LANG"
+        return
+    fi
+    if [ -f "${PROJECT_ROOT:-.}/.specleap/config.json" ]; then
+        local lang
+        lang=$(grep -o '"language": "[^"]*"' "${PROJECT_ROOT}/.specleap/config.json" 2>/dev/null | cut -d'"' -f4)
+        if [ -n "$lang" ]; then
+            echo "$lang"
+            return
+        fi
+    fi
+    echo "es"
+}
+
 # Validate project structure
 validate_project() {
     if [[ ! -f "$PROJECT_ROOT/openspec/config.yaml" ]]; then

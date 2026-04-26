@@ -8,7 +8,37 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 usage() {
-    cat <<EOF
+    if [ "$(cli_lang)" = "en" ]; then
+        cat <<EOF
+openspec archive — Archive a completed proposal
+
+USAGE:
+    openspec archive <CHANGE-ID> [options]
+
+OPTIONS:
+    --keep-branch       Do not delete the feature branch
+    --no-merge          Skip merge check (useful if already merged manually)
+    -h, --help          Show help
+
+DESCRIPTION:
+    Archives a completed and merged proposal:
+    1. Verifies the PR is merged
+    2. Updates status to "completed"
+    3. Deletes the feature branch (optional)
+    4. Generates a final report
+
+EXAMPLES:
+    openspec archive CHANGE-001
+    openspec archive CHANGE-002 --keep-branch
+    openspec archive CHANGE-003 --no-merge
+
+PREREQUISITES:
+    - PR merged into the base branch
+    - Code review approved
+
+EOF
+    else
+        cat <<EOF
 openspec archive — Archivar propuesta completada
 
 USAGE:
@@ -36,6 +66,7 @@ PREREQUISITES:
     - Code review aprobado
 
 EOF
+    fi
 }
 
 # Parse arguments
