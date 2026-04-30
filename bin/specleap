@@ -6,9 +6,19 @@ const fs = require('fs');
 const readline = require('readline');
 const os = require('os');
 
-// Nombre fijo de la carpeta destino. NO es configurable: si el usuario
-// quiere otro nombre, renombra la carpeta a posteriori con `mv`.
-const FOLDER_NAME = 'specleap-framework';
+// Nombre por defecto de la carpeta destino. El usuario puede cambiarlo
+// en el prompt; si pulsa Enter, se usa este valor.
+const DEFAULT_FOLDER_NAME = 'specleap-framework';
+
+// Validador de nombre de carpeta: caracteres seguros para sistemas de
+// archivos cross-platform (sin `/`, sin nulos, sin barras). Permite letras,
+// números, guiones, guiones bajos y puntos. No puede empezar con punto.
+function isValidFolderName(name) {
+  if (!name || name.length === 0) return false;
+  if (name.length > 100) return false;
+  if (name.startsWith('.')) return false;
+  return /^[A-Za-z0-9_][A-Za-z0-9_.\-]*$/.test(name);
+}
 
 // Directorio del paquete npm (donde están todos los archivos a copiar)
 const packageDir = path.join(__dirname, '..');
@@ -26,49 +36,104 @@ function resolveBasePath(input) {
   return path.resolve(process.cwd(), trimmed);
 }
 
-// Pregunta interactiva al usuario por la carpeta base.
-// Bilingüe en el prompt porque el idioma de SpecLeap se elige más tarde
-// dentro de setup.sh — aquí todavía no lo sabemos.
-function askBasePath(defaultBase) {
-  return new Promise((resolve) => {
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout
-    });
-
-    console.log('');
-    console.log('📁 ¿En qué carpeta base instalar SpecLeap?');
-    console.log('   Where do you want to install SpecLeap?');
-    console.log('');
-    console.log(`   Se creará / Will create: <base>/${FOLDER_NAME}`);
-    console.log(`   Default: ${defaultBase}`);
-    console.log('');
-    console.log('   Ejemplos / Examples:');
-    console.log('     ~/Downloads        →  ~/Downloads/specleap-framework');
-    console.log('     ~/Desktop/work     →  ~/Desktop/work/specleap-framework');
-    console.log('     .                  →  ./specleap-framework');
-    console.log('     (Enter)            →  default arriba');
-    console.log('');
-
-    rl.question('Carpeta base / Base folder: ', (answer) => {
-      rl.close();
-      resolve(resolveBasePath(answer));
-    });
+// Crea una interfaz readline reutilizable; cerramos al final del flujo.
+function createPrompt() {
+  return readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
   });
 }
 
-async function main() {
-  // Argumento CLI opcional: `npx specleap-framework@latest ~/Downloads`
-  const args = process.argv.slice(2);
-  const argBase = args.find((a) => !a.startsWith('-'));
+function ask(rl, question) {
+  return new Promise((resolve) => rl.question(question, (a) => resolve(a)));
+}
 
-  // Si no hay argumento, preguntar interactivamente con default = cwd
-  let basePath;
-  if (argBase) {
-    basePath = resolveBasePath(argBase);
-    console.log(`\n📁 Carpeta base: ${basePath}`);
-  } else {
-    basePath = await askBasePath(process.cwd());
+// Pregunta la carpeta base donde poner el proyecto. Bilingüe porque el
+// idioma de SpecLeap se elige después dentro de setup.sh.
+async function askBasePath(rl, defaultBase) {
+  console.log('');
+  console.log('📁 ¿En qué carpeta base instalar SpecLeap?');
+  console.log('   Where do you want to install SpecLeap?');
+  console.log('');
+  console.log(`   Default: ${defaultBase}`);
+  console.log('');
+  console.log('   Ejemplos / Examples:');
+  console.log('     ~/Downloads        →  ~/Downloads/<nombre>');
+  console.log('     ~/Desktop/work     →  ~/Desktop/work/<nombre>');
+  console.log('     .                  →  ./<nombre>');
+  console.log('     (Enter)            →  default arriba');
+  console.log('');
+
+  const answer = await ask(rl, 'Carpeta base / Base folder: ');
+  return resolveBasePath(answer);
+}
+
+// Pregunta el nombre de la carpeta. Default = "specleap-framework".
+// Reintenta si el nombre tiene caracteres inválidos.
+async function askFolderName(rl) {
+  console.log('');
+  console.log('📝 ¿Qué nombre quieres para la carpeta?');
+  console.log('   What name do you want for the folder?');
+  console.log('');
+  console.log(`   Default: ${DEFAULT_FOLDER_NAME}`);
+  console.log('   Permitido / Allowed: letras, números, guiones, guiones bajos, puntos');
+  console.log('   No permitido / Not allowed: espacios, "/", caracteres especiales');
+  console.log('');
+
+  while (true) {
+    const answer = await ask(rl, 'Nombre / Name: ');
+    const name = answer.trim();
+
+    // Enter → default
+    if (!name) return DEFAULT_FOLDER_NAME;
+
+    if (isValidFolderName(name)) return name;
+
+    console.log('');
+    console.log(`❌ Nombre inválido / Invalid name: "${name}"`);
+    console.log('   Usa solo letras, números, "-", "_" y "." (sin empezar con ".")');
+    console.log('   Use only letters, numbers, "-", "_" and "." (cannot start with ".")');
+    console.log('');
+  }
+}
+
+async function main() {
+  // Argumentos CLI opcionales:
+  //   npx specleap-framework@latest <carpeta-base> [<nombre>]
+  //   p.ej.  npx specleap-framework@latest ~/Downloads
+  //          npx specleap-framework@latest ~/Downloads mi-app
+  const args = process.argv.slice(2).filter((a) => !a.startsWith('-'));
+  const argBase = args[0];
+  const argName = args[1];
+
+  // Validar el nombre del argumento CLI antes de seguir
+  if (argName && !isValidFolderName(argName)) {
+    console.error(`\n❌ Nombre inválido / Invalid name: "${argName}"`);
+    console.error('   Usa solo letras, números, "-", "_" y "." (sin empezar con ".")');
+    console.error('   Use only letters, numbers, "-", "_" and "." (cannot start with ".")\n');
+    process.exit(1);
+  }
+
+  // Si hay argumentos CLI, no abrimos prompt; si faltan, preguntamos
+  let basePath, folderName;
+  const rl = (!argBase || !argName) ? createPrompt() : null;
+
+  try {
+    if (argBase) {
+      basePath = resolveBasePath(argBase);
+      console.log(`\n📁 Carpeta base: ${basePath}`);
+    } else {
+      basePath = await askBasePath(rl, process.cwd());
+    }
+
+    if (argName) {
+      folderName = argName;
+      console.log(`📝 Nombre de carpeta: ${folderName}`);
+    } else {
+      folderName = await askFolderName(rl);
+    }
+  } finally {
+    if (rl) rl.close();
   }
 
   // Verificar que la carpeta base existe (o se puede crear)
@@ -83,21 +148,20 @@ async function main() {
     }
   }
 
-  // Verificar que sea un directorio (no un archivo con ese nombre)
   const baseStat = fs.statSync(basePath);
   if (!baseStat.isDirectory()) {
     console.error(`\n❌ La ruta no es una carpeta / Path is not a directory: ${basePath}\n`);
     process.exit(1);
   }
 
-  // Construir el destino final: <basePath>/specleap-framework
-  const targetDir = path.join(basePath, FOLDER_NAME);
+  // Destino final: <basePath>/<folderName>
+  const targetDir = path.join(basePath, folderName);
 
   // No sobrescribir si ya existe
   if (fs.existsSync(targetDir)) {
     console.error(`\n❌ Ya existe / Already exists: ${targetDir}`);
-    console.error('   Elige otra carpeta base o elimina la existente.');
-    console.error('   Choose another base folder or delete the existing one.\n');
+    console.error('   Elige otra carpeta o nombre, o elimina la existente.');
+    console.error('   Choose another folder or name, or delete the existing one.\n');
     process.exit(1);
   }
 
