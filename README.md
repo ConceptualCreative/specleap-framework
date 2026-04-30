@@ -20,7 +20,7 @@
 
 SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 34 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
 
-**Versión actual:** 2.1.11 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
+**Versión actual:** 2.1.12 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
 
 ---
 
@@ -242,6 +242,41 @@ Ambos modos coexisten. Lo habitual es trabajar conversacionalmente en el día a 
 - `.agents/` — Definiciones de los tres roles especializados
 - `rules/` — Standards globales por tecnología
 - `proyectos/_template/CONTRATO.md` — Plantilla de contrato
+
+---
+
+## Convertir documentos a Markdown (opcional)
+
+Si tienes el brief de un cliente en PDF, user stories en Word, o specs antiguas en Excel, SpecLeap incluye un wrapper sobre [Microsoft markitdown](https://github.com/microsoft/markitdown) para convertirlos a Markdown que el framework pueda usar como contexto.
+
+**Instalación de markitdown** (dependencia opcional):
+
+```bash
+pip install markitdown
+# o, si usas uv:
+uv tool install markitdown
+```
+
+Requiere Python 3.10+. No es obligatorio: SpecLeap funciona perfectamente sin él. Solo lo necesitas si vas a alimentar archivos no-Markdown.
+
+**Uso:**
+
+```bash
+# Un archivo individual
+bash scripts/convert-docs.sh brief.pdf
+# → genera brief.md
+
+# Una carpeta entera (recursivo, max 3 niveles)
+bash scripts/convert-docs.sh ./briefings/
+# → convierte todos los pdf/docx/xlsx/pptx/html/csv/json/xml/epub que encuentre
+
+# Ayuda
+bash scripts/convert-docs.sh --help
+```
+
+Formatos soportados: **PDF, Word, PowerPoint, Excel, HTML, CSV, JSON, XML, EPub, imágenes (con OCR), audio (con transcripción)**.
+
+Si markitdown no está instalado, el script muestra un mensaje claro con las instrucciones de instalación y termina sin tocar nada.
 
 ---
 
