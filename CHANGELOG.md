@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.9] - 2026-04-30
+
+### Added
+
+- **Interactive base-folder prompt during `npx specleap-framework@latest`.** The installer now asks where to install before copying anything. Previously it dropped the `specleap-framework/` folder silently into the user's current working directory, leaving them unsure of the final location.
+
+#### How it works
+
+- `bin/specleap` (the entry point invoked by `npx`) now accepts an optional CLI argument with the base folder, e.g. `npx specleap-framework@latest ~/Downloads`. If the argument is omitted, an interactive bilingual prompt asks for the base folder, with the current working directory as default.
+- The folder name is **always** `specleap-framework` (not configurable). If the user wants a different name, they rename it after install with `mv`.
+- The base path supports `~`, `~/relative`, plain relative paths, and absolute paths. The resolved path is shown back to the user before copying.
+- If the resolved target already exists, the installer aborts with a clear bilingual message instead of silently overwriting.
+- The installer creates the base folder if it does not exist.
+
+### Changed
+
+- **Final summary of `setup.sh` now prints the absolute install path prominently.** Block at the end of the installer reads `📍 SpecLeap instalado en: <ruta>` (or `📍 SpecLeap installed at: <path>` in English). Reported by Styng during v2.1.8 testing — after a long setup, the path was effectively lost in the scrollback.
+- **Next-steps list now starts with `cd "<install_path>"`** so the user knows how to reach the project regardless of where they ran `npx` from.
+
+### Notes
+
+- Backwards compatible: existing scripts that depend on `setup.sh` running from the project root still work — the env var `SPECLEAP_INSTALL_PATH` is set by `bin/specleap` but `setup.sh` falls back to `pwd` if absent.
+- The folder-name decision (always `specleap-framework`) keeps documentation, generated paths and tutorials consistent across users.
+
 ## [2.1.8] - 2026-04-26
 
 ### Fixed
