@@ -167,22 +167,70 @@ else
     echo ""
 fi
 
-read -p "$(echo -e ${YELLOW}GitHub Token:${NC} )" GITHUB_TOKEN
-echo ""
+# Validación con reintentos: hasta 3 intentos antes de pedir abort/reintentar
+GITHUB_USER=""
+GITHUB_ATTEMPT=0
+GITHUB_MAX_ATTEMPTS=3
 
-if [ -z "$GITHUB_TOKEN" ]; then
-    echo -e "${RED}$MSG_ERROR GitHub token is required${NC}"
-    exit 1
-fi
+while [ -z "$GITHUB_USER" ]; do
+    GITHUB_ATTEMPT=$((GITHUB_ATTEMPT + 1))
 
-# Verificar token
-echo -ne "Verificando token... "
-GITHUB_USER=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user | grep -o '"login": "[^"]*' | cut -d'"' -f4)
+    read -p "$(echo -e ${YELLOW}GitHub Token:${NC} )" GITHUB_TOKEN
+    echo ""
 
-if [ -z "$GITHUB_USER" ]; then
-    echo -e "${RED}❌ Token inválido${NC}"
-    exit 1
-fi
+    if [ -z "$GITHUB_TOKEN" ]; then
+        if [ "$LANG" = "es" ]; then
+            echo -e "${RED}❌ Token vacío. Pega tu token de GitHub.${NC}"
+        else
+            echo -e "${RED}❌ Empty token. Paste your GitHub token.${NC}"
+        fi
+        echo ""
+        # No cuenta como intento si está vacío (probable typo / pegado mal)
+        GITHUB_ATTEMPT=$((GITHUB_ATTEMPT - 1))
+        continue
+    fi
+
+    # Verificar token contra la API de GitHub
+    echo -ne "Verificando token... "
+    GITHUB_USER=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user | grep -o '"login": "[^"]*' | cut -d'"' -f4)
+
+    if [ -z "$GITHUB_USER" ]; then
+        echo -e "${RED}❌ Token inválido${NC}"
+        echo ""
+
+        if [ "$GITHUB_ATTEMPT" -ge "$GITHUB_MAX_ATTEMPTS" ]; then
+            if [ "$LANG" = "es" ]; then
+                echo -e "${YELLOW}⚠️  Has fallado $GITHUB_MAX_ATTEMPTS veces.${NC}"
+                read -p "$(echo -e ${YELLOW}¿[R]eintentar o [C]ancelar instalación? [R/c]:${NC} )" RETRY_CHOICE
+            else
+                echo -e "${YELLOW}⚠️  You've failed $GITHUB_MAX_ATTEMPTS times.${NC}"
+                read -p "$(echo -e ${YELLOW}[R]etry or [C]ancel installation? [R/c]:${NC} )" RETRY_CHOICE
+            fi
+
+            if [[ "$RETRY_CHOICE" =~ ^[Cc]$ ]]; then
+                if [ "$LANG" = "es" ]; then
+                    echo -e "${RED}Instalación cancelada por el usuario.${NC}"
+                else
+                    echo -e "${RED}Installation cancelled by user.${NC}"
+                fi
+                exit 1
+            fi
+            # Reset contador para nueva ronda de 3 intentos
+            GITHUB_ATTEMPT=0
+            echo ""
+            continue
+        fi
+
+        if [ "$LANG" = "es" ]; then
+            echo "Intenta de nuevo (intento $((GITHUB_ATTEMPT + 1))/$GITHUB_MAX_ATTEMPTS)."
+            echo "Verifica que el token tenga los permisos: repo, workflow."
+        else
+            echo "Try again (attempt $((GITHUB_ATTEMPT + 1))/$GITHUB_MAX_ATTEMPTS)."
+            echo "Make sure the token has the scopes: repo, workflow."
+        fi
+        echo ""
+    fi
+done
 
 echo -e "${GREEN}✅ Token válido (Usuario: $GITHUB_USER)${NC}"
 echo ""
@@ -227,64 +275,112 @@ else
     echo ""
 fi
 
-read -p "$(echo -e ${YELLOW}Asana Token:${NC} )" ASANA_TOKEN
+# Validación con reintentos: hasta 3 intentos antes de pedir abort/reintentar
+ASANA_VALID=""
+ASANA_ATTEMPT=0
+ASANA_MAX_ATTEMPTS=3
+
+while [ -z "$ASANA_VALID" ]; do
+    ASANA_ATTEMPT=$((ASANA_ATTEMPT + 1))
+
+    read -p "$(echo -e ${YELLOW}Asana Token:${NC} )" ASANA_TOKEN
+    echo ""
+
+    if [ -z "$ASANA_TOKEN" ]; then
+        if [ "$LANG" = "es" ]; then
+            echo -e "${RED}❌ Token vacío. Pega tu token de Asana (empieza con '0/' o '1/' o '2/').${NC}"
+        else
+            echo -e "${RED}❌ Empty token. Paste your Asana token (starts with '0/' or '1/' or '2/').${NC}"
+        fi
+        echo ""
+        ASANA_ATTEMPT=$((ASANA_ATTEMPT - 1))
+        continue
+    fi
+
+    # Verificar token y obtener workspace
+    echo -ne "Verificando token Asana... "
+    ASANA_RESPONSE=$(curl -s -H "Authorization: Bearer $ASANA_TOKEN" https://app.asana.com/api/1.0/workspaces)
+
+    if echo "$ASANA_RESPONSE" | grep -q '"gid"'; then
+        echo -e "${GREEN}✅ Token válido${NC}"
+        ASANA_VALID="yes"
+    else
+        echo -e "${RED}❌ Token inválido${NC}"
+        echo ""
+
+        if [ "$ASANA_ATTEMPT" -ge "$ASANA_MAX_ATTEMPTS" ]; then
+            if [ "$LANG" = "es" ]; then
+                echo -e "${YELLOW}⚠️  Has fallado $ASANA_MAX_ATTEMPTS veces.${NC}"
+                read -p "$(echo -e ${YELLOW}¿[R]eintentar o [C]ancelar instalación? [R/c]:${NC} )" RETRY_CHOICE
+            else
+                echo -e "${YELLOW}⚠️  You've failed $ASANA_MAX_ATTEMPTS times.${NC}"
+                read -p "$(echo -e ${YELLOW}[R]etry or [C]ancel installation? [R/c]:${NC} )" RETRY_CHOICE
+            fi
+
+            if [[ "$RETRY_CHOICE" =~ ^[Cc]$ ]]; then
+                if [ "$LANG" = "es" ]; then
+                    echo -e "${RED}Instalación cancelada por el usuario.${NC}"
+                else
+                    echo -e "${RED}Installation cancelled by user.${NC}"
+                fi
+                exit 1
+            fi
+            ASANA_ATTEMPT=0
+            echo ""
+            continue
+        fi
+
+        if [ "$LANG" = "es" ]; then
+            echo "Intenta de nuevo (intento $((ASANA_ATTEMPT + 1))/$ASANA_MAX_ATTEMPTS)."
+            echo "Verifica que el token sea Personal Access Token de Asana."
+        else
+            echo "Try again (attempt $((ASANA_ATTEMPT + 1))/$ASANA_MAX_ATTEMPTS)."
+            echo "Make sure the token is an Asana Personal Access Token."
+        fi
+        echo ""
+    fi
+done
+
 echo ""
 
-if [ -z "$ASANA_TOKEN" ]; then
-    echo -e "${RED}$MSG_ERROR Asana token is required${NC}"
-    exit 1
-fi
-
-# Verificar token y obtener workspace
-echo -ne "Verificando token Asana... "
-ASANA_RESPONSE=$(curl -s -H "Authorization: Bearer $ASANA_TOKEN" https://app.asana.com/api/1.0/workspaces)
-
-if echo "$ASANA_RESPONSE" | grep -q '"gid"'; then
-    echo -e "${GREEN}✅ Token válido${NC}"
-    echo ""
-    
-    # Listar workspaces disponibles
-    if [ "$LANG" = "es" ]; then
-        echo "Workspaces disponibles:"
-    else
-        echo "Available workspaces:"
-    fi
-    echo ""
-    
-    # Extraer workspaces (simple parsing)
-    WORKSPACE_COUNT=0
-    while IFS= read -r line; do
-        if echo "$line" | grep -q '"gid"'; then
-            WORKSPACE_COUNT=$((WORKSPACE_COUNT + 1))
-            WS_GID=$(echo "$line" | grep -o '"gid":"[^"]*' | cut -d'"' -f4)
-            WS_NAME=$(echo "$ASANA_RESPONSE" | grep -A1 "\"gid\":\"$WS_GID\"" | grep '"name"' | grep -o '"name":"[^"]*' | cut -d'"' -f4)
-            echo "  $WORKSPACE_COUNT) $WS_NAME (ID: $WS_GID)"
-            
-            # Guardar primer workspace como default
-            if [ $WORKSPACE_COUNT -eq 1 ]; then
-                DEFAULT_WORKSPACE_ID="$WS_GID"
-            fi
-        fi
-    done < <(echo "$ASANA_RESPONSE" | grep '"gid"')
-    
-    echo ""
-    if [ "$LANG" = "es" ]; then
-        read -p "$(echo -e ${YELLOW}Workspace ID [Enter para usar el primero]:${NC} )" ASANA_WORKSPACE_INPUT
-    else
-        read -p "$(echo -e ${YELLOW}Workspace ID [Enter to use first]:${NC} )" ASANA_WORKSPACE_INPUT
-    fi
-    
-    if [ -z "$ASANA_WORKSPACE_INPUT" ]; then
-        ASANA_WORKSPACE_ID="$DEFAULT_WORKSPACE_ID"
-    else
-        ASANA_WORKSPACE_ID="$ASANA_WORKSPACE_INPUT"
-    fi
-    
-    echo -e "${GREEN}✅ Workspace seleccionado: $ASANA_WORKSPACE_ID${NC}"
+# Listar workspaces disponibles
+if [ "$LANG" = "es" ]; then
+    echo "Workspaces disponibles:"
 else
-    echo -e "${RED}❌ Token inválido${NC}"
-    exit 1
+    echo "Available workspaces:"
 fi
+echo ""
+
+# Extraer workspaces (simple parsing)
+WORKSPACE_COUNT=0
+while IFS= read -r line; do
+    if echo "$line" | grep -q '"gid"'; then
+        WORKSPACE_COUNT=$((WORKSPACE_COUNT + 1))
+        WS_GID=$(echo "$line" | grep -o '"gid":"[^"]*' | cut -d'"' -f4)
+        WS_NAME=$(echo "$ASANA_RESPONSE" | grep -A1 "\"gid\":\"$WS_GID\"" | grep '"name"' | grep -o '"name":"[^"]*' | cut -d'"' -f4)
+        echo "  $WORKSPACE_COUNT) $WS_NAME (ID: $WS_GID)"
+
+        # Guardar primer workspace como default
+        if [ $WORKSPACE_COUNT -eq 1 ]; then
+            DEFAULT_WORKSPACE_ID="$WS_GID"
+        fi
+    fi
+done < <(echo "$ASANA_RESPONSE" | grep '"gid"')
+
+echo ""
+if [ "$LANG" = "es" ]; then
+    read -p "$(echo -e ${YELLOW}Workspace ID [Enter para usar el primero]:${NC} )" ASANA_WORKSPACE_INPUT
+else
+    read -p "$(echo -e ${YELLOW}Workspace ID [Enter to use first]:${NC} )" ASANA_WORKSPACE_INPUT
+fi
+
+if [ -z "$ASANA_WORKSPACE_INPUT" ]; then
+    ASANA_WORKSPACE_ID="$DEFAULT_WORKSPACE_ID"
+else
+    ASANA_WORKSPACE_ID="$ASANA_WORKSPACE_INPUT"
+fi
+
+echo -e "${GREEN}✅ Workspace seleccionado: $ASANA_WORKSPACE_ID${NC}"
 
 echo ""
 sleep 1
