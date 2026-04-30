@@ -3,48 +3,137 @@
 const { spawn, execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
+const readline = require('readline');
+const os = require('os');
 
-// Directorio del paquete npm (donde están todos los archivos)
+// Nombre fijo de la carpeta destino. NO es configurable: si el usuario
+// quiere otro nombre, renombra la carpeta a posteriori con `mv`.
+const FOLDER_NAME = 'specleap-framework';
+
+// Directorio del paquete npm (donde están todos los archivos a copiar)
 const packageDir = path.join(__dirname, '..');
 
-// Directorio donde el usuario ejecutó npx (su directorio de trabajo)
-const userCwd = process.cwd();
-
-// Carpeta de destino
-const targetDir = path.join(userCwd, 'specleap-framework');
-
-console.log('\n🚀 Copiando SpecLeap Framework...\n');
-
-// Verificar si ya existe
-if (fs.existsSync(targetDir)) {
-  console.error(`❌ Error: El directorio '${targetDir}' ya existe.`);
-  console.error('   Por favor elimínalo primero o ejecuta desde otro directorio.\n');
-  process.exit(1);
+// Resolver una ruta base introducida por el usuario:
+// - "~" o "~/algo" → expande a $HOME
+// - relativa → se resuelve contra cwd
+// - absoluta → se queda igual
+function resolveBasePath(input) {
+  const trimmed = input.trim();
+  if (!trimmed) return process.cwd();
+  if (trimmed === '~') return os.homedir();
+  if (trimmed.startsWith('~/')) return path.join(os.homedir(), trimmed.slice(2));
+  if (path.isAbsolute(trimmed)) return trimmed;
+  return path.resolve(process.cwd(), trimmed);
 }
 
-// Crear directorio destino
-try {
-  fs.mkdirSync(targetDir, { recursive: true });
-  
-  // Copiar todos los archivos del paquete
-  execSync(`cp -R "${packageDir}"/* "${targetDir}"/`, { stdio: 'inherit' });
-  execSync(`cp -R "${packageDir}"/.??* "${targetDir}"/ 2>/dev/null || true`, { stdio: 'ignore' });
-  
-  console.log(`✅ Archivos copiados a: ${targetDir}\n`);
-  
-} catch (err) {
-  console.error('❌ Error copiando archivos:', err.message);
-  process.exit(1);
+// Pregunta interactiva al usuario por la carpeta base.
+// Bilingüe en el prompt porque el idioma de SpecLeap se elige más tarde
+// dentro de setup.sh — aquí todavía no lo sabemos.
+function askBasePath(defaultBase) {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    console.log('');
+    console.log('📁 ¿En qué carpeta base instalar SpecLeap?');
+    console.log('   Where do you want to install SpecLeap?');
+    console.log('');
+    console.log(`   Se creará / Will create: <base>/${FOLDER_NAME}`);
+    console.log(`   Default: ${defaultBase}`);
+    console.log('');
+    console.log('   Ejemplos / Examples:');
+    console.log('     ~/Downloads        →  ~/Downloads/specleap-framework');
+    console.log('     ~/Desktop/work     →  ~/Desktop/work/specleap-framework');
+    console.log('     .                  →  ./specleap-framework');
+    console.log('     (Enter)            →  default arriba');
+    console.log('');
+
+    rl.question('Carpeta base / Base folder: ', (answer) => {
+      rl.close();
+      resolve(resolveBasePath(answer));
+    });
+  });
 }
 
-// Ejecutar setup.sh DESDE el directorio copiado
-const setupPath = path.join(targetDir, 'setup.sh');
+async function main() {
+  // Argumento CLI opcional: `npx specleap-framework@latest ~/Downloads`
+  const args = process.argv.slice(2);
+  const argBase = args.find((a) => !a.startsWith('-'));
 
-const setup = spawn('bash', [setupPath], {
-  stdio: 'inherit',
-  cwd: targetDir
-});
+  // Si no hay argumento, preguntar interactivamente con default = cwd
+  let basePath;
+  if (argBase) {
+    basePath = resolveBasePath(argBase);
+    console.log(`\n📁 Carpeta base: ${basePath}`);
+  } else {
+    basePath = await askBasePath(process.cwd());
+  }
 
-setup.on('close', (code) => {
-  process.exit(code);
+  // Verificar que la carpeta base existe (o se puede crear)
+  if (!fs.existsSync(basePath)) {
+    try {
+      fs.mkdirSync(basePath, { recursive: true });
+      console.log(`📂 Carpeta base creada / Base folder created: ${basePath}`);
+    } catch (err) {
+      console.error(`\n❌ No se pudo crear la carpeta base / Could not create base folder: ${basePath}`);
+      console.error(`   ${err.message}\n`);
+      process.exit(1);
+    }
+  }
+
+  // Verificar que sea un directorio (no un archivo con ese nombre)
+  const baseStat = fs.statSync(basePath);
+  if (!baseStat.isDirectory()) {
+    console.error(`\n❌ La ruta no es una carpeta / Path is not a directory: ${basePath}\n`);
+    process.exit(1);
+  }
+
+  // Construir el destino final: <basePath>/specleap-framework
+  const targetDir = path.join(basePath, FOLDER_NAME);
+
+  // No sobrescribir si ya existe
+  if (fs.existsSync(targetDir)) {
+    console.error(`\n❌ Ya existe / Already exists: ${targetDir}`);
+    console.error('   Elige otra carpeta base o elimina la existente.');
+    console.error('   Choose another base folder or delete the existing one.\n');
+    process.exit(1);
+  }
+
+  console.log(`\n🚀 Copiando SpecLeap Framework a / Copying SpecLeap Framework to:`);
+  console.log(`   ${targetDir}\n`);
+
+  // Crear destino y copiar archivos
+  try {
+    fs.mkdirSync(targetDir, { recursive: true });
+    execSync(`cp -R "${packageDir}"/* "${targetDir}"/`, { stdio: 'inherit' });
+    execSync(`cp -R "${packageDir}"/.??* "${targetDir}"/ 2>/dev/null || true`, { stdio: 'ignore' });
+    console.log(`✅ Archivos copiados / Files copied\n`);
+  } catch (err) {
+    console.error('❌ Error copiando archivos / Error copying files:', err.message);
+    process.exit(1);
+  }
+
+  // Ejecutar setup.sh DESDE el directorio copiado, exportando la ruta
+  // para que setup.sh la use en el mensaje final.
+  const setupPath = path.join(targetDir, 'setup.sh');
+
+  const setup = spawn('bash', [setupPath], {
+    stdio: 'inherit',
+    cwd: targetDir,
+    env: {
+      ...process.env,
+      SPECLEAP_INSTALL_PATH: targetDir
+    }
+  });
+
+  setup.on('close', (code) => {
+    process.exit(code);
+  });
+}
+
+main().catch((err) => {
+  console.error('\n❌ Error inesperado / Unexpected error:', err.message);
+  process.exit(1);
 });
