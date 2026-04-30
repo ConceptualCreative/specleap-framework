@@ -254,6 +254,50 @@ El commit es rechazado. Corrige y vuelve a intentar.
 
 ---
 
+## 🔄 Herramientas Opcionales
+
+### markitdown — Convertir PDF/Word/Excel a Markdown
+
+Útil cuando un cliente te entrega el brief en PDF, las user stories en Word, o cualquier doc de referencia que quieras alimentar a SpecLeap como contexto. **No es obligatorio**: SpecLeap funciona sin él, sólo lo necesitas si trabajas con archivos no-Markdown.
+
+**Requisito previo:** Python 3.10 o superior.
+
+**Instalación:**
+
+```bash
+pip install markitdown
+# o, si prefieres uv:
+uv tool install markitdown
+```
+
+**Uso (vía wrapper de SpecLeap):**
+
+```bash
+# Un archivo
+bash scripts/convert-docs.sh ./brief-cliente.pdf
+
+# Una carpeta entera (max 3 niveles de profundidad)
+bash scripts/convert-docs.sh ./referencias/
+
+# Ayuda
+bash scripts/convert-docs.sh --help
+```
+
+**Formatos soportados:** PDF, Word (.docx), PowerPoint (.pptx), Excel (.xlsx), HTML, CSV, JSON, XML, EPub, imágenes (con OCR), audio (con transcripción).
+
+Si markitdown no está instalado, el script muestra el mensaje de instalación y termina con exit 1. No toca ningún archivo. Es seguro ejecutarlo aunque no lo tengas.
+
+**Caso típico de uso en SpecLeap:**
+
+1. Recibes el brief de un cliente en PDF.
+2. `bash scripts/convert-docs.sh ./brief.pdf` → genera `brief.md`.
+3. Lo pegas o referencias en el cuestionario al responder "¿Qué hace este proyecto?" / "¿Qué problema resuelve?".
+4. El AI tiene contexto rico desde el primer comando.
+
+Más info sobre markitdown: https://github.com/microsoft/markitdown
+
+---
+
 ## 📚 Documentación Completa
 
 ### Guías Detalladas
