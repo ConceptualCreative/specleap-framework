@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.11] - 2026-04-30
+
+### Fixed
+
+- **`setup.sh` was lying about how many Agent Skills get installed.** The "Paso 4/6" header correctly read "34 skills" but the description right below said "SpecLeap incluye 20 Agent Skills profesionales" with a four-bullet breakdown that summed to exactly 20 — leftover text from before the 14 TIER 2 skills were added in v2.1.0. Reported by Styng during v2.1.10 testing.
+
+#### What the user sees now
+
+- The full count (34) is stated up front.
+- TIER 1 (20) is broken down into its 6 actual categories: Consistency (3), Backend/Dev (7), Design (4), DevOps (3), Testing (2), Frontend (1).
+- TIER 2 (14) is broken down into its 8 actual categories: Design/Frontend advanced (3), Mobile (2), Security audits/GDPR (2), Testing advanced (2), Infrastructure (2), Brainstorming (1), PDF (1), Documentation (1).
+- Both blocks are localised (ES + EN) and visually grouped with bold tier headers so the user can scan them quickly before deciding whether to install.
+
+The numbers now match exactly what `scripts/install-skills.sh` actually downloads from upstream repos (obra/superpowers, jeffallan/claude-skills, anthropics/skills, vercel-labs/agent-*, alirezarezvani/claude-skills).
+
 ## [2.1.10] - 2026-04-30
 
 ### Added
