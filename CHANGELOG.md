@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.10] - 2026-04-30
+
+### Added
+
+- **Installer now also asks for the folder name**, on top of the base folder prompt added in v2.1.9. The user can keep `specleap-framework` (the default) or pick a custom name like `mi-app-tienda` straight from the prompt — no more renaming after install with `mv`.
+- **Two-argument CLI form:** `npx specleap-framework@latest <base> [<name>]`. Both positional. If `<name>` is omitted, the prompt asks. If `<base>` is also omitted, both prompts run interactively.
+- **Folder name validation:** allows letters, numbers, `-`, `_` and `.`, must not start with `.`, must be ≤100 chars. Invalid input on the prompt re-asks until valid; invalid input on the CLI argument aborts with a clear bilingual error and exit 1.
+
+### Changed
+
+- The "ya existe" abort message now reads "elige otra carpeta o nombre" (instead of just "elige otra carpeta base"), matching the new flexibility.
+
+### Notes
+
+- Backwards compatible with v2.1.9: same env var (`SPECLEAP_INSTALL_PATH`) handed off to `setup.sh`, same final summary block, same fallback behaviour for direct `bash setup.sh` invocations.
+- Decision rationale: keep the prompt-based flow (no native GUI dialog) so the installer keeps working over SSH, in CI/CD pipelines and inside containers — exactly the kind of environments where a Mac-only `osascript` dialog would have broken things.
+
 ## [2.1.9] - 2026-04-30
 
 ### Added
