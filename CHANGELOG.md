@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.8] - 2026-04-26
+
+### Fixed
+
+- **`setup.sh` token validation no longer aborts on the first wrong input.** Both the GitHub and the Asana token prompts now retry up to 3 times before asking the user whether to retry the round again or cancel the installation. Empty input doesn't consume an attempt (it's almost always a paste/typo, not a real failure). Reported by Styng during a manual test where pasting a partial Asana token killed the installer outright with no recovery path.
+
+#### Behavioural details
+
+- 3 attempts per round, then the installer prints the actual count and asks `[R]eintentar / [C]ancelar` (Spanish) or `[R]etry / [C]ancel` (English) depending on the chosen language.
+- Choosing `R` (default) resets the attempt counter and lets the user try 3 more times — useful when they realise mid-prompt that they grabbed the wrong token.
+- Choosing `C` exits cleanly with code 1 and the message `Instalación cancelada por el usuario` / `Installation cancelled by user`.
+- After every invalid token, a tip is printed reminding the user about required scopes (GitHub: `repo`, `workflow`) or token format (Asana: Personal Access Token).
+- Empty token input prints a localised reminder of the expected format and re-prompts without spending an attempt.
+
+No changes to the validation logic itself (still calls `https://api.github.com/user` and `https://app.asana.com/api/1.0/workspaces`), so behaviour with valid tokens is unchanged.
+
 ## [2.1.7] - 2026-04-25
 
 ### Added
