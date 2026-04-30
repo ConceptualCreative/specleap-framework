@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.12] - 2026-04-30
+
+### Added
+
+- **`scripts/convert-docs.sh`** — wrapper sobre [Microsoft markitdown](https://github.com/microsoft/markitdown) para convertir PDF, Word, PowerPoint, Excel, HTML, CSV, JSON, XML, EPub, imágenes (OCR) y audio (transcripción) a Markdown que el framework pueda usar como contexto. markitdown es una **dependencia opcional** (no se incluye en el tarball npm, no se instala automáticamente): si no está presente, el script muestra el mensaje de instalación (`pip install markitdown` o `uv tool install markitdown`) y termina con exit 1 sin tocar ningún archivo. Bilingüe ES/EN según `SPECLEAP_LANG`.
+- Acepta tanto un archivo individual (`brief.pdf` → `brief.md`) como una carpeta entera (recursivo, max 3 niveles, filtra por extensiones soportadas).
+- Documentación en `README.md` (sección "Convertir documentos a Markdown") y `SETUP.md` (sección "Herramientas Opcionales") con caso de uso típico (briefs de cliente, user stories exportadas, reference docs).
+
+### Notes
+
+- Decisión de diseño: markitdown se queda como opcional para no imponer Python 3.10+ a usuarios que no lo necesiten. SpecLeap solo requiere bash + node + git + curl + jq como antes.
+- Caso de uso típico: cliente entrega brief en PDF → `bash scripts/convert-docs.sh brief.pdf` → `brief.md` → se referencia desde el cuestionario inicial. El AI gana contexto rico desde el primer comando.
+
 ## [2.1.11] - 2026-04-30
 
 ### Fixed
