@@ -49,33 +49,82 @@ echo -e "${CYAN}${LINE}${NC}"
 echo ""
 
 # ============================================
-# PRE-CHECK: Aviso si la carpeta se llama "specleap-framework"
+# PASO 0: Nombre de la carpeta del proyecto
 # ============================================
-# Si el usuario clonó con `git clone <url>` (sin segundo argumento), la
-# carpeta se llamará "specleap-framework" por defecto. Le avisamos por si
-# quería otro nombre, antes de empezar el setup interactivo.
-# Solo aplica cuando setup.sh se ejecuta directamente (no via bin/specleap,
-# que ya pregunta nombre interactivamente). Detectamos este caso por
-# ausencia de la variable SPECLEAP_INSTALL_PATH (que solo la pone bin/specleap).
+# Solo se pregunta cuando setup.sh se ejecuta DIRECTAMENTE (`bash setup.sh`
+# tras `git clone …`). Si vienes desde `bin/specleap` (vía `npx`) ese script
+# ya preguntó nombre y ya creó la carpeta — entonces SPECLEAP_INSTALL_PATH
+# está set y saltamos este bloque para no preguntar dos veces.
+#
+# Si el usuario escribe un nombre distinto al actual, el script RENOMBRA
+# la carpeta in-place: `mv` del directorio actual al nuevo y `cd` al nuevo.
+# El proceso bash sigue vivo durante el rename porque se aferra al inode,
+# no al path.
 
-CURRENT_FOLDER_NAME="$(basename "$(pwd)")"
+CURRENT_PATH="$(pwd)"
+CURRENT_FOLDER_NAME="$(basename "$CURRENT_PATH")"
+PARENT_PATH="$(dirname "$CURRENT_PATH")"
 
-if [ -z "${SPECLEAP_INSTALL_PATH:-}" ] && [ "$CURRENT_FOLDER_NAME" = "specleap-framework" ]; then
-    echo "ℹ️  Esta carpeta se llama 'specleap-framework' (nombre por defecto de git clone)."
-    echo "   This folder is named 'specleap-framework' (git clone default)."
+is_valid_folder_name() {
+    local name="$1"
+    [ -z "$name" ] && return 1
+    [ ${#name} -gt 100 ] && return 1
+    [[ "$name" == .* ]] && return 1
+    [[ "$name" =~ ^[A-Za-z0-9_][A-Za-z0-9_.\-]*$ ]] && return 0
+    return 1
+}
+
+if [ -z "${SPECLEAP_INSTALL_PATH:-}" ]; then
+    echo "📝 ¿Cómo quieres que se llame la carpeta del proyecto?"
+    echo "   What name do you want for the project folder?"
     echo ""
-    echo "   Si querías otro nombre / If you wanted a different name:"
-    echo "     1) Cancela con Ctrl+C / Cancel with Ctrl+C"
-    echo "     2) Vuelve a ejecutar / Run again with:"
-    echo "        git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto"
-    echo "        cd mi-proyecto"
-    echo "        bash setup.sh"
+    echo "   Carpeta actual / Current: $CURRENT_FOLDER_NAME"
+    echo "   Default si pulsas Enter / Default on Enter: specleap-framework"
+    echo "   Permitido / Allowed: letras, números, '-', '_', '.'"
     echo ""
-    read -p "¿Continuar con el nombre 'specleap-framework'? / Continue with 'specleap-framework'? [S/n]: " CONTINUE_DEFAULT
-    if [[ "$CONTINUE_DEFAULT" =~ ^[Nn]$ ]]; then
+
+    while true; do
+        read -p "Nombre / Name: " RAW_NAME
+        # Si Enter vacío → default 'specleap-framework'
+        # Excepto si ya se llama así y el user pulsa Enter, mantenemos
+        if [ -z "$RAW_NAME" ]; then
+            NEW_NAME="specleap-framework"
+        else
+            NEW_NAME="$RAW_NAME"
+        fi
+
+        if is_valid_folder_name "$NEW_NAME"; then
+            break
+        fi
+
         echo ""
-        echo "Cancelado por el usuario / Cancelled by user."
-        exit 0
+        echo "❌ Nombre inválido / Invalid name: \"$NEW_NAME\""
+        echo "   Usa solo letras, números, '-', '_' y '.' (no empezar con '.')"
+        echo "   Use only letters, numbers, '-', '_' and '.' (cannot start with '.')"
+        echo ""
+    done
+
+    # Si el nombre coincide con el actual, no renombramos
+    if [ "$NEW_NAME" = "$CURRENT_FOLDER_NAME" ]; then
+        echo ""
+        echo "✅ Carpeta: $CURRENT_FOLDER_NAME"
+        SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
+    else
+        NEW_PATH="$PARENT_PATH/$NEW_NAME"
+        if [ -e "$NEW_PATH" ]; then
+            echo ""
+            echo "❌ Ya existe / Already exists: $NEW_PATH"
+            echo "   Se mantiene el nombre actual / Keeping current name: $CURRENT_FOLDER_NAME"
+            SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
+        else
+            mv "$CURRENT_PATH" "$NEW_PATH"
+            cd "$NEW_PATH"
+            CURRENT_PATH="$NEW_PATH"
+            CURRENT_FOLDER_NAME="$NEW_NAME"
+            SPECLEAP_INSTALL_PATH="$NEW_PATH"
+            echo ""
+            echo "✅ Carpeta renombrada / Folder renamed: $NEW_NAME"
+        fi
     fi
     echo ""
 fi
