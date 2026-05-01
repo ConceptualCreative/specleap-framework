@@ -20,7 +20,7 @@
 
 SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 34 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
 
-**Versión actual:** 2.1.12 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
+**Versión actual:** 2.1.13 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
 
 ---
 
@@ -44,23 +44,57 @@ SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo
 
 ## Instalación Rápida
 
-### Vía npm (recomendado)
+Hay dos formas de instalar SpecLeap. Elige según tu preferencia:
+
+### Opción A: Vía npm (instalación interactiva, recomendado)
 
 ```bash
 npx specleap-framework@latest
 ```
 
-### Desde GitHub
+El instalador te **pregunta dónde quieres la carpeta y con qué nombre** antes de copiar nada. Ideal si quieres un setup guiado paso a paso.
+
+Ejemplo de lo que verás:
+
+```
+📁 ¿En qué carpeta base instalar SpecLeap?
+   Default: /Users/tu-usuario/Desktop
+Carpeta base: ~/Downloads
+
+📝 ¿Qué nombre quieres para la carpeta?
+   Default: specleap-framework
+Nombre: mi-app-tienda
+
+→ Resultado: /Users/tu-usuario/Downloads/mi-app-tienda/
+```
+
+### Opción B: Vía git clone (control directo, sin prompts)
 
 ```bash
-git clone https://github.com/ConceptualCreative/specleap-framework.git
-cd specleap-framework
+git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
+cd mi-proyecto
 bash setup.sh
 ```
 
-El instalador interactivo solicita los tokens de GitHub y Asana, instala los 34 Agent Skills en `~/.skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
+Aquí **tú decides el nombre** pasándolo como segundo argumento de `git clone`. El setup arranca directo, sin preguntar carpeta/nombre porque ya estás dentro del repo donde quieres.
 
-**Requisitos previos:** Node.js ≥ 18, Git, Bash.
+Si haces `git clone <url>` sin segundo argumento, la carpeta se llamará `specleap-framework` (default de git). El setup te avisará por si querías otro nombre.
+
+### Diferencias rápidas
+
+| | Vía npm | Vía git clone |
+|---|---|---|
+| **Pregunta carpeta y nombre** | ✅ Sí, interactivo | ❌ No, lo decides con `cd` y `git clone <url> <nombre>` |
+| **Requiere Node.js** | ✅ Sí (≥ 18) | ⛔ No, solo Git + Bash |
+| **Trae los archivos** | npm los descarga | git los clona del repo |
+| **Ideal para** | Empezar rápido, no recordar el flujo de git | Devs que ya manejan git fluidamente |
+
+A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 34 Agent Skills en `~/.skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
+
+**Requisitos previos:**
+
+- Vía npm → Node.js ≥ 18, Git, Bash.
+- Vía git clone → Git, Bash.
 
 ---
 

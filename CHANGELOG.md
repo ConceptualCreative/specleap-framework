@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.13] - 2026-05-01
+
+### Fixed
+
+- **Confusion between the two install flows.** Reported by Styng during testing: with `git clone … && bash setup.sh`, the installer was not asking the carpeta-base / folder-name prompts that `bin/specleap` (the npx entry point) does ask. That looked like a regression but it's by design — the prompts live in `bin/specleap` (Node), not in `setup.sh` (bash). When the user clones with git they already chose where the code lives, and the second positional argument of `git clone` is the canonical way to set a custom folder name. The fix is making the difference obvious in docs and in runtime.
+
+#### Changes
+
+- `setup.sh` now prints a bilingual heads-up at the very start (before the language step) when the current folder is named `specleap-framework` (the `git clone` default) AND the script was invoked without `bin/specleap` having set `SPECLEAP_INSTALL_PATH`. The user gets a one-second pause, an explanation of how to clone with a custom name (`git clone <url> mi-proyecto`), and a [S/n] confirmation before continuing. If they cancel, the script exits 0 cleanly.
+- `README.md`: rewrote the "Instalación Rápida" section as two clearly-labeled options (Opción A: vía npx — interactive prompts; Opción B: vía git clone — direct, name controlled by `git clone <url> <nombre>`) plus a comparison table so the reader picks intentionally.
+- `SETUP.md`: replicated the same comparison upfront in the Quick Start section, with full examples for each path.
+
+### Notes
+
+- No code-path change in the actual installation logic. `bin/specleap` keeps its prompts; `setup.sh` runs the same setup it always ran. Only documentation and a single pre-check in `setup.sh` change.
+- The pre-check in `setup.sh` is opt-out (Enter or `S` to continue), so users who really want a folder named `specleap-framework` aren't forced to do anything extra.
+
 ## [2.1.12] - 2026-04-30
 
 ### Added
