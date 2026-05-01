@@ -8,6 +8,163 @@
 
 ## Flujo Completo
 
+### Paso 0: Ofrecer Instalación de markitdown (Herramienta Opcional)
+
+**ANTES de listar proyectos**, preguntar al usuario si quiere instalar **markitdown** (herramienta opcional de Microsoft que convierte PDF/Word/Excel/PowerPoint/HTML a Markdown). Esta conversión reduce significativamente el consumo de tokens cuando SpecLeap procesa documentos no-markdown durante el flujo (briefs en PDF, requisitos en Word, etc.).
+
+**Importante:** Este paso solo se ejecuta UNA VEZ por sesión "Hola". Si el usuario ya respondió antes en la misma sesión, saltar este paso.
+
+#### Detectar idioma del usuario
+
+Por defecto, el idioma de SpecLeap es **español** (ver `CLAUDE.md`). Si el usuario te ha hablado en inglés o ha configurado el framework en inglés, usa la versión en inglés del prompt.
+
+#### Texto del prompt (Español)
+
+```markdown
+¡Hola! 👋 Antes de empezar con tu proyecto, una pregunta rápida:
+
+🔧 **Herramienta opcional disponible: markitdown**
+
+`markitdown` es una utilidad de Microsoft (open source, MIT) que convierte:
+- 📄 PDF → Markdown
+- 📝 Word (.docx) → Markdown
+- 📊 Excel (.xlsx) / PowerPoint (.pptx) → Markdown
+- 🌐 HTML, CSV, JSON, XML, EPUB → Markdown
+
+**¿Por qué te interesa?** Cuando trabajemos con documentos (briefs, requisitos, contratos antiguos en PDF/Word), si los conviertes primero a Markdown con esta herramienta, el consumo de tokens baja entre **20% y 50%** y yo entiendo mejor el contenido.
+
+**Requisitos:** Python 3.10+ y `pip` instalados.
+
+**¿Quieres instalarlo ahora?** (Sí / No / Ya está instalado)
+```
+
+#### Texto del prompt (English)
+
+```markdown
+Hi! 👋 Before we start with your project, a quick question:
+
+🔧 **Optional tool available: markitdown**
+
+`markitdown` is a Microsoft utility (open source, MIT) that converts:
+- 📄 PDF → Markdown
+- 📝 Word (.docx) → Markdown
+- 📊 Excel (.xlsx) / PowerPoint (.pptx) → Markdown
+- 🌐 HTML, CSV, JSON, XML, EPUB → Markdown
+
+**Why does this matter?** When we work with documents (briefs, requirements, legacy contracts in PDF/Word), converting them to Markdown first with this tool reduces token consumption by **20%–50%** and I understand the content better.
+
+**Requirements:** Python 3.10+ and `pip` installed.
+
+**Do you want to install it now?** (Yes / No / Already installed)
+```
+
+#### Acción según respuesta
+
+**Si el usuario responde "Sí" / "Yes":**
+
+1. Verificar si ya está instalado ejecutando:
+   ```bash
+   command -v markitdown
+   ```
+
+2. **Si NO está instalado**, mostrar comando de instalación según OS:
+
+   **Español:**
+   ```markdown
+   📦 **Instalación de markitdown**
+
+   Ejecuta en tu terminal (fuera de Claude Code):
+
+   ```bash
+   pip install 'markitdown[all]'
+   ```
+
+   **Si usas pipx (recomendado para CLIs Python):**
+   ```bash
+   pipx install 'markitdown[all]'
+   ```
+
+   **Si tienes Python 3.10+ pero no `pip`:**
+   - macOS: `brew install python` (incluye pip)
+   - Linux: `sudo apt install python3-pip` (Debian/Ubuntu)
+   - Windows: descarga desde [python.org](https://www.python.org/downloads/)
+
+   Una vez instalado, podrás usar:
+   ```bash
+   bash scripts/convert-docs.sh archivo.pdf
+   bash scripts/convert-docs.sh carpeta/
+   ```
+
+   **¿Sigo con la creación del proyecto?** (Sí / Espera, voy a instalarlo primero)
+   ```
+
+   **English:**
+   ```markdown
+   📦 **Install markitdown**
+
+   Run in your terminal (outside Claude Code):
+
+   ```bash
+   pip install 'markitdown[all]'
+   ```
+
+   **If you use pipx (recommended for Python CLIs):**
+   ```bash
+   pipx install 'markitdown[all]'
+   ```
+
+   **If you have Python 3.10+ but no `pip`:**
+   - macOS: `brew install python` (includes pip)
+   - Linux: `sudo apt install python3-pip` (Debian/Ubuntu)
+   - Windows: download from [python.org](https://www.python.org/downloads/)
+
+   Once installed, you'll be able to use:
+   ```bash
+   bash scripts/convert-docs.sh file.pdf
+   bash scripts/convert-docs.sh folder/
+   ```
+
+   **Continue with project creation?** (Yes / Wait, I'll install it first)
+   ```
+
+3. **Si YA está instalado**, confirmar y seguir:
+
+   **Español:**
+   ```markdown
+   ✅ `markitdown` ya está instalado en tu sistema. Perfecto, sigamos con tu proyecto.
+   ```
+
+   **English:**
+   ```markdown
+   ✅ `markitdown` is already installed on your system. Great, let's continue with your project.
+   ```
+
+**Si el usuario responde "No":**
+
+**Español:**
+```markdown
+👍 Sin problema. Si más adelante quieres instalarlo, puedes ejecutar `pip install 'markitdown[all]'` o leer `scripts/convert-docs.sh --help`.
+
+Sigamos con tu proyecto.
+```
+
+**English:**
+```markdown
+👍 No problem. If you want to install it later, run `pip install 'markitdown[all]'` or read `scripts/convert-docs.sh --help`.
+
+Let's continue with your project.
+```
+
+**Si el usuario responde "Ya está instalado" / "Already installed":**
+
+Verificar con `command -v markitdown`. Si está → confirmar. Si no → mostrar instrucciones de instalación.
+
+#### Después de la respuesta
+
+Continúa con **Paso 1** (listar proyectos) sin importar la respuesta. La instalación de markitdown nunca bloquea el flujo principal.
+
+---
+
 ### Paso 1: Listar Proyectos Disponibles
 
 Ejecuta bash para listar proyectos:
