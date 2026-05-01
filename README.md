@@ -20,7 +20,7 @@
 
 SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 34 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
 
-**Versión actual:** 2.1.13 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
+**Versión actual:** 2.1.14 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
 
 ---
 
@@ -68,17 +68,24 @@ Nombre: mi-app-tienda
 → Resultado: /Users/tu-usuario/Downloads/mi-app-tienda/
 ```
 
-### Opción B: Vía git clone (control directo, sin prompts)
+### Opción B: Vía git clone (control desde la terminal)
+
+```bash
+git clone https://github.com/ConceptualCreative/specleap-framework.git
+cd specleap-framework
+bash setup.sh
+```
+
+Cuando arranque `setup.sh` lo primero que te preguntará es **cómo quieres que se llame la carpeta** del proyecto. Si pulsas Enter mantiene el nombre que tiene (`specleap-framework` por default de git clone). Si escribes otro nombre, **el setup renombra la carpeta automáticamente** y continúa desde ahí. Después sigue con idioma, tokens, skills y CodeRabbit.
+
+Atajo: si ya sabes el nombre, lo pasas a `git clone` para evitar el rename:
 
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
 cd mi-proyecto
 bash setup.sh
+# El setup pregunta el nombre igualmente; pulsa Enter para mantener "mi-proyecto".
 ```
-
-Aquí **tú decides el nombre** pasándolo como segundo argumento de `git clone`. El setup arranca directo, sin preguntar carpeta/nombre porque ya estás dentro del repo donde quieres.
-
-Si haces `git clone <url>` sin segundo argumento, la carpeta se llamará `specleap-framework` (default de git). El setup te avisará por si querías otro nombre.
 
 ### Diferencias rápidas
 
