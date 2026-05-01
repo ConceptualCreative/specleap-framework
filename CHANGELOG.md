@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`setup.sh` — el prompt del nombre de carpeta se movió a DESPUÉS del Paso 1 (idioma)**, antes del Paso 2 (GitHub). Ahora sale en el idioma elegido (sólo ES o sólo EN, no bilingüe a la vez como en v2.1.14). El comportamiento funcional es idéntico (Enter para mantener nombre actual con default `specleap-framework`, valida caracteres, renombra in-place si se cambia, salta si `SPECLEAP_INSTALL_PATH` ya está set por `bin/specleap`). Reportado por Styng tras testear v2.1.14: el bloque salía con texto bilingüe simultáneo porque se ejecutaba antes de saber qué idioma había elegido el usuario.
 
+- **`.commands/inicio.md` — nuevo Paso 0 (antes de listar proyectos) que ofrece instalar `markitdown`** (Microsoft, MIT, Python 3.10+) como herramienta opcional. Convierte PDF/Word/Excel/PowerPoint/HTML/CSV/JSON/XML/EPUB a Markdown. Cuando SpecLeap procesa documentos no-markdown durante el flujo conversacional, esta conversión previa baja el consumo de tokens entre 20% y 50%. El prompt se ejecuta UNA SOLA VEZ por sesión "Hola", es bilingüe (ES default, EN si el usuario habla en inglés), y nunca bloquea el flujo principal: si el usuario dice "No" o "Más tarde" se sigue normalmente con el listado de proyectos. Si dice "Sí", se verifica con `command -v markitdown` y se muestran instrucciones de instalación (`pip install 'markitdown[all]'` o `pipx install`) si no está. Pedido por Styng tras validar v2.1.14: quería que tras "Hola" se ofreciera la herramienta antes de empezar el primer proyecto.
+
+### Removed
+
+- **`composer.json`** — residual de un proyecto Laravel previo (`barryvdh/laravel-dompdf`). SpecLeap no usa Composer ni PHP en sus dependencias; el archivo nunca debió formar parte del paquete npm.
+- **`package-lock.json`** — sin sentido en un paquete que no declara `dependencies` ni `devDependencies` en `package.json`. Solo añadía ruido al diff.
+
 ## [2.1.14] - 2026-05-01
 
 ### Changed
