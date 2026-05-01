@@ -2,12 +2,12 @@
 # Este archivo muestra cómo se guardan las respuestas del cuestionario
 
 # ===== IDENTIDAD =====
-project_name: casa-de-peli
-project_display_name: Casa de Peli
-project_objective: Plataforma web de catálogo y reseñas de películas donde los usuarios pueden descubrir películas, ver detalles y crear listas personalizadas
-problem_solved: Los usuarios no tienen un lugar centralizado para llevar registro de películas vistas, escribir reseñas y gestionar listas de películas
-target_audience: public
-competitors: IMDb, Letterboxd, FilmAffinity
+project_name: task-manager
+project_display_name: Task Manager Pro
+project_objective: Aplicación web para gestionar tareas en equipo con asignación, prioridades y seguimiento de tiempo
+problem_solved: Los equipos pierden tiempo coordinando tareas en herramientas dispersas (email, chat, hojas de cálculo) y no tienen visibilidad clara del progreso
+target_audience: team
+competitors: Notion, Trello, Linear
 
 # ===== STACK TECNOLÓGICO =====
 backend_framework: laravel
@@ -18,17 +18,17 @@ css_framework: tailwind
 
 # ===== FUNCIONALIDADES =====
 core_features:
-  - Catálogo de películas con búsqueda y filtros
-  - Sistema de reseñas y calificaciones
-  - Listas personalizadas (favoritas, por ver, vistas)
-  - Autenticación de usuarios
-  - Perfil de usuario
+  - Autenticación de usuarios y equipos
+  - CRUD de tareas con estados y prioridades
+  - Asignación de tareas a miembros
+  - Búsqueda y filtros avanzados
+  - Notificaciones en-app
 
 secondary_features:
-  - Feed de actividad reciente
-  - Recomendaciones basadas en gustos
+  - Exportar a CSV
   - Modo oscuro
-  - Compartir reseñas en redes sociales
+  - Atajos de teclado
+  - Integraciones con Slack/Email
 
 needs_auth: email_password
 needs_admin_panel: basic
@@ -41,13 +41,13 @@ visual_style: modern
 # ===== DESPLIEGUE =====
 hosting: hostinger
 needs_ssl: true
-custom_domain: casadepeli.com
+custom_domain: taskmanager.example.com
 
 # ===== RESTRICCIONES =====
 time_limit: 3 meses
 budget_limit: 500 USD
 out_of_scope:
-  - Streaming de películas (no reproducción)
   - App móvil nativa
+  - Videoconferencia integrada
   - Sistema de pagos
-  - Chat entre usuarios
+  - Chat entre usuarios en tiempo real

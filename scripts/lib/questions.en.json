@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "total_questions": 58,
+    "total_questions": 93,
     "checkpoint_interval": 10,
     "description": "Interactive questionnaire to generate CONTRATO.md in SpecLeap"
   },
@@ -18,7 +18,11 @@
       ],
       "required": true,
       "help": "nuevo = from scratch | existente = adopt a legacy project into SpecLeap",
-      "example": "nuevo"
+      "example": "nuevo",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.path",
@@ -31,7 +35,11 @@
         "project.type": "nuevo"
       },
       "help": "Absolute or relative path to the legacy project directory",
-      "example": "/Users/me/my-legacy-project"
+      "example": "/Users/me/my-legacy-project",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.name",
@@ -46,8 +54,12 @@
       },
       "required": true,
       "default": null,
-      "help": "Examples: my-online-store, rest-users-api, admin-dashboard",
-      "example": "my-project"
+      "help": "Examples: task-manager, inventory-app, crm-suite",
+      "example": "task-manager",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.display_name",
@@ -62,7 +74,11 @@
       "required": true,
       "default": null,
       "help": "The name users will see. Can have uppercase, spaces and special characters.",
-      "example": "My Awesome Project"
+      "example": "Task Manager Pro",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.responsible",
@@ -73,7 +89,11 @@
       "required": true,
       "default": null,
       "help": "Name of the product owner, tech lead or main person in charge.",
-      "example": "Jane Doe"
+      "example": "Alex Smith",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.objective",
@@ -86,7 +106,11 @@
       },
       "required": true,
       "help": "Brief description of the main purpose.",
-      "example": "E-commerce platform for selling artisan products with inventory management and online payments"
+      "example": "Web app to manage team tasks with assignments, priorities and time tracking",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.problem_solved",
@@ -99,7 +123,11 @@
       },
       "required": true,
       "help": "The pain point or need your project addresses.",
-      "example": "Artisans have no easy way to sell online without technical knowledge or high costs"
+      "example": "Teams waste time coordinating tasks across scattered tools (email, chat, spreadsheets) and lack clear visibility into progress",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.target_audience",
@@ -115,7 +143,11 @@
       ],
       "required": true,
       "help": "personal = just you | team = your team | public = anyone | niche = specific audience",
-      "example": "public"
+      "example": "public",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.competitors",
@@ -125,8 +157,12 @@
       "type": "string",
       "required": false,
       "default": "",
-      "help": "Similar products that inspire you.",
-      "example": "Shopify, WooCommerce, Etsy"
+      "help": "If you know similar apps, I'll use them as a reference to suggest features and UX patterns. If none, type `none` or leave blank.",
+      "example": "Notion, Trello, Linear",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.backend.framework",
@@ -144,7 +180,11 @@
       ],
       "required": true,
       "help": "Main server-side framework.",
-      "example": "laravel"
+      "example": "laravel",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.backend.language",
@@ -161,7 +201,11 @@
         "python": "Python 3.11",
         "django": "Python 3.11",
         "rails": "Ruby 3.2"
-      }
+      },
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.backend.version",
@@ -178,7 +222,11 @@
         "python": "3.11",
         "django": "5.x",
         "rails": "7.x"
-      }
+      },
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.database.engine",
@@ -195,7 +243,11 @@
       ],
       "required": true,
       "help": "Main database for the project.",
-      "example": "postgresql"
+      "example": "postgresql",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.database.version",
@@ -211,7 +263,11 @@
         "mysql": "8.0",
         "mongodb": "7.x",
         "sqlite": "3.x"
-      }
+      },
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.framework",
@@ -229,7 +285,11 @@
       ],
       "required": true,
       "help": "ninguno = backend/API only without visual interface.",
-      "example": "react"
+      "example": "react",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.language",
@@ -246,7 +306,11 @@
         "stack.frontend.framework": "none"
       },
       "help": "TypeScript is recommended for medium/large projects.",
-      "example": "typescript"
+      "example": "typescript",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.build_tool",
@@ -265,7 +329,11 @@
         "stack.frontend.framework": "none"
       },
       "help": "Vite is the fastest and most modern (recommended).",
-      "example": "vite"
+      "example": "vite",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.ui_library",
@@ -286,7 +354,11 @@
         "stack.frontend.framework": "none"
       },
       "help": "Tailwind is utility-first and very popular today.",
-      "example": "tailwind"
+      "example": "tailwind",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.devops.hosting",
@@ -305,7 +377,11 @@
       ],
       "required": true,
       "help": "Hosting/cloud provider.",
-      "example": "digitalocean"
+      "example": "digitalocean",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.devops.ci_cd",
@@ -321,7 +397,11 @@
       ],
       "required": true,
       "help": "Continuous integration and automated deployment system.",
-      "example": "github-actions"
+      "example": "github-actions",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.devops.containers",
@@ -336,7 +416,11 @@
       ],
       "required": true,
       "help": "Docker for development, Kubernetes for scalable production.",
-      "example": "docker"
+      "example": "docker",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.core",
@@ -351,7 +435,11 @@
       },
       "required": true,
       "help": "The ESSENTIAL features the MVP MUST have.",
-      "example": "User authentication, Dashboard, Product management, Shopping cart, Checkout"
+      "example": "User authentication, Dashboard, CRUD for main entities, Search and filters, Notifications",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.secondary",
@@ -367,7 +455,11 @@
       "required": false,
       "default": [],
       "help": "Desirable but non-critical features for the MVP.",
-      "example": "Live chat, Review system, Personalized recommendations"
+      "example": "CSV export, Dark mode, Keyboard shortcuts, External integrations",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.auth.enabled",
@@ -377,7 +469,11 @@
       "type": "boolean",
       "required": true,
       "help": "Should users be able to sign up and log in?",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.auth.methods",
@@ -397,7 +493,11 @@
       },
       "required": false,
       "help": "email_password is the minimum. OAuth adds social login.",
-      "example": "email_password, oauth_google"
+      "example": "email_password, oauth_google",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.auth.two_factor",
@@ -411,7 +511,11 @@
       "required": false,
       "default": false,
       "help": "Extra security via SMS code or authenticator app.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "users.registration",
@@ -421,7 +525,11 @@
       "type": "boolean",
       "required": true,
       "help": "If false, users must be created manually by an admin.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "users.roles",
@@ -436,7 +544,11 @@
       },
       "required": true,
       "help": "Types of users with different permissions.",
-      "example": "admin, user, guest"
+      "example": "admin, user, guest",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.admin_panel.enabled",
@@ -446,7 +558,11 @@
       "type": "boolean",
       "required": true,
       "help": "Interface to manage users, content and configuration.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.admin_panel.level",
@@ -464,7 +580,11 @@
       },
       "required": false,
       "help": "completo = full CRUD | básico = view-only | ninguno = no panel",
-      "example": "completo"
+      "example": "completo",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.file_uploads.enabled",
@@ -474,7 +594,11 @@
       "type": "boolean",
       "required": true,
       "help": "Can users upload files?",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.file_uploads.storage",
@@ -493,7 +617,11 @@
       },
       "required": false,
       "help": "local = on the server | s3/cloudinary = cloud storage",
-      "example": "s3"
+      "example": "s3",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.payments.enabled",
@@ -503,7 +631,11 @@
       "type": "boolean",
       "required": true,
       "help": "Will users pay inside the platform?",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.payments.providers",
@@ -523,7 +655,11 @@
       },
       "required": false,
       "help": "Stripe is the most widely used and complete.",
-      "example": "stripe, paypal"
+      "example": "stripe, paypal",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.notifications.email",
@@ -533,7 +669,11 @@
       "type": "boolean",
       "required": true,
       "help": "Automated emails (welcome, password reset, etc.).",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.notifications.push",
@@ -543,7 +683,11 @@
       "type": "boolean",
       "required": true,
       "help": "Browser or mobile app notifications.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.notifications.in_app",
@@ -553,7 +697,11 @@
       "type": "boolean",
       "required": true,
       "help": "Notifications inside the interface (bell icon with counter).",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.visual_style",
@@ -570,7 +718,11 @@
       ],
       "required": true,
       "help": "Overall aesthetic of the interface.",
-      "example": "modern"
+      "example": "modern",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.primary_color",
@@ -584,7 +736,11 @@
       "required": false,
       "default": "#3B82F6",
       "help": "Main brand color (buttons, links, etc.).",
-      "example": "#3B82F6"
+      "example": "#3B82F6",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.dark_mode",
@@ -594,7 +750,11 @@
       "type": "boolean",
       "required": true,
       "help": "Alternative dark theme.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.responsive",
@@ -604,7 +764,11 @@
       "type": "boolean",
       "required": true,
       "help": "Adapts to all screen sizes.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "architecture.pattern",
@@ -621,7 +785,11 @@
       ],
       "required": true,
       "help": "mvc = Model-View-Controller (Laravel default) | ddd = Domain-Driven Design",
-      "example": "mvc"
+      "example": "mvc",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "architecture.separation",
@@ -636,7 +804,11 @@
       ],
       "required": true,
       "help": "monolith = all together | separated = API + frontend separated | microservices = independent services",
-      "example": "separated"
+      "example": "separated",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "deployment.ssl",
@@ -646,7 +818,11 @@
       "type": "boolean",
       "required": true,
       "help": "Always recommended for production.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "deployment.custom_domain",
@@ -657,7 +833,11 @@
       "required": false,
       "default": "",
       "help": "Example: www.mystore.com",
-      "example": "www.myproject.com"
+      "example": "www.myproject.com",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "deployment.environments",
@@ -672,7 +852,11 @@
       },
       "required": true,
       "help": "Typically: development, staging, production",
-      "example": "development, staging, production"
+      "example": "development, staging, production",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "security.level",
@@ -687,7 +871,11 @@
       ],
       "required": true,
       "help": "básico = standard | medio = + auditing | alto = + end-to-end encryption",
-      "example": "medio"
+      "example": "medio",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "security.gdpr_compliant",
@@ -697,7 +885,11 @@
       "type": "boolean",
       "required": true,
       "help": "Required if you have users in Europe.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "security.sensitive_data",
@@ -707,7 +899,11 @@
       "type": "boolean",
       "required": true,
       "help": "Requires extra security and regulatory compliance.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "performance.load_time_target",
@@ -723,7 +919,11 @@
       ],
       "required": true,
       "help": "Initial load time of the main page.",
-      "example": "< 2s"
+      "example": "< 2s",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "performance.api_response_target",
@@ -739,7 +939,11 @@
       ],
       "required": true,
       "help": "Response time of critical endpoints.",
-      "example": "< 200ms"
+      "example": "< 200ms",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "performance.concurrent_users",
@@ -753,7 +957,11 @@
       },
       "required": true,
       "help": "How many simultaneous users you expect at launch.",
-      "example": "100"
+      "example": "100",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.unit",
@@ -763,7 +971,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tests for individual functions and classes.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.integration",
@@ -773,7 +985,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tests for interaction between modules/APIs.",
-      "example": "yes"
+      "example": "yes",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.e2e",
@@ -783,7 +999,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tests for full user flows (Playwright, Cypress).",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.coverage_target",
@@ -798,7 +1018,11 @@
       "required": false,
       "default": 0,
       "help": "Percentage of code covered by tests. 80% is a good target.",
-      "example": "80"
+      "example": "80",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "constraints.time_limit",
@@ -809,7 +1033,11 @@
       "required": false,
       "default": "",
       "help": "Examples: 2 weeks, 3 months, none",
-      "example": "3 months"
+      "example": "3 months",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "constraints.out_of_scope",
@@ -825,7 +1053,589 @@
       "required": false,
       "default": [],
       "help": "Features explicitly excluded from the project.",
-      "example": "Social media integration, Native mobile app, Multi-language support"
+      "example": "Social media integration, Native mobile app, Multi-language support",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
+    },
+    {
+      "id": "governance.product_owner",
+      "section": "Governance",
+      "text": "Who is the Product Owner?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Person responsible for backlog, priorities and product vision. Provide name and email.",
+      "example": "Maria Garcia - maria@company.com",
+      "number": 59
+    },
+    {
+      "id": "governance.tech_lead",
+      "section": "Governance",
+      "text": "Who is the Tech Lead?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Person responsible for technical decisions, architecture and code review.",
+      "example": "Alex Smith - alex@company.com",
+      "number": 60
+    },
+    {
+      "id": "governance.release_approver",
+      "section": "Governance",
+      "text": "Who approves a production release?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Roles or names with authority to approve production deploys.",
+      "example": "Tech Lead + Product Owner",
+      "number": 61
+    },
+    {
+      "id": "governance.security_approver",
+      "section": "Governance",
+      "text": "Mandatory Security/InfoSec approval? If yes, who?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "If your org requires security review for releases or sensitive features, name the role/team. Otherwise type 'none'.",
+      "example": "InfoSec Team - security@company.com",
+      "default": "ninguno",
+      "number": 62
+    },
+    {
+      "id": "governance.legal_approver",
+      "section": "Governance",
+      "text": "Mandatory Legal/Compliance approval? If yes, who?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Useful if you handle personal data, contracts or specific regulations. Otherwise type 'none'.",
+      "example": "Legal Dept - legal@company.com",
+      "default": "ninguno",
+      "number": 63
+    },
+    {
+      "id": "departments.list",
+      "section": "Departments Involved",
+      "text": "Departments involved (comma-separated)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Functional areas that use, feed or depend on the product.",
+      "example": "Sales, Support, Operations",
+      "options": [
+        "Sales",
+        "Marketing",
+        "HR",
+        "Accounting",
+        "IT",
+        "Support",
+        "Operations",
+        "Product",
+        "Design",
+        "Legal",
+        "other"
+      ],
+      "number": 64
+    },
+    {
+      "id": "departments.key_contacts",
+      "section": "Departments Involved",
+      "text": "Key contacts per department",
+      "type": "text",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "One line per department with person and role. Helps identify whom to consult for decisions in each area.",
+      "example": "Sales: Anna Lee (Sales Ops); Support: John Roe (Lead)",
+      "default": "",
+      "number": 65
+    },
+    {
+      "id": "departments.dependencies",
+      "section": "Departments Involved",
+      "text": "Critical inter-department dependencies (optional)",
+      "type": "text",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Workflows where one team's progress depends on another. Useful to anticipate blockers.",
+      "example": "Marketing needs the Sales API for campaign dashboards",
+      "default": "",
+      "number": 66
+    },
+    {
+      "id": "integrations.sso",
+      "section": "Enterprise Integrations",
+      "text": "SSO/SAML/LDAP? (select all that apply)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Corporate identity systems the product must support for login.",
+      "example": "Google Workspace, Okta",
+      "options": [
+        "none",
+        "Google Workspace",
+        "Microsoft AD/Entra",
+        "Okta",
+        "Auth0",
+        "Generic SAML",
+        "LDAP",
+        "other"
+      ],
+      "number": 67
+    },
+    {
+      "id": "integrations.erp",
+      "section": "Enterprise Integrations",
+      "text": "ERP integration?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Enterprise resource planning system to sync data with. Type 'none' if not applicable.",
+      "example": "SAP S/4HANA",
+      "default": "ninguno",
+      "number": 68
+    },
+    {
+      "id": "integrations.crm",
+      "section": "Enterprise Integrations",
+      "text": "CRM integration?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "CRM to sync contacts, opportunities, etc. Type 'none' if not applicable.",
+      "example": "HubSpot",
+      "default": "ninguno",
+      "number": 69
+    },
+    {
+      "id": "integrations.bi",
+      "section": "Enterprise Integrations",
+      "text": "BI / Data Warehouse integration?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Analytics platform or data warehouse for reporting. Type 'none' if not applicable.",
+      "example": "Snowflake + Tableau",
+      "default": "ninguno",
+      "number": 70
+    },
+    {
+      "id": "integrations.payroll",
+      "section": "Enterprise Integrations",
+      "text": "Payroll / HR systems integration? (optional)",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Only applies if the product interacts with payroll or HR. Type 'none' if not applicable.",
+      "example": "Workday",
+      "default": "ninguno",
+      "number": 71
+    },
+    {
+      "id": "sla.uptime_target",
+      "section": "SLAs & Resilience",
+      "text": "Uptime target",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Minimum committed availability. More nines = higher cost and redundancy investment.",
+      "example": "99.9%",
+      "options": [
+        "99.0%",
+        "99.5%",
+        "99.9%",
+        "99.95%",
+        "99.99%"
+      ],
+      "number": 72
+    },
+    {
+      "id": "sla.rto",
+      "section": "SLAs & Resilience",
+      "text": "RTO (Recovery Time Objective)",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Maximum acceptable time to restore service after a major incident.",
+      "example": "< 4h",
+      "options": [
+        "< 1h",
+        "< 4h",
+        "< 24h",
+        "< 72h"
+      ],
+      "number": 73
+    },
+    {
+      "id": "sla.rpo",
+      "section": "SLAs & Resilience",
+      "text": "RPO (Recovery Point Objective)",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Maximum amount of data you can afford to lose in an incident.",
+      "example": "< 1h",
+      "options": [
+        "< 15min",
+        "< 1h",
+        "< 24h",
+        "< 7d"
+      ],
+      "number": 74
+    },
+    {
+      "id": "sla.disaster_recovery",
+      "section": "SLAs & Resilience",
+      "text": "Disaster Recovery strategy",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "How you recover if the primary region/provider goes down. Cost and complexity grow to the right.",
+      "example": "hot-standby",
+      "options": [
+        "none",
+        "backup-restore",
+        "hot-standby",
+        "multi-region active-passive",
+        "multi-region active-active"
+      ],
+      "number": 75
+    },
+    {
+      "id": "sla.on_call",
+      "section": "SLAs & Resilience",
+      "text": "24/7 on-call team? If yes, what tooling?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "If you have on-call rotation, specify the tool (PagerDuty, Opsgenie, etc.). Otherwise type 'no'.",
+      "example": "PagerDuty",
+      "default": "no",
+      "number": 76
+    },
+    {
+      "id": "compliance.frameworks",
+      "section": "Compliance",
+      "text": "Applicable compliance frameworks (select all that apply)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Regulatory frameworks the product must comply with. Determines controls, audits and documentation required.",
+      "example": "GDPR, SOC2",
+      "options": [
+        "none",
+        "GDPR",
+        "HIPAA",
+        "PCI-DSS",
+        "SOC2",
+        "ISO27001",
+        "FedRAMP",
+        "other"
+      ],
+      "number": 77
+    },
+    {
+      "id": "compliance.dpo",
+      "section": "Compliance",
+      "text": "DPO designated? (required if GDPR applies)",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Data Protection Officer. Mandatory under GDPR for large-scale processing. Provide name and email, or 'none'.",
+      "example": "Sam Taylor - dpo@company.com",
+      "default": "ninguno",
+      "number": 78
+    },
+    {
+      "id": "compliance.audit_log_retention",
+      "section": "Compliance",
+      "text": "Audit log retention",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Minimum period you retain activity logs for audit. Longer = higher storage cost.",
+      "example": "1 year",
+      "options": [
+        "30 days",
+        "90 days",
+        "1 year",
+        "7 years",
+        "indefinite"
+      ],
+      "number": 79
+    },
+    {
+      "id": "compliance.data_residency",
+      "section": "Compliance",
+      "text": "Data residency",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Where data can be stored. GDPR and other frameworks may impose geographic restrictions.",
+      "example": "EU only",
+      "options": [
+        "any",
+        "EU only",
+        "US only",
+        "per-customer multi-region"
+      ],
+      "number": 80
+    },
+    {
+      "id": "roadmap.phases",
+      "section": "Roadmap by Phases",
+      "text": "Project phases",
+      "type": "text",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "List phases with estimated duration and main deliverables for each.",
+      "example": "Phase 1 (3mo): MVP with auth, dashboard, core CRUD. Phase 2 (2mo): SSO + CRM integrations. Phase 3 (2mo): multi-tenant + i18n.",
+      "number": 81
+    },
+    {
+      "id": "roadmap.milestones",
+      "section": "Roadmap by Phases",
+      "text": "Critical milestones with dates",
+      "type": "text",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Key dates: launches, stakeholder demos, audits, legal compliance dates, etc.",
+      "example": "2026-06-30: investor demo. 2026-09-15: closed beta launch. 2026-12-01: public GA.",
+      "number": 82
+    },
+    {
+      "id": "roadmap.cross_team_deps",
+      "section": "Roadmap by Phases",
+      "text": "Cross-team dependencies (optional)",
+      "type": "text",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Blockers depending on other teams: pending external APIs, hardware, data, legal approvals, etc.",
+      "example": "Data team prepares scoring model before Phase 2. Legal approves terms before beta.",
+      "default": "",
+      "number": 83
+    },
+    {
+      "id": "release.feature_flags",
+      "section": "Release Processes",
+      "text": "Do you use feature flags? If yes, what tooling?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Feature flags let you deploy disabled code and enable it selectively. Specify tooling (LaunchDarkly, Unleash, in-house) or 'no'.",
+      "example": "LaunchDarkly",
+      "default": "no",
+      "number": 84
+    },
+    {
+      "id": "release.deploy_strategy",
+      "section": "Release Processes",
+      "text": "Deploy strategy",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "standard = brief downtime | blue-green = zero downtime, double infra | canary = gradual user % | rolling = node by node",
+      "example": "blue-green",
+      "options": [
+        "standard",
+        "blue-green",
+        "canary",
+        "rolling"
+      ],
+      "number": 85
+    },
+    {
+      "id": "release.rollback_strategy",
+      "section": "Release Processes",
+      "text": "Automated rollback plan?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "How you revert a faulty release: auto-rollback on metric, manual button, redeploy previous version, etc.",
+      "example": "auto-rollback if error rate > 1% for 5min",
+      "number": 86
+    },
+    {
+      "id": "observability.apm_logs_metrics",
+      "section": "Observability",
+      "text": "Observability stack (APM, logs, metrics)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Tools used to monitor the system in production.",
+      "example": "Datadog, Sentry",
+      "options": [
+        "Datadog",
+        "New Relic",
+        "Sentry",
+        "Grafana",
+        "ELK/OpenSearch",
+        "Splunk",
+        "CloudWatch",
+        "none",
+        "other"
+      ],
+      "number": 87
+    },
+    {
+      "id": "observability.alerting",
+      "section": "Observability",
+      "text": "Alerting system",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Where critical alerts are sent: PagerDuty, Opsgenie, Slack, email, etc.",
+      "example": "PagerDuty + Slack #incidents",
+      "number": 88
+    },
+    {
+      "id": "observability.dashboards",
+      "section": "Observability",
+      "text": "Public dashboards for stakeholders?",
+      "type": "boolean",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Whether non-technical stakeholders (business, execs) will view operational metrics.",
+      "example": "yes",
+      "number": 89
+    },
+    {
+      "id": "multi.languages",
+      "section": "Multi-X (language, tenant, region)",
+      "text": "Supported languages (comma-separated)",
+      "type": "array",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "ISO codes of languages the product must support. If only one, indicate just that.",
+      "example": "en, es, fr",
+      "validation": {
+        "min_items": 1,
+        "max_items": 20,
+        "separator": ","
+      },
+      "number": 90
+    },
+    {
+      "id": "multi.tenant",
+      "section": "Multi-X (language, tenant, region)",
+      "text": "Multi-tenant?",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Determines how data of different customers is isolated. Impacts architecture, deployment and compliance.",
+      "example": "single-DB shared (tenant_id)",
+      "options": [
+        "no (single-tenant)",
+        "single-DB shared (tenant_id)",
+        "single-DB per tenant",
+        "multi-DB (DB per tenant)"
+      ],
+      "number": 91
+    },
+    {
+      "id": "multi.regions",
+      "section": "Multi-X (language, tenant, region)",
+      "text": "Multi-region?",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Whether the system runs in one region or several. Multi-region improves latency and resilience but complicates replication.",
+      "example": "single region",
+      "options": [
+        "single region",
+        "multi-region active-passive",
+        "multi-region active-active"
+      ],
+      "number": 92
+    },
+    {
+      "id": "multi.i18n_strategy",
+      "section": "Multi-X (language, tenant, region)",
+      "text": "i18n strategy",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "How translations are stored and served. Each strategy has tradeoffs in workflow and performance.",
+      "example": "JSON files per language",
+      "options": [
+        "JSON files per language",
+        "gettext / PO files",
+        "database",
+        "external service (Phrase, Lokalise)"
+      ],
+      "number": 93
     }
   ]
 }

@@ -116,8 +116,8 @@ Pregunta dónde está el código:
 ¿En qué directorio está el código del proyecto?
 
 Ejemplo:
-- `/path/to/app-tienda-backend`
-- `/path/to/app-tienda-frontend`
+- `/path/to/task-manager-backend`
+- `/path/to/task-manager-frontend`
 ```
 
 ---

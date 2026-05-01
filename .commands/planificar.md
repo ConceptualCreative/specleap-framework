@@ -22,6 +22,30 @@ Esto incluye:
 
 ## Flujo
 
+### 0. Cargar credenciales desde .env
+
+**ANTES de cualquier comando que necesite Asana**, cargar las variables de entorno desde el `.env` del proyecto SpecLeap. `setup.sh` guarda allí `ASANA_ACCESS_TOKEN` y `ASANA_WORKSPACE_GID`, pero la shell de Claude Code no las carga automáticamente.
+
+```bash
+# Cargar .env si existe (no fallar si no existe)
+if [ -f .env ]; then
+  set -a
+  source .env
+  set +a
+fi
+
+# Verificar que el token quedó cargado
+if [ -z "${ASANA_ACCESS_TOKEN:-}" ]; then
+  echo "❌ ASANA_ACCESS_TOKEN no está configurado en .env ni en la shell"
+  echo "   Re-ejecuta bash setup.sh para configurar Asana, o exporta manualmente."
+  exit 1
+fi
+```
+
+**Importante:** los scripts `scripts/generate-asana-structure.sh` y `scripts/create-asana-tasks.sh` también cargan `.env` por su cuenta como red de seguridad. Pero comprobar aquí permite dar un mensaje claro al usuario antes de invocar el script.
+
+---
+
 ### 1. Identificar Proyecto
 
 Si no se especifica ruta:
@@ -29,9 +53,9 @@ Si no se especifica ruta:
 ¿Para qué proyecto quieres crear el backlog?
 
 **Proyectos disponibles:**
-1. app-tienda
-2. api-backend
-3. dashboard-analytics
+1. task-manager
+2. inventory-app
+3. crm-suite
 
 Responde con el número o nombre:
 ```
@@ -208,8 +232,14 @@ Edita `scripts/generate-asana-structure.sh`:
 ## Requisitos
 
 1. **CONTRATO.md** existente
-2. **ASANA_ACCESS_TOKEN** configurado en ~/.zshrc
-3. **ASANA_WORKSPACE_GID** configurado (o se detecta automáticamente)
+2. **ASANA_ACCESS_TOKEN** y **ASANA_WORKSPACE_GID** en `.env` del proyecto SpecLeap (`setup.sh` lo crea al instalar)
+
+Los scripts cargan `.env` automáticamente. Si necesitas verificar manualmente:
+
+```bash
+cd <ruta-proyecto-specleap>
+cat .env | grep ASANA
+```
 
 ---
 
@@ -218,20 +248,27 @@ Edita `scripts/generate-asana-structure.sh`:
 ### "Script no encontrado"
 
 ```bash
-cd ~/specleap-framework
 ls scripts/generate-asana-structure.sh
-# Si no existe, verifica instalación
+# Si no existe, verifica instalación o re-ejecuta setup.sh
 ```
 
 ### "ASANA_ACCESS_TOKEN no configurado"
 
-```bash
-# Verifica que está en tu ~/.zshrc
-grep ASANA_ACCESS_TOKEN ~/.zshrc
+El `.env` del proyecto SpecLeap no existe o no contiene el token. Soluciones:
 
-# Si no está, agrégalo:
-echo 'export ASANA_ACCESS_TOKEN="tu-token-aqui"' >> ~/.zshrc
-source ~/.zshrc
+```bash
+# Verificar que existe el .env y tiene el token
+ls -la .env && grep ASANA .env
+
+# Si falta o está vacío, re-ejecutar el paso de configuración Asana del setup
+bash setup.sh
+```
+
+Si por alguna razón prefieres exportar manualmente (sin pasar por `.env`):
+
+```bash
+export ASANA_ACCESS_TOKEN="tu-token-aqui"
+export ASANA_WORKSPACE_GID="tu-workspace-gid"
 ```
 
 ### "Error: Not Authorized"

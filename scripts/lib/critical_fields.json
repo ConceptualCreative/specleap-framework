@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "description": "Campos mínimos que el modo 'creativo' verifica tras extraer información del párrafo del usuario. Si falta alguno, la AI pregunta sólo ese (no las 58/93 completas). Las claves apuntan a IDs de questions.{es,en}.json."
+  },
+  "mvp_critical": [
+    "project.name",
+    "project.display_name",
+    "project.responsible",
+    "identity.objective",
+    "identity.target_audience",
+    "stack.backend.framework",
+    "stack.frontend.framework",
+    "stack.database.engine",
+    "features.core",
+    "features.auth.enabled",
+    "design.responsive",
+    "design.primary_color",
+    "deployment.hosting",
+    "deployment.ssl",
+    "security.level",
+    "security.gdpr_compliant",
+    "testing.coverage_target",
+    "constraints.time_limit"
+  ],
+  "serio_critical_extra": [
+    "governance.product_owner",
+    "governance.release_approver",
+    "departments.list",
+    "compliance.frameworks",
+    "sla.uptime_target",
+    "sla.rto",
+    "roadmap.phases",
+    "release.deploy_strategy",
+    "observability.apm_logs_metrics",
+    "multi.tenant",
+    "multi.regions"
+  ]
+}
