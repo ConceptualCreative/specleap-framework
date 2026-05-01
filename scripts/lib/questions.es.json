@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "1.0",
-    "total_questions": 58,
+    "total_questions": 93,
     "checkpoint_interval": 10,
     "description": "Cuestionario interactivo para generar CONTRATO.md en SpecLeap"
   },
@@ -18,7 +18,11 @@
       ],
       "required": true,
       "help": "nuevo = desde cero | existente = adoptar proyecto legacy en SpecLeap",
-      "example": "nuevo"
+      "example": "nuevo",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.path",
@@ -31,7 +35,11 @@
         "project.type": "nuevo"
       },
       "help": "Ruta absoluta o relativa al directorio del proyecto legacy",
-      "example": "/Users/usuario/mi-proyecto-legacy"
+      "example": "/Users/usuario/mi-proyecto-legacy",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.name",
@@ -46,8 +54,12 @@
       },
       "required": true,
       "default": null,
-      "help": "Ejemplo: mi-tienda-online, api-rest-usuarios, dashboard-admin",
-      "example": "mi-proyecto"
+      "help": "Ejemplo: task-manager, inventory-app, crm-suite",
+      "example": "task-manager",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.display_name",
@@ -62,7 +74,11 @@
       "required": true,
       "default": null,
       "help": "El nombre que verán los usuarios. Puede tener mayúsculas, espacios y caracteres especiales.",
-      "example": "Mi Proyecto Awesome"
+      "example": "Task Manager Pro",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "project.responsible",
@@ -73,7 +89,11 @@
       "required": true,
       "default": null,
       "help": "Nombre del product owner, tech lead o responsable principal.",
-      "example": "Juan Pérez"
+      "example": "María García",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.objective",
@@ -86,7 +106,11 @@
       },
       "required": true,
       "help": "Descripción breve del propósito principal.",
-      "example": "Plataforma e-commerce para venta de productos artesanales con gestión de inventario y pagos online"
+      "example": "Aplicación web para gestionar tareas en equipo con asignación, prioridades y seguimiento de tiempo",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.problem_solved",
@@ -99,7 +123,11 @@
       },
       "required": true,
       "help": "El dolor o necesidad que soluciona tu proyecto.",
-      "example": "Los artesanos no tienen forma fácil de vender online sin conocimientos técnicos ni costos altos"
+      "example": "Los equipos pierden tiempo coordinando tareas en herramientas dispersas (email, chat, hojas de cálculo) y no tienen visibilidad clara del progreso",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.target_audience",
@@ -115,7 +143,11 @@
       ],
       "required": true,
       "help": "personal = solo tú | team = tu equipo | public = cualquiera | niche = audiencia específica",
-      "example": "public"
+      "example": "public",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "identity.competitors",
@@ -125,8 +157,12 @@
       "type": "string",
       "required": false,
       "default": "",
-      "help": "Productos similares que te sirven de inspiración.",
-      "example": "Shopify, WooCommerce, Etsy"
+      "help": "Si conoces apps similares, las usaré como referencia para sugerir features y patrones de UX. Si no, escribe `ninguno` o déjalo vacío.",
+      "example": "Notion, Trello, Linear",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.backend.framework",
@@ -144,7 +180,11 @@
       ],
       "required": true,
       "help": "Framework principal para el servidor.",
-      "example": "laravel"
+      "example": "laravel",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.backend.language",
@@ -161,7 +201,11 @@
         "python": "Python 3.11",
         "django": "Python 3.11",
         "rails": "Ruby 3.2"
-      }
+      },
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.backend.version",
@@ -178,7 +222,11 @@
         "python": "3.11",
         "django": "5.x",
         "rails": "7.x"
-      }
+      },
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.database.engine",
@@ -195,7 +243,11 @@
       ],
       "required": true,
       "help": "Base de datos principal del proyecto.",
-      "example": "postgresql"
+      "example": "postgresql",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.database.version",
@@ -211,7 +263,11 @@
         "mysql": "8.0",
         "mongodb": "7.x",
         "sqlite": "3.x"
-      }
+      },
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.framework",
@@ -229,7 +285,11 @@
       ],
       "required": true,
       "help": "ninguno = solo backend/API sin interfaz visual.",
-      "example": "react"
+      "example": "react",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.language",
@@ -246,7 +306,11 @@
         "stack.frontend.framework": "none"
       },
       "help": "TypeScript es recomendado para proyectos medianos/grandes.",
-      "example": "typescript"
+      "example": "typescript",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.build_tool",
@@ -265,7 +329,11 @@
         "stack.frontend.framework": "none"
       },
       "help": "Vite es el más rápido y moderno (recomendado).",
-      "example": "vite"
+      "example": "vite",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.frontend.ui_library",
@@ -286,7 +354,11 @@
         "stack.frontend.framework": "none"
       },
       "help": "Tailwind es utility-first y muy popular actualmente.",
-      "example": "tailwind"
+      "example": "tailwind",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.devops.hosting",
@@ -305,7 +377,11 @@
       ],
       "required": true,
       "help": "Proveedor de hosting/cloud.",
-      "example": "digitalocean"
+      "example": "digitalocean",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.devops.ci_cd",
@@ -321,7 +397,11 @@
       ],
       "required": true,
       "help": "Sistema de integración continua y despliegue automático.",
-      "example": "github-actions"
+      "example": "github-actions",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "stack.devops.containers",
@@ -336,7 +416,11 @@
       ],
       "required": true,
       "help": "Docker para desarrollo, Kubernetes para producción escalable.",
-      "example": "docker"
+      "example": "docker",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.core",
@@ -351,7 +435,11 @@
       },
       "required": true,
       "help": "Las funcionalidades ESENCIALES que DEBE tener el MVP.",
-      "example": "Autenticación de usuarios, Dashboard, Gestión de productos, Carrito de compras, Checkout"
+      "example": "Autenticación de usuarios, Dashboard, CRUD de entidades principales, Búsqueda y filtros, Notificaciones",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.secondary",
@@ -367,7 +455,11 @@
       "required": false,
       "default": [],
       "help": "Funcionalidades deseables pero no críticas para el MVP.",
-      "example": "Chat en vivo, Sistema de reseñas, Recomendaciones personalizadas"
+      "example": "Exportar a CSV, Modo oscuro, Atajos de teclado, Integraciones con apps externas",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.auth.enabled",
@@ -377,7 +469,11 @@
       "type": "boolean",
       "required": true,
       "help": "¿Los usuarios deben poder registrarse y hacer login?",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.auth.methods",
@@ -397,7 +493,11 @@
       },
       "required": false,
       "help": "email_password es el mínimo. OAuth agrega login con redes sociales.",
-      "example": "email_password, oauth_google"
+      "example": "email_password, oauth_google",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.auth.two_factor",
@@ -411,7 +511,11 @@
       "required": false,
       "default": false,
       "help": "Seguridad adicional mediante código SMS/app.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "users.registration",
@@ -421,7 +525,11 @@
       "type": "boolean",
       "required": true,
       "help": "Si es false, los usuarios deben ser creados manualmente por admin.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "users.roles",
@@ -436,7 +544,11 @@
       },
       "required": true,
       "help": "Tipos de usuarios con diferentes permisos.",
-      "example": "admin, user, guest"
+      "example": "admin, user, guest",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.admin_panel.enabled",
@@ -446,7 +558,11 @@
       "type": "boolean",
       "required": true,
       "help": "Interfaz para gestionar usuarios, contenido, configuración.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.admin_panel.level",
@@ -464,7 +580,11 @@
       },
       "required": false,
       "help": "completo = CRUD completo | básico = solo visualización | ninguno = sin panel",
-      "example": "completo"
+      "example": "completo",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.file_uploads.enabled",
@@ -474,7 +594,11 @@
       "type": "boolean",
       "required": true,
       "help": "¿Los usuarios pueden subir archivos?",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.file_uploads.storage",
@@ -493,7 +617,11 @@
       },
       "required": false,
       "help": "local = en el servidor | s3/cloudinary = cloud storage",
-      "example": "s3"
+      "example": "s3",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.payments.enabled",
@@ -503,7 +631,11 @@
       "type": "boolean",
       "required": true,
       "help": "¿Los usuarios pagarán dentro de la plataforma?",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.payments.providers",
@@ -523,7 +655,11 @@
       },
       "required": false,
       "help": "Stripe es el más usado y completo.",
-      "example": "stripe, paypal"
+      "example": "stripe, paypal",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.notifications.email",
@@ -533,7 +669,11 @@
       "type": "boolean",
       "required": true,
       "help": "Envío de emails automáticos (bienvenida, recuperación password, etc.).",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.notifications.push",
@@ -543,7 +683,11 @@
       "type": "boolean",
       "required": true,
       "help": "Notificaciones en navegador o app móvil.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "features.notifications.in_app",
@@ -553,7 +697,11 @@
       "type": "boolean",
       "required": true,
       "help": "Notificaciones dentro de la interfaz (campana con contador).",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.visual_style",
@@ -570,7 +718,11 @@
       ],
       "required": true,
       "help": "Estética general de la interfaz.",
-      "example": "modern"
+      "example": "modern",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.primary_color",
@@ -584,7 +736,11 @@
       "required": false,
       "default": "#3B82F6",
       "help": "Color principal de la marca (botones, enlaces, etc.).",
-      "example": "#3B82F6"
+      "example": "#3B82F6",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.dark_mode",
@@ -594,7 +750,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tema dark alternativo.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "design.responsive",
@@ -604,7 +764,11 @@
       "type": "boolean",
       "required": true,
       "help": "Adaptación a todos los tamaños de pantalla.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "architecture.pattern",
@@ -621,7 +785,11 @@
       ],
       "required": true,
       "help": "mvc = Model-View-Controller (Laravel default) | ddd = Domain-Driven Design",
-      "example": "mvc"
+      "example": "mvc",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "architecture.separation",
@@ -636,7 +804,11 @@
       ],
       "required": true,
       "help": "monolith = todo junto | separated = API + frontend separados | microservices = servicios independientes",
-      "example": "separated"
+      "example": "separated",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "deployment.ssl",
@@ -646,7 +818,11 @@
       "type": "boolean",
       "required": true,
       "help": "Siempre recomendado para producción.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "deployment.custom_domain",
@@ -657,7 +833,11 @@
       "required": false,
       "default": "",
       "help": "Ejemplo: www.mitienda.com",
-      "example": "www.miproyecto.com"
+      "example": "www.miproyecto.com",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "deployment.environments",
@@ -672,7 +852,11 @@
       },
       "required": true,
       "help": "Típicamente: development, staging, production",
-      "example": "development, staging, production"
+      "example": "development, staging, production",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "security.level",
@@ -687,7 +871,11 @@
       ],
       "required": true,
       "help": "básico = estándar | medio = + auditoría | alto = + encriptación end-to-end",
-      "example": "medio"
+      "example": "medio",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "security.gdpr_compliant",
@@ -697,7 +885,11 @@
       "type": "boolean",
       "required": true,
       "help": "Requerido si tienes usuarios en Europa.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "security.sensitive_data",
@@ -707,7 +899,11 @@
       "type": "boolean",
       "required": true,
       "help": "Requiere seguridad adicional y cumplimiento normativo.",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "performance.load_time_target",
@@ -723,7 +919,11 @@
       ],
       "required": true,
       "help": "Tiempo de carga inicial de la página principal.",
-      "example": "< 2s"
+      "example": "< 2s",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "performance.api_response_target",
@@ -739,7 +939,11 @@
       ],
       "required": true,
       "help": "Tiempo de respuesta de endpoints críticos.",
-      "example": "< 200ms"
+      "example": "< 200ms",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "performance.concurrent_users",
@@ -753,7 +957,11 @@
       },
       "required": true,
       "help": "Cuántos usuarios simultáneos esperas al lanzar.",
-      "example": "100"
+      "example": "100",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.unit",
@@ -763,7 +971,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tests de funciones y clases individuales.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.integration",
@@ -773,7 +985,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tests de interacción entre módulos/APIs.",
-      "example": "sí"
+      "example": "sí",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.e2e",
@@ -783,7 +999,11 @@
       "type": "boolean",
       "required": true,
       "help": "Tests de flujos completos de usuario (Playwright, Cypress).",
-      "example": "no"
+      "example": "no",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "testing.coverage_target",
@@ -798,7 +1018,11 @@
       "required": false,
       "default": 0,
       "help": "Porcentaje de código cubierto por tests. 80% es buen objetivo.",
-      "example": "80"
+      "example": "80",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "constraints.time_limit",
@@ -809,7 +1033,11 @@
       "required": false,
       "default": "",
       "help": "Ejemplo: 2 weeks, 3 months, none",
-      "example": "3 months"
+      "example": "3 months",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
     },
     {
       "id": "constraints.out_of_scope",
@@ -825,7 +1053,589 @@
       "required": false,
       "default": [],
       "help": "Funcionalidades explícitamente excluidas del proyecto.",
-      "example": "Integración con redes sociales, App móvil nativa, Soporte multiidioma"
+      "example": "Integración con redes sociales, App móvil nativa, Soporte multiidioma",
+      "modes": [
+        "mvp",
+        "serio"
+      ]
+    },
+    {
+      "id": "governance.product_owner",
+      "section": "Gobernanza",
+      "text": "¿Quién es el Product Owner?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Persona responsable del backlog, prioridades y visión del producto. Indica nombre y email.",
+      "example": "María García - maria@empresa.com",
+      "number": 59
+    },
+    {
+      "id": "governance.tech_lead",
+      "section": "Gobernanza",
+      "text": "¿Quién es el Tech Lead?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Persona responsable de decisiones técnicas, arquitectura y revisión de código.",
+      "example": "Carlos López - carlos@empresa.com",
+      "number": 60
+    },
+    {
+      "id": "governance.release_approver",
+      "section": "Gobernanza",
+      "text": "¿Quién aprueba un release a producción?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Roles o nombres con autoridad para aprobar el deploy a producción.",
+      "example": "Tech Lead + Product Owner",
+      "number": 61
+    },
+    {
+      "id": "governance.security_approver",
+      "section": "Gobernanza",
+      "text": "¿Hay aprobación obligatoria de Security/InfoSec? Si sí, ¿quién?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Si tu organización requiere review de seguridad para releases o features sensibles, indica el rol/equipo. Si no, escribe 'ninguno'.",
+      "example": "InfoSec Team - security@empresa.com",
+      "default": "ninguno",
+      "number": 62
+    },
+    {
+      "id": "governance.legal_approver",
+      "section": "Gobernanza",
+      "text": "¿Hay aprobación obligatoria de Legal/Compliance? Si sí, ¿quién?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Útil si manejas datos personales, contratos o normativa específica. Si no, escribe 'ninguno'.",
+      "example": "Legal Dept - legal@empresa.com",
+      "default": "ninguno",
+      "number": 63
+    },
+    {
+      "id": "departments.list",
+      "section": "Departamentos Involucrados",
+      "text": "Departamentos involucrados (separados por coma)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Áreas funcionales que usan, alimentan o dependen del producto.",
+      "example": "Ventas, Soporte, Operaciones",
+      "options": [
+        "Ventas",
+        "Marketing",
+        "RRHH",
+        "Contabilidad",
+        "IT",
+        "Soporte",
+        "Operaciones",
+        "Producto",
+        "Diseño",
+        "Legal",
+        "otro"
+      ],
+      "number": 64
+    },
+    {
+      "id": "departments.key_contacts",
+      "section": "Departamentos Involucrados",
+      "text": "Contactos clave por departamento",
+      "type": "text",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Una línea por departamento con persona y rol. Ayuda a saber a quién consultar para decisiones de cada área.",
+      "example": "Ventas: Ana López (Sales Ops); Soporte: Juan Ruiz (Lead)",
+      "default": "",
+      "number": 65
+    },
+    {
+      "id": "departments.dependencies",
+      "section": "Departamentos Involucrados",
+      "text": "Dependencias críticas entre departamentos (opcional)",
+      "type": "text",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Flujos donde el avance de un equipo depende de otro. Útil para anticipar bloqueos.",
+      "example": "Marketing necesita la API de Ventas para los dashboards de campañas",
+      "default": "",
+      "number": 66
+    },
+    {
+      "id": "integrations.sso",
+      "section": "Integraciones Empresariales",
+      "text": "¿SSO/SAML/LDAP? (selecciona los que apliquen)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Sistemas de identidad corporativos que el producto debe soportar para login.",
+      "example": "Google Workspace, Okta",
+      "options": [
+        "ninguno",
+        "Google Workspace",
+        "Microsoft AD/Entra",
+        "Okta",
+        "Auth0",
+        "SAML genérico",
+        "LDAP",
+        "otro"
+      ],
+      "number": 67
+    },
+    {
+      "id": "integrations.erp",
+      "section": "Integraciones Empresariales",
+      "text": "¿Integración con ERP?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Sistema de gestión empresarial al que sincronizar datos. Escribe 'ninguno' si no aplica.",
+      "example": "SAP S/4HANA",
+      "default": "ninguno",
+      "number": 68
+    },
+    {
+      "id": "integrations.crm",
+      "section": "Integraciones Empresariales",
+      "text": "¿Integración con CRM?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "CRM con el que sincronizar contactos, oportunidades, etc. Escribe 'ninguno' si no aplica.",
+      "example": "HubSpot",
+      "default": "ninguno",
+      "number": 69
+    },
+    {
+      "id": "integrations.bi",
+      "section": "Integraciones Empresariales",
+      "text": "¿Integración con BI/Data Warehouse?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Plataforma de analytics o data warehouse para reporting. Escribe 'ninguno' si no aplica.",
+      "example": "Snowflake + Tableau",
+      "default": "ninguno",
+      "number": 70
+    },
+    {
+      "id": "integrations.payroll",
+      "section": "Integraciones Empresariales",
+      "text": "¿Integración con sistemas de payroll/HR? (opcional)",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Solo aplica si el producto interactúa con nóminas o RRHH. Escribe 'ninguno' si no aplica.",
+      "example": "Workday",
+      "default": "ninguno",
+      "number": 71
+    },
+    {
+      "id": "sla.uptime_target",
+      "section": "SLAs y Resiliencia",
+      "text": "Uptime target",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Disponibilidad mínima comprometida. Más nueves = más coste e inversión en redundancia.",
+      "example": "99.9%",
+      "options": [
+        "99.0%",
+        "99.5%",
+        "99.9%",
+        "99.95%",
+        "99.99%"
+      ],
+      "number": 72
+    },
+    {
+      "id": "sla.rto",
+      "section": "SLAs y Resiliencia",
+      "text": "RTO (Recovery Time Objective)",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Tiempo máximo aceptable para restaurar el servicio tras un incidente grave.",
+      "example": "< 4h",
+      "options": [
+        "< 1h",
+        "< 4h",
+        "< 24h",
+        "< 72h"
+      ],
+      "number": 73
+    },
+    {
+      "id": "sla.rpo",
+      "section": "SLAs y Resiliencia",
+      "text": "RPO (Recovery Point Objective)",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Cantidad máxima de datos que puedes permitirte perder en un incidente.",
+      "example": "< 1h",
+      "options": [
+        "< 15min",
+        "< 1h",
+        "< 24h",
+        "< 7d"
+      ],
+      "number": 74
+    },
+    {
+      "id": "sla.disaster_recovery",
+      "section": "SLAs y Resiliencia",
+      "text": "Estrategia de Disaster Recovery",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Cómo te recuperas si la región/proveedor principal cae. Coste y complejidad crecen hacia la derecha.",
+      "example": "hot-standby",
+      "options": [
+        "ninguna",
+        "backup-restore",
+        "hot-standby",
+        "multi-region activo-pasivo",
+        "multi-region activo-activo"
+      ],
+      "number": 75
+    },
+    {
+      "id": "sla.on_call",
+      "section": "SLAs y Resiliencia",
+      "text": "¿Equipo on-call 24/7? Si sí, ¿qué tooling?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Si hay rotación de guardias, indica la herramienta (PagerDuty, Opsgenie, etc.). Si no, escribe 'no'.",
+      "example": "PagerDuty",
+      "default": "no",
+      "number": 76
+    },
+    {
+      "id": "compliance.frameworks",
+      "section": "Compliance",
+      "text": "Frameworks de compliance aplicables (selecciona los que apliquen)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Marcos regulatorios que tu producto debe cumplir. Determina controles, auditorías y documentación necesarios.",
+      "example": "GDPR, SOC2",
+      "options": [
+        "ninguno",
+        "GDPR",
+        "HIPAA",
+        "PCI-DSS",
+        "SOC2",
+        "ISO27001",
+        "FedRAMP",
+        "otro"
+      ],
+      "number": 77
+    },
+    {
+      "id": "compliance.dpo",
+      "section": "Compliance",
+      "text": "¿DPO designado? (requerido si GDPR aplica)",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Data Protection Officer. Obligatorio si tratas datos personales bajo GDPR a gran escala. Indica nombre y email, o 'ninguno'.",
+      "example": "Lucía Martín - dpo@empresa.com",
+      "default": "ninguno",
+      "number": 78
+    },
+    {
+      "id": "compliance.audit_log_retention",
+      "section": "Compliance",
+      "text": "Retención de logs de auditoría",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Período mínimo que conservas logs de actividad para auditoría. Más tiempo = más coste de almacenamiento.",
+      "example": "1 año",
+      "options": [
+        "30 días",
+        "90 días",
+        "1 año",
+        "7 años",
+        "indefinida"
+      ],
+      "number": 79
+    },
+    {
+      "id": "compliance.data_residency",
+      "section": "Compliance",
+      "text": "Residencia de datos",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Dónde pueden almacenarse los datos. GDPR y otros frameworks pueden imponer restricciones geográficas.",
+      "example": "solo EU",
+      "options": [
+        "cualquiera",
+        "solo EU",
+        "solo US",
+        "multi-región según cliente"
+      ],
+      "number": 80
+    },
+    {
+      "id": "roadmap.phases",
+      "section": "Roadmap por Fases",
+      "text": "Fases del proyecto",
+      "type": "text",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Lista las fases con su duración estimada y los entregables principales de cada una.",
+      "example": "Fase 1 (3 meses): MVP con auth, dashboard, CRUD core. Fase 2 (2 meses): integraciones SSO + CRM. Fase 3 (2 meses): multi-tenant + i18n.",
+      "number": 81
+    },
+    {
+      "id": "roadmap.milestones",
+      "section": "Roadmap por Fases",
+      "text": "Hitos críticos con fechas",
+      "type": "text",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Fechas clave: lanzamientos, demos a stakeholders, auditorías, fechas de cumplimiento legal, etc.",
+      "example": "2026-06-30: demo a inversores. 2026-09-15: lanzamiento beta cerrada. 2026-12-01: GA pública.",
+      "number": 82
+    },
+    {
+      "id": "roadmap.cross_team_deps",
+      "section": "Roadmap por Fases",
+      "text": "Dependencias inter-equipo (opcional)",
+      "type": "text",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Bloqueos que dependen de otros equipos: APIs externas pendientes, hardware, datos, aprobaciones legales, etc.",
+      "example": "Equipo Data prepara el modelo de scoring antes de Fase 2. Legal aprueba los términos antes del beta.",
+      "default": "",
+      "number": 83
+    },
+    {
+      "id": "release.feature_flags",
+      "section": "Procesos de Release",
+      "text": "¿Usas feature flags? Si sí, ¿qué tooling?",
+      "type": "string",
+      "required": false,
+      "modes": [
+        "serio"
+      ],
+      "help": "Las feature flags permiten desplegar código desactivado y activarlo selectivamente. Indica el tooling (LaunchDarkly, Unleash, propio) o 'no'.",
+      "example": "LaunchDarkly",
+      "default": "no",
+      "number": 84
+    },
+    {
+      "id": "release.deploy_strategy",
+      "section": "Procesos de Release",
+      "text": "Estrategia de deploy",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "standard = downtime breve | blue-green = sin downtime, doble infra | canary = % gradual de usuarios | rolling = nodos uno a uno",
+      "example": "blue-green",
+      "options": [
+        "standard",
+        "blue-green",
+        "canary",
+        "rolling"
+      ],
+      "number": 85
+    },
+    {
+      "id": "release.rollback_strategy",
+      "section": "Procesos de Release",
+      "text": "¿Plan de rollback automatizado?",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Cómo revertís un release defectuoso: rollback automático por métrica, manual por botón, redeploy de versión anterior, etc.",
+      "example": "rollback automático si error rate > 1% durante 5min",
+      "number": 86
+    },
+    {
+      "id": "observability.apm_logs_metrics",
+      "section": "Observabilidad",
+      "text": "Stack de observabilidad (APM, logs, métricas)",
+      "type": "multiselect",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Herramientas usadas para monitorizar el sistema en producción.",
+      "example": "Datadog, Sentry",
+      "options": [
+        "Datadog",
+        "New Relic",
+        "Sentry",
+        "Grafana",
+        "ELK/OpenSearch",
+        "Splunk",
+        "CloudWatch",
+        "ninguno",
+        "otro"
+      ],
+      "number": 87
+    },
+    {
+      "id": "observability.alerting",
+      "section": "Observabilidad",
+      "text": "Sistema de alertas",
+      "type": "string",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Por dónde llegan las alertas críticas: PagerDuty, Opsgenie, Slack, email, etc.",
+      "example": "PagerDuty + Slack #incidents",
+      "number": 88
+    },
+    {
+      "id": "observability.dashboards",
+      "section": "Observabilidad",
+      "text": "¿Dashboards públicos para stakeholders?",
+      "type": "boolean",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Si stakeholders no técnicos (negocio, ejecutivos) verán métricas operativas.",
+      "example": "sí",
+      "number": 89
+    },
+    {
+      "id": "multi.languages",
+      "section": "Multi-X (idioma, tenant, región)",
+      "text": "Idiomas soportados (separados por coma)",
+      "type": "array",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Códigos ISO de idiomas que el producto debe soportar. Si solo uno, indica solo ese.",
+      "example": "es, en, fr",
+      "validation": {
+        "min_items": 1,
+        "max_items": 20,
+        "separator": ","
+      },
+      "number": 90
+    },
+    {
+      "id": "multi.tenant",
+      "section": "Multi-X (idioma, tenant, región)",
+      "text": "¿Multi-tenant?",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Determina cómo se aíslan los datos de distintos clientes. Impacta arquitectura, despliegue y compliance.",
+      "example": "single-DB shared (con tenant_id)",
+      "options": [
+        "no (single-tenant)",
+        "single-DB shared (con tenant_id)",
+        "single-DB per tenant",
+        "multi-DB (DB por tenant)"
+      ],
+      "number": 91
+    },
+    {
+      "id": "multi.regions",
+      "section": "Multi-X (idioma, tenant, región)",
+      "text": "¿Multi-región?",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Si el sistema corre en una región o varias. Multi-región mejora latencia y resiliencia, pero complica replicación.",
+      "example": "una sola región",
+      "options": [
+        "una sola región",
+        "multi-región activo-pasivo",
+        "multi-región activo-activo"
+      ],
+      "number": 92
+    },
+    {
+      "id": "multi.i18n_strategy",
+      "section": "Multi-X (idioma, tenant, región)",
+      "text": "Estrategia de i18n",
+      "type": "select",
+      "required": true,
+      "modes": [
+        "serio"
+      ],
+      "help": "Cómo se almacenan y entregan las traducciones. Cada estrategia tiene tradeoffs en flujo de trabajo y rendimiento.",
+      "example": "archivos JSON por idioma",
+      "options": [
+        "archivos JSON por idioma",
+        "gettext / PO files",
+        "base de datos",
+        "servicio externo (Phrase, Lokalise)"
+      ],
+      "number": 93
     }
   ]
 }

@@ -8,6 +8,15 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ASANA_UTILS="$SCRIPT_DIR/lib/asana-utils.sh"
 
+# Auto-cargar .env desde el root del proyecto SpecLeap.
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [[ -f "$PROJECT_ROOT/.env" ]]; then
+    set -a
+    # shellcheck disable=SC1090
+    source "$PROJECT_ROOT/.env"
+    set +a
+fi
+
 source "$ASANA_UTILS"
 
 # Colores

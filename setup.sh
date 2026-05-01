@@ -642,6 +642,10 @@ GITHUB_USER=$GITHUB_USER
 # Asana (REQUIRED)
 ASANA_ACCESS_TOKEN=$ASANA_TOKEN
 ASANA_WORKSPACE_ID=$ASANA_WORKSPACE_ID
+# ASANA_WORKSPACE_GID es alias de ASANA_WORKSPACE_ID — los scripts del backlog
+# (generate-asana-structure.sh, asana-utils.sh) leen GID; lo exponemos para
+# evitar tener que detectarlo cada vez via API.
+ASANA_WORKSPACE_GID=$ASANA_WORKSPACE_ID
 
 # CodeRabbit (installed via GitHub App)
 # https://github.com/apps/coderabbitai

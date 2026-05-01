@@ -13,6 +13,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`.commands/inicio.md` — nuevo Paso 0 (antes de listar proyectos) que ofrece instalar `markitdown`** (Microsoft, MIT, Python 3.10+) como herramienta opcional. Convierte PDF/Word/Excel/PowerPoint/HTML/CSV/JSON/XML/EPUB a Markdown. Cuando SpecLeap procesa documentos no-markdown durante el flujo conversacional, esta conversión previa baja el consumo de tokens entre 20% y 50%. El prompt se ejecuta UNA SOLA VEZ por sesión "Hola", es bilingüe (ES default, EN si el usuario habla en inglés), y nunca bloquea el flujo principal: si el usuario dice "No" o "Más tarde" se sigue normalmente con el listado de proyectos. Si dice "Sí", se verifica con `command -v markitdown` y se muestran instrucciones de instalación (`pip install 'markitdown[all]'` o `pipx install`) si no está. Pedido por Styng tras validar v2.1.14: quería que tras "Hola" se ofreciera la herramienta antes de empezar el primer proyecto.
 
+### Fixed
+
+- **Bug Asana: `.env` no se cargaba en sesiones nuevas de Claude Code.** `setup.sh` guarda `ASANA_ACCESS_TOKEN` y `ASANA_WORKSPACE_GID` en `.env` del proyecto SpecLeap, pero la shell que arranca Claude Code no lo carga automáticamente. Resultado: `crear-tickets` y `planificar` reportaban "ASANA_ACCESS_TOKEN no configurado" aunque el token sí existía en el `.env`.
+  - **Fix**: `scripts/generate-asana-structure.sh` y `scripts/create-asana-tasks.sh` cargan `.env` con `set -a && source .env && set +a` al inicio (red de seguridad).
+  - **Fix**: `.commands/planificar.md` instruye a la AI a hacer la misma carga ANTES de comprobar el token, dando un mensaje claro al usuario si falta.
+  - **Fix**: `setup.sh` exporta tanto `ASANA_WORKSPACE_ID` como `ASANA_WORKSPACE_GID` (mismo valor) en `.env`, porque distintos scripts usan distintos nombres y antes había que hacer un roundtrip a la API para resolverlo.
+  - **Reportado por Styng** durante test 2026-05-01 de v2.1.14.
+
+### Changed
+
+- **Ejemplos sesgados en cuestionario y comandos sustituidos por nombres genéricos neutros.** Antes los ejemplos eran `casa-de-peli`, `app-tienda`, `Mi Proyecto Awesome`, `Casa de Películas`, `Tienda Online de Café`, `Juan Pérez`, etc. Cambiados a `task-manager`, `inventory-app`, `crm-suite`, `Task Manager Pro`, `María García`, etc. Afecta: `scripts/lib/questions.es.json`, `scripts/lib/questions.en.json`, `.commands/inicio.md`, `.commands/explicar.md`, `.commands/implementar.md`, `.commands/planificar.md`, `.commands/nuevo/README.md`, `.commands/nuevo/responses-example.yaml`. Reportado por Styng: los ejemplos eran reconocibles como proyectos suyos y eso confunde a usuarios nuevos.
+- **Pregunta 9 (competidores) ahora explica el "para qué".** Antes el `help` decía solo "Productos similares que te sirven de inspiración" — el usuario no entendía por qué se preguntaba. Ahora dice "Si conoces apps similares, las usaré como referencia para sugerir features y patrones de UX. Si no, escribe `ninguno` o déjalo vacío".
+
+### Added
+
+- **Tres modos de cuestionario al inicio del Flujo A (proyecto nuevo): MVP, Proyecto serio, Modo creativo.** Después de pedir el nombre del proyecto, `.commands/inicio.md` lanza un `AskUserQuestion` (Paso A0) preguntando qué tipo de proyecto se va a montar:
+  - **MVP** (58 preguntas, 15-20 min) — proyecto pequeño / prototipo / 1 persona o equipo pequeño. Es el comportamiento histórico.
+  - **Proyecto serio** (93 preguntas, 25-35 min) — equipo + departamentos + compliance + SLAs. Las 58 base + 35 nuevas: governance (5), departamentos involucrados (3), integraciones empresariales (5: SSO, ERP, CRM, BI, payroll), SLAs y resiliencia (5: uptime/RTO/RPO/DR/on-call), compliance (4: frameworks, DPO, audit log retention, data residency), roadmap por fases (3), procesos de release (3: feature flags, deploy strategy, rollback), observabilidad (3: APM/alerting/dashboards), multi-X (4: idiomas, tenant, regiones, i18n strategy).
+  - **Modo creativo** (5-10 min) — el usuario describe el proyecto en un párrafo libre; la AI extrae lo dicho con razonamiento estructurado, muestra un resumen para validar, y solo pregunta los **campos críticos** que no fueron mencionados (`scripts/lib/critical_fields.json` define 18 críticos para MVP y 11 extra para Serio).
+
+- **Transiciones bidireccionales entre modos (Paso A9).** Tras generar el CONTRATO en cualquier modo, ofrecer al usuario:
+  - Mantener como está → seguir a `crear-tickets`.
+  - Pasar a Serio → contestar las 35 preguntas extra de governance/compliance/SLAs (manteniendo las respuestas existentes).
+  - Pasar a Creativo → describir matices en un párrafo libre que se añade como sección "Contexto Adicional" del CONTRATO.
+  El paso es iterativo: se puede repetir para ir construyendo el CONTRATO incrementalmente.
+
+- **`scripts/lib/questions.es.json` y `scripts/lib/questions.en.json` ahora marcan cada pregunta con un campo `modes`.** Las 58 base llevan `["mvp", "serio"]` (aparecen en ambos modos); las 35 nuevas llevan `["serio"]` (solo en modo serio). El cuestionario filtra por modo elegido antes de renderizar.
+
+- **Nuevo archivo `scripts/lib/critical_fields.json`** que define los campos mínimos que el modo creativo verifica tras la extracción del párrafo del usuario. Si falta alguno, la AI hace una pregunta dirigida con contexto explicando POR QUÉ se necesita.
+
 ### Removed
 
 - **`composer.json`** — residual de un proyecto Laravel previo (`barryvdh/laravel-dompdf`). SpecLeap no usa Composer ni PHP en sus dependencias; el archivo nunca debió formar parte del paquete npm.
