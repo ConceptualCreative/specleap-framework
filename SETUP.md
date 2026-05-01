@@ -2,23 +2,70 @@
 
 ## ⚡ Quick Start (5 minutos)
 
-### Paso 1: Clonar el repositorio
+Hay **dos formas de instalar SpecLeap**. Elige la que prefieras según cómo te resulte más cómodo trabajar.
+
+### Comparativa rápida
+
+| | Opción A: vía npx | Opción B: vía git clone |
+|---|---|---|
+| **Pregunta carpeta y nombre** | ✅ Sí, prompt interactivo | ❌ No (lo decides con `cd` y `git clone <url> <nombre>`) |
+| **Requiere** | Node.js ≥ 18, Git, Bash | Git, Bash |
+| **Cuándo usar** | Quieres setup guiado | Manejas git fluidamente |
+
+---
+
+### Opción A: vía npx (recomendado para empezar)
 
 ```bash
-git clone https://github.com/ConceptualCreative/specleap-framework.git
-cd specleap-framework
+cd ~/Downloads      # o donde quieras que vaya el proyecto
+npx specleap-framework@latest
 ```
 
-### Paso 2: Ejecutar instalador
+El instalador te pregunta:
+1. **Carpeta base** (default = donde estás).
+2. **Nombre de la carpeta** (default = `specleap-framework`).
+
+Después continúa con el setup normal (idioma, GitHub token, Asana token, skills, CodeRabbit).
+
+**Ejemplo:**
+
+```
+📁 ¿En qué carpeta base instalar SpecLeap?
+   Default: /Users/tu-usuario/Downloads
+Carpeta base: (Enter para usar default)
+
+📝 ¿Qué nombre quieres para la carpeta?
+   Default: specleap-framework
+Nombre: mi-app-tienda
+
+→ Resultado final: /Users/tu-usuario/Downloads/mi-app-tienda/
+```
+
+---
+
+### Opción B: vía git clone
 
 ```bash
-bash install.sh
+# Clona el repo con el nombre que tú quieras (segundo argumento de git clone)
+git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
+cd mi-proyecto
+bash setup.sh
 ```
 
-**Qué hace:**
+Aquí **no hay prompts de carpeta o nombre** — ya estás dentro de `mi-proyecto/` que tú nombraste con git. El `setup.sh` arranca directo con la selección de idioma.
+
+Si haces `git clone <url>` **sin segundo argumento**, la carpeta se llamará `specleap-framework` por defecto. El setup te avisará por si esperabas otro nombre y te ofrecerá cancelar.
+
+---
+
+### Después del setup (ambas opciones)
+
+**Qué hace `setup.sh`:**
 - Selecciona idioma (Español/English)
-- Crea estructura de carpetas
-- Genera archivos base
+- Pide tokens GitHub y Asana
+- Instala los 34 Agent Skills en `~/.skills/`
+- Configura CodeRabbit
+- Crea estructura base + archivos de configuración
 
 ### Paso 3: Responder cuestionario
 

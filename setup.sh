@@ -49,6 +49,38 @@ echo -e "${CYAN}${LINE}${NC}"
 echo ""
 
 # ============================================
+# PRE-CHECK: Aviso si la carpeta se llama "specleap-framework"
+# ============================================
+# Si el usuario clonó con `git clone <url>` (sin segundo argumento), la
+# carpeta se llamará "specleap-framework" por defecto. Le avisamos por si
+# quería otro nombre, antes de empezar el setup interactivo.
+# Solo aplica cuando setup.sh se ejecuta directamente (no via bin/specleap,
+# que ya pregunta nombre interactivamente). Detectamos este caso por
+# ausencia de la variable SPECLEAP_INSTALL_PATH (que solo la pone bin/specleap).
+
+CURRENT_FOLDER_NAME="$(basename "$(pwd)")"
+
+if [ -z "${SPECLEAP_INSTALL_PATH:-}" ] && [ "$CURRENT_FOLDER_NAME" = "specleap-framework" ]; then
+    echo "ℹ️  Esta carpeta se llama 'specleap-framework' (nombre por defecto de git clone)."
+    echo "   This folder is named 'specleap-framework' (git clone default)."
+    echo ""
+    echo "   Si querías otro nombre / If you wanted a different name:"
+    echo "     1) Cancela con Ctrl+C / Cancel with Ctrl+C"
+    echo "     2) Vuelve a ejecutar / Run again with:"
+    echo "        git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto"
+    echo "        cd mi-proyecto"
+    echo "        bash setup.sh"
+    echo ""
+    read -p "¿Continuar con el nombre 'specleap-framework'? / Continue with 'specleap-framework'? [S/n]: " CONTINUE_DEFAULT
+    if [[ "$CONTINUE_DEFAULT" =~ ^[Nn]$ ]]; then
+        echo ""
+        echo "Cancelado por el usuario / Cancelled by user."
+        exit 0
+    fi
+    echo ""
+fi
+
+# ============================================
 # PASO 1: Selección de Idioma
 # ============================================
 
