@@ -91,14 +91,14 @@ Usuario: "explicar cómo funciona el sistema de autenticación"
 IA:
 🔍 Leyendo contexto del proyecto...
 
-cat proyectos/app-tienda/CONTRATO.md:
+cat proyectos/task-manager/CONTRATO.md:
   Sistema de Usuarios → Autenticación: Laravel Sanctum (SPA)
 
-cat proyectos/app-tienda/context/tech-stack.md:
+cat proyectos/task-manager/context/tech-stack.md:
   Autenticación: Laravel Sanctum 4.x
   Frontend: React 18 con axios
 
-cat proyectos/app-tienda/context/architecture.md:
+cat proyectos/task-manager/context/architecture.md:
   API stateless, tokens en localStorage
 
 ---

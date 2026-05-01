@@ -256,8 +256,8 @@ cd /path/to/specleap
 # Output esperado:
 # ✅ CONTRATO.md generado exitosamente
 # 📁 Archivos creados:
-#   - proyectos/casa-de-peli/CONTRATO.md
-#   - proyectos/casa-de-peli/context/brief.md
+#   - proyectos/task-manager/CONTRATO.md
+#   - proyectos/task-manager/context/brief.md
 #   - ...
 ```
 
@@ -265,10 +265,10 @@ cd /path/to/specleap
 
 ```bash
 # Ver frontmatter
-head -n 100 proyectos/casa-de-peli/CONTRATO.md
+head -n 100 proyectos/task-manager/CONTRATO.md
 
 # Ver estructura completa
-cat proyectos/casa-de-peli/CONTRATO.md
+cat proyectos/task-manager/CONTRATO.md
 ```
 
 ## 🔧 Próximos Pasos (Fase 2)

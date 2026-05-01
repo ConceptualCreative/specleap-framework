@@ -167,6 +167,8 @@ Continúa con **Paso 1** (listar proyectos) sin importar la respuesta. La instal
 
 ### Paso 1: Listar Proyectos Disponibles
 
+> **Nota:** Si el usuario va a crear un proyecto nuevo (Flujo A más adelante), antes de empezar el cuestionario lanzaremos el **Paso A0 — Selección de Modo** (MVP / Serio / Creativo). Si va a trabajar en un proyecto existente o adoptar legacy, ese paso se omite.
+
 Ejecuta bash para listar proyectos:
 
 ```bash
@@ -176,9 +178,9 @@ ls proyectos/
 **Output esperado:**
 ```
 _template
-app-tienda
-api-backend
-dashboard-analytics
+task-manager
+inventory-app
+crm-suite
 ...
 ```
 
@@ -210,6 +212,44 @@ Usar `AskUserQuestion` (modal interactivo):
 
 ## Flujo A: Proyecto Nuevo (Cuestionario Interactivo)
 
+### Paso A0: Selección de Modo de Trabajo
+
+**ANTES de pedir el nombre del proyecto**, preguntar al usuario qué tipo de proyecto va a montar. Esto determina cuántas preguntas se le harán y por qué carriles.
+
+Usar `AskUserQuestion`:
+
+```markdown
+## Tipo de proyecto que vas a crear
+
+○ **MVP** — proyecto pequeño, prototipo o piloto.
+  - 58 preguntas estructuradas (~15-20 min).
+  - Ideal para 1 persona o equipo pequeño.
+
+○ **Proyecto serio** — equipo grande, varios departamentos, compliance, SLAs.
+  - 93 preguntas estructuradas (~25-35 min).
+  - Cubre governance, integraciones empresariales, SLAs, compliance, roadmap por fases, observabilidad, multi-tenant/i18n.
+
+○ **Modo creativo** — describes tu proyecto en un párrafo, yo extraigo y solo te pregunto los huecos.
+  - 5-10 minutos.
+  - Ideal si ya tienes claro qué quieres construir y prefieres conversar antes que rellenar formulario.
+```
+
+Guardar la elección como variable de sesión `MODE` (valores: `mvp`, `serio`, `creativo`).
+
+#### Si elige MVP
+
+Continúa con Paso A1 normal. El cuestionario filtra `questions.es.json` por `modes` que contengan `"mvp"` (= 58 preguntas).
+
+#### Si elige Proyecto serio
+
+Continúa con Paso A1 normal. El cuestionario filtra por `modes` que contengan `"serio"` (= 93 preguntas, las 58 de MVP + 35 nuevas de governance/compliance/SLAs/etc.).
+
+#### Si elige Modo creativo
+
+**Saltar Paso A1, A2, A3.** Ir directamente al Paso A1.5 (Modo Creativo) descrito más abajo.
+
+---
+
 ### Paso A1: Nombre del Proyecto
 
 Usar `AskUserQuestion`:
@@ -220,10 +260,10 @@ Usar `AskUserQuestion`:
 ¿Cuál es el nombre del nuevo proyecto?
 
 ○ **Nombre con guiones** (Recomendado)
-  Ejemplo: mi-proyecto-web, app-mobile, api-backend
+  Ejemplo: task-manager, inventory-app, crm-suite
 
 ○ **Nombre simple**
-  Ejemplo: portfolio, dashboard, ecommerce
+  Ejemplo: portfolio, dashboard, analytics
 
 ○ **Other**
 ```
@@ -235,10 +275,10 @@ Luego preguntar:
 ```markdown
 ¿Cuál es el nombre exacto del proyecto?
 
-Por ejemplo: `mi-proyecto-web`, `app-tienda`, `api-users`, `landing-corporativa`
+Por ejemplo: `task-manager`, `inventory-app`, `crm-suite`, `landing-corporativa`
 ```
 
-Esperar nombre (ej: "casa-de-peli")
+Esperar nombre (ej: "task-manager")
 
 **Validar nombre:**
 - Solo minúsculas, números y guiones
@@ -250,7 +290,7 @@ Si es inválido:
 ```markdown
 ❌ **Error:** El nombre debe tener solo minúsculas, números y guiones.
 
-Ejemplo válido: `casa-de-peli`, `mi-tienda-online`, `api-rest-v2`
+Ejemplo válido: `task-manager`, `inventory-app`, `crm-suite`
 
 Por favor, intenta de nuevo:
 ```
@@ -259,12 +299,115 @@ Si es válido, continuar.
 
 ---
 
-### Paso A2: Iniciar Cuestionario (58 preguntas)
+### Paso A1.5: Modo Creativo (solo si `MODE = creativo`)
+
+**Si el usuario eligió MVP o Serio en el Paso A0, saltar este paso e ir directamente al Paso A2.**
+
+#### A1.5.1 — Pedir descripción libre
 
 ```markdown
-Perfecto, vamos a crear el proyecto **casa-de-peli**.
+🎨 **Modo Creativo activado.**
 
-Para generar el CONTRATO completo, necesito hacerte **58 preguntas** sobre el proyecto.
+Cuéntame tu proyecto en un párrafo (o varios). No te preocupes por el orden ni por dejarte cosas — yo extraeré lo que dijiste y te preguntaré solo lo que falte.
+
+**Ideas que me ayudan:** qué hace, para quién es, qué stack imaginas, qué prioridades tienes, fechas, presupuesto, qué NO quieres, restricciones legales, integraciones que necesitas, equipo que lo va a usar.
+
+**Tu descripción:**
+```
+
+Esperar a que el usuario escriba su párrafo. Aceptar respuestas multi-línea hasta que pulse Enter sobre línea vacía o escriba `FIN` en una línea propia.
+
+#### A1.5.2 — Extracción estructurada
+
+Sobre el texto del usuario, hacer una pasada de extracción mapeando lo dicho a los IDs de `questions.es.json` (`.en.json`). Llenar un dict interno `extracted = {id: valor}`.
+
+**Reglas de extracción:**
+
+- **No alucinar.** Si el usuario no mencionó algo, ese ID se queda vacío.
+- **Inferencias seguras**: si dice "una app web React + Laravel", inferir `stack.backend.framework: laravel`, `stack.frontend.framework: react`. Si dice "una app", NO inferir framework.
+- **Para texto libre** (como `identity.objective`, `identity.problem_solved`), usar las frases del usuario lo más literal posible, recortando a los `max_length` permitidos.
+- **Para selects/multiselects**, mapear a las opciones canónicas del JSON. Si el usuario usa sinónimos (ej: "PostgreSQL 16" → `stack.database.engine: postgresql` + `stack.database.version: 16.x`), normalizar.
+- **Confianza**: si una inferencia tiene <70% certeza, NO la rellenes — pregúntala después.
+
+#### A1.5.3 — Mostrar resumen extraído al usuario
+
+```markdown
+✅ **Esto es lo que entendí de tu descripción:**
+
+[Renderizar como tabla o lista los IDs extraídos con su valor]
+
+| Campo | Valor |
+|-------|-------|
+| Nombre proyecto | [extracted.project.name] |
+| Audiencia | [extracted.identity.target_audience] |
+| Stack backend | [extracted.stack.backend.framework] |
+| ... | ... |
+
+**¿Está bien?** Responde:
+- **Sí** — sigamos con las preguntas que faltan
+- **Corregir [ID]** — quiero cambiar X
+- **Reescribir** — déjame describir el proyecto otra vez
+```
+
+Si el usuario corrige, actualizar `extracted` y volver a mostrar.
+
+#### A1.5.4 — Pedir solo los huecos críticos
+
+Leer `scripts/lib/critical_fields.json` y filtrar:
+
+- Si MODE original era `creativo` puro → usar `mvp_critical` (18 campos).
+- Si el usuario después decide subir a serio (ver Paso A6 transiciones) → usar `mvp_critical + serio_critical_extra` (29 campos).
+
+Para cada campo crítico que NO esté en `extracted` o esté vacío:
+
+1. Buscar la pregunta correspondiente en `questions.es.json` por su `id`.
+2. Renderizarla igual que en Paso A3 (con su `text`, `help`, `example`).
+3. Encabezar con un mensaje contextual explicando POR QUÉ se pregunta:
+
+```markdown
+🔍 **Falta info clave**: [resumen del por qué importa].
+
+[Renderizar pregunta normal con text + help + example]
+```
+
+Ejemplo:
+
+```markdown
+🔍 **Falta info clave**: no mencionaste si el sistema necesita responsive design. Es importante porque afecta directamente al diseño de los componentes.
+
+### Pregunta — Diseño
+
+**¿Diseño responsive (mobile-first)?**
+
+○ sí
+○ no
+
+💡 **Ayuda:** Si esperas usuarios en móvil, recomendado.
+```
+
+#### A1.5.5 — Generar CONTRATO con lo extraído + huecos rellenados
+
+Continuar con el Paso A4 normal (Generar CONTRATO.md), usando como respuestas la unión `extracted + huecos rellenados`.
+
+---
+
+### Paso A2: Iniciar Cuestionario
+
+**Cuántas preguntas:**
+
+- Modo `mvp`: 58 preguntas (filtradas por `modes` que contengan `"mvp"`).
+- Modo `serio`: 93 preguntas (filtradas por `modes` que contengan `"serio"`).
+- Modo `creativo`: este paso se salta — ver Paso A1.5.
+
+**Tiempo estimado:**
+
+- MVP: 15-20 minutos.
+- Serio: 25-35 minutos.
+
+```markdown
+Perfecto, vamos a crear el proyecto **task-manager** en modo **[MODE]**.
+
+Para generar el CONTRATO completo, necesito hacerte **[N] preguntas** sobre el proyecto.
 
 ⏱️ **Tiempo estimado:** 15-20 minutos
 💾 **Guardado automático:** Cada 10 preguntas
@@ -279,7 +422,11 @@ Esperar confirmación (usuario responde: "Sí", "Adelante", "Ok", etc.)
 
 ### Paso A3: Preguntas (Leer desde questions.json)
 
-**IMPORTANTE:** Leer `scripts/lib/questions.json` y procesar las preguntas en orden.
+**IMPORTANTE:**
+
+1. Leer `scripts/lib/questions.es.json` (o `.en.json` según el idioma elegido en setup) y procesar las preguntas en orden.
+2. **Filtrar por modo**: solo procesar preguntas cuyo array `modes` contenga el modo elegido por el usuario (`mvp`, `serio`, o `creativo` — aunque creativo no usa este flujo).
+3. Las preguntas con `modes: ["mvp", "serio"]` aparecen en ambos modos (las 58 base). Las preguntas con `modes: ["serio"]` solo aparecen en modo serio (las 35 nuevas de governance/compliance/SLAs/etc.).
 
 #### Estructura de cada pregunta:
 
@@ -576,7 +723,7 @@ Crear estructura del proyecto:
 
 ```bash
 # Copiar template
-cp -r proyectos/_template proyectos/casa-de-peli
+cp -r proyectos/_template proyectos/task-manager
 
 # Guardar CONTRATO.md
 # (Usar Write con el contenido generado)
@@ -588,7 +735,7 @@ Generar archivos adicionales:
 
 **context/brief.md:**
 ```markdown
-# Brief — casa-de-peli
+# Brief — task-manager
 
 **Proyecto:** [project.display_name]
 **Responsable:** [project.responsible]
@@ -620,7 +767,7 @@ Generar archivos adicionales:
 
 **context/tech-stack.md:**
 ```markdown
-# Tech Stack — casa-de-peli
+# Tech Stack — task-manager
 
 ## Backend
 
@@ -657,7 +804,7 @@ Generar archivos adicionales:
 
 **context/architecture.md:**
 ```markdown
-# Arquitectura — casa-de-peli
+# Arquitectura — task-manager
 
 ## Patrón Arquitectónico
 
@@ -684,7 +831,7 @@ Generar archivos adicionales:
 
 **context/conventions.md:**
 ```markdown
-# Convenciones — casa-de-peli
+# Convenciones — task-manager
 
 ## Nomenclatura
 
@@ -713,7 +860,7 @@ Generar archivos adicionales:
 
 **context/decisions.md:**
 ```markdown
-# Decisiones — casa-de-peli
+# Decisiones — task-manager
 
 **Fecha:** [fecha actual]
 
@@ -778,12 +925,12 @@ Generar archivos adicionales:
 ### Paso A7: Confirmar Creación
 
 ```markdown
-✅ **Proyecto casa-de-peli creado exitosamente**
+✅ **Proyecto task-manager creado exitosamente**
 
 **Estructura creada:**
 
 ```
-proyectos/casa-de-peli/
+proyectos/task-manager/
 ├── CONTRATO.md          (🔒 inmutable — 58 preguntas procesadas)
 ├── ANEXOS.md            (✏️ editable)
 ├── README.md
@@ -858,6 +1005,59 @@ cd proyectos/[nombre-proyecto]
 
 ---
 
+### Paso A9: Transición a otro modo (opcional, después de generar CONTRATO)
+
+**Después de que el CONTRATO se haya generado en cualquier modo (MVP, Serio o Creativo)**, ofrecer al usuario la posibilidad de ampliar/refinar mediante otro modo. Esto es opcional — si el usuario ya está conforme, sigue al Paso A8 normal (crear tickets).
+
+#### A9.1 — Ofrecer transición
+
+Usar `AskUserQuestion`:
+
+```markdown
+✅ CONTRATO generado en modo **[MODE]**.
+
+¿Quieres ampliarlo o refinarlo?
+
+○ **Mantener como está** — ir directo a `crear-tickets`.
+
+○ **Pasar a modo Serio** — añadir preguntas de governance, compliance, SLAs, integraciones empresariales, multi-tenant. (~35 preguntas extra, 15-20 min).
+  - Disponible si vienes de MVP o Creativo.
+  - Si vienes de Serio, esta opción no aparece.
+
+○ **Pasar a modo Creativo** — describir aspectos extra del proyecto en un párrafo libre. Útil si quieres añadir contexto, decisiones que no estaban en el cuestionario, anotaciones para el equipo.
+  - Disponible siempre.
+```
+
+#### A9.2 — Si el usuario elige "Pasar a modo Serio"
+
+1. Mantener todas las respuestas existentes (no preguntar de nuevo).
+2. Filtrar las preguntas de `questions.es.json` por `modes` que contengan `"serio"` y que NO tengan respuesta aún en `extracted`.
+3. Renderizar y procesar SOLO esas preguntas extra (las 35 nuevas).
+4. Regenerar el CONTRATO.md con las respuestas anteriores + las nuevas.
+5. Actualizar el campo `meta.mode` en el frontmatter del CONTRATO a `serio`.
+6. Mostrar diff resumido al usuario antes de sobrescribir.
+
+#### A9.3 — Si el usuario elige "Pasar a modo Creativo"
+
+1. Pedir párrafo libre con un prompt diferente al inicial:
+
+```markdown
+🎨 Tu CONTRATO ya tiene la base. Ahora cuéntame en un párrafo cualquier matiz, contexto, decisión o detalle que NO te haya preguntado y quieras dejar registrado. Lo añadiré a una sección **"Contexto Adicional"** del CONTRATO.
+```
+
+2. Tomar el párrafo del usuario y añadirlo al CONTRATO.md como una sección nueva titulada `## Contexto Adicional`, debajo de `## Restricciones`.
+3. Actualizar el campo `meta.mode` del frontmatter a `[modo_anterior]+creativo` (ej: `mvp+creativo`, `serio+creativo`).
+
+#### A9.4 — Si el usuario elige "Mantener como está"
+
+Ir al Paso A8 (crear tickets).
+
+#### A9.5 — Iteración
+
+El Paso A9 puede repetirse: tras pasar a Serio o añadir Contexto Adicional, volver a ofrecer A9 hasta que el usuario diga "Mantener". Esto permite construir el CONTRATO de forma incremental.
+
+---
+
 ## Flujo B: Proyecto Existente (Trabajar en proyecto ya creado)
 
 ### Paso B1: Seleccionar Proyecto
@@ -866,9 +1066,9 @@ cd proyectos/[nombre-proyecto]
 **¿En cuál proyecto vas a trabajar?**
 
 Proyectos disponibles:
-1. app-tienda
-2. api-backend
-3. dashboard-analytics
+1. task-manager
+2. inventory-app
+3. crm-suite
 
 Responde con el número o el nombre:
 ```
@@ -907,7 +1107,7 @@ Responde A o B:
 **¿Qué ticket vas a trabajar?**
 
 Opciones:
-- Dime el ID del ticket (ejemplo: app-tienda-23)
+- Dime el ID del ticket (ejemplo: task-manager-23)
 - O describe la tarea que vas a hacer
 
 **Comandos disponibles:**

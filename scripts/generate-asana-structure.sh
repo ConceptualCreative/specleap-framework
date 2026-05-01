@@ -4,6 +4,17 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/../.specleap/i18n.sh"
 
+# Auto-cargar .env desde el root del proyecto SpecLeap.
+# setup.sh guarda ASANA_ACCESS_TOKEN/ASANA_WORKSPACE_GID en .env, pero las
+# shells nuevas (ej: las que arranca Claude Code) no lo cargan automáticamente.
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [[ -f "$PROJECT_ROOT/.env" ]]; then
+    set -a
+    # shellcheck disable=SC1090
+    source "$PROJECT_ROOT/.env"
+    set +a
+fi
+
 # SpecLeap — Generador de estructura Asana
 # Convierte CONTRATO.md → proyecto Asana con secciones y tareas
 
