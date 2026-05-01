@@ -46,15 +46,21 @@ Nombre: mi-app-tienda
 ### Opción B: vía git clone
 
 ```bash
-# Clona el repo con el nombre que tú quieras (segundo argumento de git clone)
-git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
-cd mi-proyecto
+git clone https://github.com/ConceptualCreative/specleap-framework.git
+cd specleap-framework
 bash setup.sh
 ```
 
-Aquí **no hay prompts de carpeta o nombre** — ya estás dentro de `mi-proyecto/` que tú nombraste con git. El `setup.sh` arranca directo con la selección de idioma.
+**El primer paso del setup pregunta cómo quieres llamar la carpeta** (Paso 0). Pulsas Enter para mantenerla con el nombre que tiene, o escribes otro nombre y el setup renombra la carpeta automáticamente antes de seguir con idioma/tokens.
 
-Si haces `git clone <url>` **sin segundo argumento**, la carpeta se llamará `specleap-framework` por defecto. El setup te avisará por si esperabas otro nombre y te ofrecerá cancelar.
+Atajo: si ya sabes el nombre, pásaselo a `git clone` y luego pulsas Enter en el Paso 0 para mantenerlo:
+
+```bash
+git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
+cd mi-proyecto
+bash setup.sh
+# Paso 0: pulsa Enter para mantener "mi-proyecto"
+```
 
 ---
 

@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.14] - 2026-05-01
+
+### Changed
+
+- **`setup.sh` ahora pregunta SIEMPRE el nombre de la carpeta como Paso 0**, antes de la selección de idioma y antes de pedir cualquier token. Si el usuario escribe un nombre distinto al actual, el script renombra la carpeta in-place (`mv`) y sigue trabajando desde el nuevo path. Si pulsa Enter, se mantiene el nombre que ya tiene.
+- El warning condicional introducido en v2.1.13 (que solo aparecía cuando la carpeta se llamaba exactamente `specleap-framework`) se elimina: el nuevo prompt activo lo reemplaza por completo, sin importar cómo se llame la carpeta de partida.
+
+#### Por qué
+
+Reportado por Styng tras testear v2.1.13: él esperaba un prompt activo, no un warning condicional. Con `git clone <url> mi-proyecto && cd mi-proyecto && bash setup.sh`, la v2.1.13 no preguntaba nada porque la carpeta no se llamaba `specleap-framework` (el filtro original era demasiado estrecho). Ahora el flujo es uniforme: el usuario siempre tiene la oportunidad de elegir el nombre, sin tener que recordar la sintaxis del segundo argumento de `git clone`.
+
+#### Detalles del flujo
+
+- Validación del nombre: letras, números, `-`, `_` y `.`, no puede empezar con `.`, máximo 100 caracteres. El prompt re-pregunta hasta que sea válido.
+- Si el nombre escrito coincide con el actual, no hace `mv` (no-op), simplemente continúa.
+- Si el nuevo path ya existe, se mantiene el nombre actual y se imprime un aviso (no aborta el setup).
+- Si `SPECLEAP_INSTALL_PATH` ya está set (caso `npx` que pasa por `bin/specleap`), el bloque se salta entero — `bin/specleap` ya pidió el nombre antes de copiar archivos.
+- El proceso bash sobrevive al `mv` del directorio activo porque mantiene el inode, no el path; tras el rename hace `cd` al nuevo path antes de continuar.
+
+#### Tests cubiertos (4 escenarios, todos pasaron)
+
+1. Enter en una carpeta llamada `specleap-framework` → mantiene nombre, no renombra.
+2. Carpeta `mi-proyecto` + nombre nuevo `tienda-online` → renombra, vieja desaparece, nueva existe.
+3. Carpeta `inicio` + nombre inválido `mi proyecto con espacios` + nombre válido `mi-proyecto-valido` → re-pregunta y luego renombra.
+4. Carpeta `specleap-framework` + `SPECLEAP_INSTALL_PATH` set → no pregunta, va directo a Paso 1/6.
+
+### Updated
+
+- `README.md` y `SETUP.md`: la sección "Opción B: vía git clone" ahora explica que `setup.sh` pregunta el nombre como Paso 0 y que pasarlo a `git clone` es solo un atajo, no una obligación.
+
 ## [2.1.13] - 2026-05-01
 
 ### Fixed
