@@ -48,23 +48,8 @@ echo -e "${YELLOW}  v2.0.0 — Instalador Profesional${NC}"
 echo -e "${CYAN}${LINE}${NC}"
 echo ""
 
-# ============================================
-# PASO 0: Nombre de la carpeta del proyecto
-# ============================================
-# Solo se pregunta cuando setup.sh se ejecuta DIRECTAMENTE (`bash setup.sh`
-# tras `git clone …`). Si vienes desde `bin/specleap` (vía `npx`) ese script
-# ya preguntó nombre y ya creó la carpeta — entonces SPECLEAP_INSTALL_PATH
-# está set y saltamos este bloque para no preguntar dos veces.
-#
-# Si el usuario escribe un nombre distinto al actual, el script RENOMBRA
-# la carpeta in-place: `mv` del directorio actual al nuevo y `cd` al nuevo.
-# El proceso bash sigue vivo durante el rename porque se aferra al inode,
-# no al path.
-
-CURRENT_PATH="$(pwd)"
-CURRENT_FOLDER_NAME="$(basename "$CURRENT_PATH")"
-PARENT_PATH="$(dirname "$CURRENT_PATH")"
-
+# Helper usado por el Paso 2 (nombre de carpeta) más abajo.
+# Definido aquí porque es lógica pura sin dependencia de idioma.
 is_valid_folder_name() {
     local name="$1"
     [ -z "$name" ] && return 1
@@ -73,61 +58,6 @@ is_valid_folder_name() {
     [[ "$name" =~ ^[A-Za-z0-9_][A-Za-z0-9_.\-]*$ ]] && return 0
     return 1
 }
-
-if [ -z "${SPECLEAP_INSTALL_PATH:-}" ]; then
-    echo "📝 ¿Cómo quieres que se llame la carpeta del proyecto?"
-    echo "   What name do you want for the project folder?"
-    echo ""
-    echo "   Carpeta actual / Current: $CURRENT_FOLDER_NAME"
-    echo "   Default si pulsas Enter / Default on Enter: specleap-framework"
-    echo "   Permitido / Allowed: letras, números, '-', '_', '.'"
-    echo ""
-
-    while true; do
-        read -p "Nombre / Name: " RAW_NAME
-        # Si Enter vacío → default 'specleap-framework'
-        # Excepto si ya se llama así y el user pulsa Enter, mantenemos
-        if [ -z "$RAW_NAME" ]; then
-            NEW_NAME="specleap-framework"
-        else
-            NEW_NAME="$RAW_NAME"
-        fi
-
-        if is_valid_folder_name "$NEW_NAME"; then
-            break
-        fi
-
-        echo ""
-        echo "❌ Nombre inválido / Invalid name: \"$NEW_NAME\""
-        echo "   Usa solo letras, números, '-', '_' y '.' (no empezar con '.')"
-        echo "   Use only letters, numbers, '-', '_' and '.' (cannot start with '.')"
-        echo ""
-    done
-
-    # Si el nombre coincide con el actual, no renombramos
-    if [ "$NEW_NAME" = "$CURRENT_FOLDER_NAME" ]; then
-        echo ""
-        echo "✅ Carpeta: $CURRENT_FOLDER_NAME"
-        SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
-    else
-        NEW_PATH="$PARENT_PATH/$NEW_NAME"
-        if [ -e "$NEW_PATH" ]; then
-            echo ""
-            echo "❌ Ya existe / Already exists: $NEW_PATH"
-            echo "   Se mantiene el nombre actual / Keeping current name: $CURRENT_FOLDER_NAME"
-            SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
-        else
-            mv "$CURRENT_PATH" "$NEW_PATH"
-            cd "$NEW_PATH"
-            CURRENT_PATH="$NEW_PATH"
-            CURRENT_FOLDER_NAME="$NEW_NAME"
-            SPECLEAP_INSTALL_PATH="$NEW_PATH"
-            echo ""
-            echo "✅ Carpeta renombrada / Folder renamed: $NEW_NAME"
-        fi
-    fi
-    echo ""
-fi
 
 # ============================================
 # PASO 1: Selección de Idioma
@@ -218,6 +148,114 @@ echo -e "${GREEN}✅ curl:${NC} available"
 
 echo ""
 sleep 1
+
+# ============================================
+# PASO 1.5: Nombre de la carpeta del proyecto
+# ============================================
+# Va DESPUÉS de la selección de idioma para que los textos salgan en el
+# idioma elegido (no bilingües). Antes del Paso 2 (GitHub) para que el
+# rename sea visible en el resto de prompts y en el resumen final.
+#
+# Solo aplica cuando setup.sh se ejecuta directamente (`bash setup.sh`).
+# Si vienes desde `bin/specleap` (vía `npx`), ese script ya pidió nombre
+# y ya creó la carpeta — entonces SPECLEAP_INSTALL_PATH está set y
+# saltamos este bloque para no preguntar dos veces.
+
+if [ -z "${SPECLEAP_INSTALL_PATH:-}" ]; then
+    CURRENT_PATH="$(pwd)"
+    CURRENT_FOLDER_NAME="$(basename "$CURRENT_PATH")"
+    PARENT_PATH="$(dirname "$CURRENT_PATH")"
+
+    echo -e "${CYAN}${LINE}${NC}"
+    if [ "$LANG" = "es" ]; then
+        echo -e "${BLUE}${BOLD}Nombre de la carpeta del proyecto${NC}"
+    else
+        echo -e "${BLUE}${BOLD}Project folder name${NC}"
+    fi
+    echo -e "${CYAN}${LINE}${NC}"
+    echo ""
+
+    if [ "$LANG" = "es" ]; then
+        echo "📝 ¿Cómo quieres que se llame la carpeta del proyecto?"
+        echo ""
+        echo "   Carpeta actual: $CURRENT_FOLDER_NAME"
+        echo "   Default si pulsas Enter: specleap-framework"
+        echo "   Permitido: letras, números, '-', '_', '.'"
+        echo ""
+    else
+        echo "📝 What name do you want for the project folder?"
+        echo ""
+        echo "   Current folder: $CURRENT_FOLDER_NAME"
+        echo "   Default on Enter: specleap-framework"
+        echo "   Allowed: letters, numbers, '-', '_', '.'"
+        echo ""
+    fi
+
+    while true; do
+        if [ "$LANG" = "es" ]; then
+            read -p "$(echo -e ${YELLOW}Nombre:${NC} )" RAW_NAME
+        else
+            read -p "$(echo -e ${YELLOW}Name:${NC} )" RAW_NAME
+        fi
+
+        if [ -z "$RAW_NAME" ]; then
+            NEW_NAME="specleap-framework"
+        else
+            NEW_NAME="$RAW_NAME"
+        fi
+
+        if is_valid_folder_name "$NEW_NAME"; then
+            break
+        fi
+
+        echo ""
+        if [ "$LANG" = "es" ]; then
+            echo -e "${RED}❌ Nombre inválido: \"$NEW_NAME\"${NC}"
+            echo "   Usa solo letras, números, '-', '_' y '.' (no empezar con '.')"
+        else
+            echo -e "${RED}❌ Invalid name: \"$NEW_NAME\"${NC}"
+            echo "   Use only letters, numbers, '-', '_' and '.' (cannot start with '.')"
+        fi
+        echo ""
+    done
+
+    if [ "$NEW_NAME" = "$CURRENT_FOLDER_NAME" ]; then
+        echo ""
+        if [ "$LANG" = "es" ]; then
+            echo -e "${GREEN}✅ Carpeta:${NC} $CURRENT_FOLDER_NAME"
+        else
+            echo -e "${GREEN}✅ Folder:${NC} $CURRENT_FOLDER_NAME"
+        fi
+        SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
+    else
+        NEW_PATH="$PARENT_PATH/$NEW_NAME"
+        if [ -e "$NEW_PATH" ]; then
+            echo ""
+            if [ "$LANG" = "es" ]; then
+                echo -e "${RED}❌ Ya existe:${NC} $NEW_PATH"
+                echo -e "${YELLOW}   Se mantiene el nombre actual:${NC} $CURRENT_FOLDER_NAME"
+            else
+                echo -e "${RED}❌ Already exists:${NC} $NEW_PATH"
+                echo -e "${YELLOW}   Keeping current name:${NC} $CURRENT_FOLDER_NAME"
+            fi
+            SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
+        else
+            mv "$CURRENT_PATH" "$NEW_PATH"
+            cd "$NEW_PATH"
+            CURRENT_PATH="$NEW_PATH"
+            CURRENT_FOLDER_NAME="$NEW_NAME"
+            SPECLEAP_INSTALL_PATH="$NEW_PATH"
+            echo ""
+            if [ "$LANG" = "es" ]; then
+                echo -e "${GREEN}✅ Carpeta renombrada:${NC} $NEW_NAME"
+            else
+                echo -e "${GREEN}✅ Folder renamed:${NC} $NEW_NAME"
+            fi
+        fi
+    fi
+    echo ""
+    sleep 1
+fi
 
 # ============================================
 # PASO 2: GitHub
