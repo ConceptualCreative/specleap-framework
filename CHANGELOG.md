@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-05-02
+
 ### Changed
 
 - **`setup.sh` — el prompt del nombre de carpeta se movió a DESPUÉS del Paso 1 (idioma)**, antes del Paso 2 (GitHub). Ahora sale en el idioma elegido (sólo ES o sólo EN, no bilingüe a la vez como en v2.1.14). El comportamiento funcional es idéntico (Enter para mantener nombre actual con default `specleap-framework`, valida caracteres, renombra in-place si se cambia, salta si `SPECLEAP_INSTALL_PATH` ya está set por `bin/specleap`). Reportado por Styng tras testear v2.1.14: el bloque salía con texto bilingüe simultáneo porque se ejecutaba antes de saber qué idioma había elegido el usuario.
