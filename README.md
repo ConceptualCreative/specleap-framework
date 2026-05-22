@@ -96,7 +96,7 @@ bash setup.sh
 | **Trae los archivos** | npm los descarga | git los clona del repo |
 | **Ideal para** | Empezar rápido, no recordar el flujo de git | Devs que ya manejan git fluidamente |
 
-A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 34 Agent Skills en `~/.skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
+A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 34 Agent Skills en `~/.claude/skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
 
 **Requisitos previos:**
 
@@ -139,7 +139,7 @@ El prefijo `/` está reservado por Claude Code para sus propios slash commands (
 
 ## Agent Skills
 
-SpecLeap instala **34 Agent Skills profesionales** en `~/.skills/` durante el setup. Se activan automáticamente cuando el contexto lo requiere.
+SpecLeap instala **34 Agent Skills profesionales** en `~/.claude/skills/` (path canónico que Claude Code auto-descubre) durante el setup. Se activan automáticamente cuando el contexto lo requiere.
 
 ### TIER 1 — 20 skills base
 

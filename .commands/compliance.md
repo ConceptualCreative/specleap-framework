@@ -9,7 +9,7 @@
 ## Qué dimensiones se auditan
 
 1. **Version** — El `package.json.version` coincide con el último tag de git.
-2. **Skills** — El número de carpetas en `~/.skills/` coincide con los counters declarados en `CLAUDE.md`, `README.md` y `.quality/baselines/baseline.json`.
+2. **Skills** — El número de carpetas en `~/.claude/skills/` (o `~/.skills/` si es instalación legacy) coincide con los counters declarados en `CLAUDE.md`, `README.md` y `.quality/baselines/baseline.json`.
 3. **i18n** — Todas las claves de `.specleap/i18n/es.json` existen en `.specleap/i18n/en.json` y viceversa.
 4. **Hooks** — `.claude/hooks/spec-guard.sh` existe, tiene shebang, es ejecutable y está referenciado en `.claude/settings.json.template`.
 5. **Baseline** — `.quality/baselines/baseline.json.repo_snapshot` no difiere >20% de los counters reales del repo.

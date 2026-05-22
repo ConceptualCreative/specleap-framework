@@ -1,6 +1,10 @@
 #!/bin/bash
-# SpecLeap — Instalador de Agent Skills TIER 1 + TIER 2
-# Versión 2.1.1 — 34 skills profesionales
+# SpecLeap — Instalador de Agent Skills TIER 1 + TIER 2 (34 skills profesionales)
+#
+# Path: instala en $HOME/.claude/skills/ (path canónico que Claude Code
+# auto-descubre). Si existe $HOME/.skills/ (path legacy de versiones previas
+# de SpecLeap), se crea un symlink desde el path canónico para mantener
+# compatibilidad sin mover archivos.
 
 set -e
 
@@ -85,8 +89,21 @@ INSTALLED=0
 FAILED=0
 SKIPPED=0
 
-SKILLS_DIR="$HOME/.skills"
+SKILLS_DIR="$HOME/.claude/skills"
+LEGACY_SKILLS_DIR="$HOME/.skills"
 TMP_DIR="/tmp/specleap-skills-$$"
+
+# Compatibilidad con instalaciones legacy:
+# Si el path antiguo ($HOME/.skills/) tiene skills y el path canónico
+# no existe todavía, crear symlink. Así Claude Code los ve sin tener
+# que mover archivos ni reinstalar nada.
+if [ -d "$LEGACY_SKILLS_DIR" ] && [ ! -e "$SKILLS_DIR" ]; then
+    mkdir -p "$HOME/.claude"
+    ln -s "$LEGACY_SKILLS_DIR" "$SKILLS_DIR"
+    echo -e "${YELLOW}⚠️  Detected legacy skills path $LEGACY_SKILLS_DIR${NC}"
+    echo -e "${YELLOW}   Created symlink at $SKILLS_DIR for Claude Code auto-discovery.${NC}"
+    echo ""
+fi
 
 mkdir -p "$SKILLS_DIR"
 mkdir -p "$TMP_DIR"
