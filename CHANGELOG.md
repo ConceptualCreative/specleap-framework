@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-05-22
+
+### Fixed
+
+- **Bug crítico: los Agent Skills no se cargaban en Claude Code.** `scripts/install-skills.sh` instalaba en `$HOME/.skills/`, que es un path obsoleto que Claude Code dejó de monitorizar. El path canónico que auto-descubre Claude Code es `$HOME/.claude/skills/`. Resultado del bug: todos los usuarios de SpecLeap (incluido Styng) tenían los 34 Agent Skills instalados pero **invisibles** para el runtime — ninguno se activaba por contexto. Detectado tras consultar la doc oficial de Claude Code: solo lee skills de `~/.claude/skills/` (user-level) y `.claude/skills/` (project-level).
+  - **Fix**: `scripts/install-skills.sh` ahora instala en `$HOME/.claude/skills/`. Si detecta una instalación legacy en `$HOME/.skills/` (de versiones ≤ 2.2.0), crea un symlink desde el path canónico apuntando al legacy. Así los usuarios existentes no tienen que mover archivos ni reinstalar — solo ejecutar `bash scripts/install-skills.sh` una vez para que el symlink se cree.
+  - **Migración manual** (alternativa al symlink automático): `ln -s ~/.skills ~/.claude/skills`.
+  - **Verificación**: tras el fix, decirle "Hola" a Claude Code dentro del proyecto y pedir algo que dispare un skill conocido (ej: "qué debo verificar antes de cerrar un ticket") debe activar `verification-before-completion`.
+
+### Changed
+
+- **`CLAUDE.md`, `README.md`, `SETUP.md`, `scripts/README.md`, `.commands/compliance.md`** actualizados para reflejar el path canónico `~/.claude/skills/` y documentar la compatibilidad con instalaciones legacy.
+
 ## [2.2.0] - 2026-05-02
 
 ### Changed
