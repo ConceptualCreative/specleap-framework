@@ -69,7 +69,7 @@ bash setup.sh
 **Qué hace `setup.sh`:**
 - Selecciona idioma (Español/English)
 - Pide tokens GitHub y Asana
-- Instala los 34 Agent Skills en `~/.skills/`
+- Instala los 34 Agent Skills en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
 - Configura CodeRabbit
 - Crea estructura base + archivos de configuración
 
@@ -233,7 +233,7 @@ Instalación:
 bash scripts/install-skills.sh
 ```
 
-Se descargan e instalan 34 skills en `~/.skills/` (20 TIER 1 más 14 TIER 2):
+Se descargan e instalan 34 skills en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). 20 TIER 1 más 14 TIER 2:
 
 - **Consistencia (6):** `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `code-reviewer`, `debugging-wizard`
 - **Backend (6):** `laravel-specialist`, `api-designer`, `database-optimizer`, `python-pro`, `react-expert`, `typescript-pro`
@@ -247,7 +247,7 @@ Se descargan e instalan 34 skills en `~/.skills/` (20 TIER 1 más 14 TIER 2):
 Verificar lo instalado:
 
 ```bash
-ls ~/.skills/
+ls ~/.claude/skills/
 ```
 
 ---
@@ -393,7 +393,7 @@ export PATH="$PATH:$(pwd)/openspec/cli"
 
 1. Verifica instalación:
 ```bash
-ls -la ~/.skills/
+ls -la ~/.claude/skills/
 ```
 
 2. Reinicia tu IDE (VSCode/Cursor/JetBrains)
@@ -439,7 +439,7 @@ chmod +x .git/hooks/pre-commit
 - [ ] IDE abierto (VSCode/Cursor) y chat con Claude funcional
 - [ ] Comando `ayuda` ejecutado exitosamente
 - [ ] **Asana configurado en `.env`** (OBLIGATORIO)
-- [ ] **20 Agent Skills instaladas en ~/.skills/** (OBLIGATORIO)
+- [ ] **34 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
 - [ ] **Git hooks instalados** (OBLIGATORIO)
 - [ ] **CodeRabbit configurado en GitHub** (OBLIGATORIO)
 - [ ] **Repositorio pusheado a GitHub** (OBLIGATORIO)

@@ -172,7 +172,7 @@ Read and follow these standards for ALL code:
 
 ## Agent Skills (Progressive Disclosure)
 
-If **20 Agent Skills TIER 1** are installed (`~/.skills/`), they activate automatically:
+If **Agent Skills TIER 1 + TIER 2 (34 total)** are installed (`~/.claude/skills/`, path that Claude Code auto-discovers), they activate automatically:
 
 ### Activation Triggers
 

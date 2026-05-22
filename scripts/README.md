@@ -43,7 +43,7 @@ git commit --no-verify -m "mensaje"
 
 ### `install-skills.sh`
 
-**Propósito:** Instalar los 34 Agent Skills del framework en `~/.skills/`.
+**Propósito:** Instalar los 34 Agent Skills del framework en `~/.claude/skills/` (path canónico que Claude Code auto-descubre). Si existe `~/.skills/` de instalaciones previas (versiones ≤ 2.2.0), se crea un symlink desde el path canónico para mantener compatibilidad.
 
 **Uso:**
 ```bash
