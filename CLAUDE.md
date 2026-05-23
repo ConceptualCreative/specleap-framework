@@ -172,7 +172,17 @@ Read and follow these standards for ALL code:
 
 ## Agent Skills (Progressive Disclosure)
 
-If **Agent Skills TIER 1 + TIER 2 (34 total)** are installed (`~/.claude/skills/`, path that Claude Code auto-discovers), they activate automatically:
+SpecLeap installs **20 curated Agent Skills** in `~/.claude/skills/` (the canonical path Claude Code auto-discovers). They activate automatically when the conversation context matches each skill's `description` frontmatter.
+
+**Source repos:**
+- `obra/superpowers` — quality/process skills
+- `jeffallan/claude-skills` — stack specialists
+- `anthropics/skills` — design
+- `vercel-labs/agent-skills` — React/Next/web
+- `shadcn-ui/ui` — shadcn components
+- `supabase/agent-skills` — PostgreSQL
+- `arvindrk/extract-design-system` — design-system extraction
+- `alirezarezvani/claude-skills` — GDPR
 
 ### Activation Triggers
 
@@ -182,83 +192,69 @@ Skills load knowledge **only when needed** based on context:
 User: "Crear endpoint POST /api/products con validación"
 
 Auto-activates:
-  ✓ api-design-principles
-  ✓ backend-api-security
-  ✓ laravel-specialist
   ✓ verification-before-completion
-  ✓ postgresql-table-design
+  ✓ laravel-specialist
+  ✓ api-designer
+  ✓ database-optimizer
+  ✓ security-reviewer
 ```
 
 ### Critical Skills
 
 #### verification-before-completion ⭐ **MANDATORY**
 
-**Before creating ANY function, class, or component:**
-1. **SEARCH** existing code for similar functionality
-2. **READ** conventions.md for naming patterns
-3. **VERIFY** utilities/services don't already exist
-4. **ONLY THEN** create if nothing similar exists
+**Before claiming work is complete, fixed, or passing:**
+1. **RUN** the verification commands fresh (tests, lint, type-check, manual curl, etc.).
+2. **CONFIRM** the output is what you expected — paste the evidence.
+3. **ONLY THEN** mark the work as done, commit, or open a PR.
 
-**Anti-Pattern (NEVER DO):**
-- ❌ Create `UserHelper` when `UserService` exists
-- ❌ Create `formatPrice()` when `formatCurrency()` exists
-- ❌ Create new HTTP client when axios instance exists
+**Iron law:** *"No completion claims without fresh verification evidence."*
 
-#### code-review-excellence
+#### systematic-debugging
 
-Before committing, verify:
-- No duplicated code
-- Follows conventions.md
-- Tests coverage >= 90%
-- Security best practices
+When a bug shows up, follow the loop: reproduce → isolate → form hypothesis → test hypothesis → fix → verify. No guessing, no "this should work".
 
-#### backend-api-security
+#### test-driven-development
 
-For all endpoints:
-- Server-side validation
-- Rate limiting
-- CSRF protection
-- SQL injection prevention
-- XSS sanitization
+Write the failing test first, then the minimal code to make it pass, then refactor. Coverage target ≥ 90%.
 
-#### frontend-design + web-design-guidelines
+#### code-reviewer + requesting-code-review + receiving-code-review
 
-For all components:
-- Professional design (Vercel/Linear style)
-- Consistent spacing (4px grid)
-- Responsive mobile-first
-- Micro-interactions
-- Design system coherence
+The three skills cover the full review cycle: self-review before requesting review, asking for review with focus areas, and reacting to review feedback constructively.
 
-### Skill Categories
+### Skill Catalogue (20)
 
-**🔒 Security (5):**
-- sast-configuration
-- stride-analysis-patterns
-- security-requirement-extraction
-- backend-api-security
-- frontend-mobile-security
-
-**🔄 Consistency (3):**
+**🔄 Core / Quality (5):**
 - verification-before-completion ⭐
-- code-review-excellence
 - systematic-debugging
-
-**🎨 Design/Frontend (6):**
-- web-design-guidelines
-- frontend-design
-- ui-ux-pro-max
-- tailwind-design-system
-- shadcn-ui
-- responsive-design
-
-**🛠️ Backend/Dev (6):**
-- laravel-specialist
-- vercel-react-best-practices
+- requesting-code-review
+- receiving-code-review
 - test-driven-development
-- api-design-principles
-- postgresql-table-design
-- error-handling-patterns
+
+**🛠️ Backend (4) — Laravel + PostgreSQL:**
+- laravel-specialist
+- api-designer
+- database-optimizer
+- supabase-postgres-best-practices
+
+**⚛️ Frontend (4) — React + TypeScript + shadcn:**
+- react-expert
+- typescript-pro
+- vercel-react-best-practices
+- shadcn
+
+**🎨 Design (3):**
+- frontend-design
+- web-design-guidelines
+- extract-design-system
+
+**🔒 Security (2):**
+- security-reviewer
+- gdpr-dsgvo-expert
+
+**🔁 Process (2):**
+- code-reviewer
+- brainstorming
 
 **See:** [SETUP.md](SETUP.md) for installation details.
 

@@ -43,24 +43,22 @@ git commit --no-verify -m "mensaje"
 
 ### `install-skills.sh`
 
-**Propósito:** Instalar los 34 Agent Skills del framework en `~/.claude/skills/` (path canónico que Claude Code auto-descubre). Si existe `~/.skills/` de instalaciones previas (versiones ≤ 2.2.0), se crea un symlink desde el path canónico para mantener compatibilidad.
+**Propósito:** Instalar los 20 Agent Skills curados del framework en `~/.claude/skills/` (path canónico que Claude Code auto-descubre). Si existe `~/.skills/` de instalaciones previas (versiones ≤ 2.2.1), se crea un symlink desde el path canónico para mantener compatibilidad.
 
 **Uso:**
 ```bash
 bash scripts/install-skills.sh
 ```
 
-**Instala:** 34 skills (20 TIER 1 + 14 TIER 2).
+**Instala:** 20 skills curados para el stack de SpecLeap (Laravel + React + TypeScript + PostgreSQL).
 
 **Categorías:**
-- Consistencia: `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `code-reviewer`, `debugging-wizard`
-- Backend: `laravel-specialist`, `api-designer`, `database-optimizer`, `python-pro`, `react-expert`, `typescript-pro`
-- Diseño y frontend: `frontend-design`, `canvas-design`, `algorithmic-art`, `skill-creator`, `web-design-guidelines`, `vercel-composition-patterns`, `agent-browser`
-- DevOps: `devops-engineer`, `cloud-architect`, `architecture-designer`, `terraform-engineer`, `monitoring-expert`
-- Mobile: `react-native-expert`, `flutter-expert`
-- Testing: `test-driven-development`, `playwright-expert`, `test-master`
-- Seguridad: `security-reviewer`, `gdpr-dsgvo-expert`
-- Documentación y otros: `code-documenter`, `brainstorming`, `pdf`
+- Core / Quality (5): `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development`
+- Backend (4) — Laravel + PostgreSQL: `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices`
+- Frontend (4) — React + TS + shadcn: `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn`
+- Diseño (3): `frontend-design`, `web-design-guidelines`, `extract-design-system`
+- Seguridad (2): `security-reviewer`, `gdpr-dsgvo-expert`
+- Process (2): `code-reviewer`, `brainstorming`
 
 El script detecta las skills ya instaladas y las salta. Puede volver a ejecutarse con seguridad.
 

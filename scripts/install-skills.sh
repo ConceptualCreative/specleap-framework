@@ -1,10 +1,13 @@
 #!/bin/bash
-# SpecLeap — Instalador de Agent Skills TIER 1 + TIER 2 (34 skills profesionales)
+# SpecLeap — Instalador de Agent Skills (20 skills curados para el flujo SDD)
 #
 # Path: instala en $HOME/.claude/skills/ (path canónico que Claude Code
 # auto-descubre). Si existe $HOME/.skills/ (path legacy de versiones previas
 # de SpecLeap), se crea un symlink desde el path canónico para mantener
 # compatibilidad sin mover archivos.
+#
+# La lista está curada para el stack de SpecLeap (Laravel + React + TypeScript
+# + PostgreSQL) y el flujo CONTRATO → tickets → implementar → verify.
 
 set -e
 
@@ -14,74 +17,44 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo -e "${BLUE}━━━ Installing Agent Skills (34 total) ━━━${NC}"
+echo -e "${BLUE}━━━ Installing 20 curated Agent Skills ━━━${NC}"
 echo ""
 
 # Lista de skills (repo:path:name)
+# El "name" debe coincidir con el frontmatter `name` del SKILL.md del repo,
+# porque ese es el identificador que Claude Code usa para activar la skill.
 SKILLS=(
-    # Consistencia (3) - obra/superpowers
+    # Core / Quality (5)
     "obra/superpowers:skills/verification-before-completion:verification-before-completion"
     "obra/superpowers:skills/systematic-debugging:systematic-debugging"
     "obra/superpowers:skills/requesting-code-review:requesting-code-review"
-    
-    # Backend (7) - jeffallan/claude-skills
+    "obra/superpowers:skills/receiving-code-review:receiving-code-review"
+    "obra/superpowers:skills/test-driven-development:test-driven-development"
+
+    # Backend Stack (4) — Laravel + PostgreSQL
     "jeffallan/claude-skills:skills/laravel-specialist:laravel-specialist"
     "jeffallan/claude-skills:skills/api-designer:api-designer"
     "jeffallan/claude-skills:skills/database-optimizer:database-optimizer"
-    "jeffallan/claude-skills:skills/code-reviewer:code-reviewer"
-    "jeffallan/claude-skills:skills/debugging-wizard:debugging-wizard"
-    "jeffallan/claude-skills:skills/python-pro:python-pro"
+    "supabase/agent-skills:skills/supabase-postgres-best-practices:supabase-postgres-best-practices"
+
+    # Frontend Stack (4) — React + TypeScript + Tailwind/shadcn
     "jeffallan/claude-skills:skills/react-expert:react-expert"
-    
-    # Diseño (4) - anthropics/skills
-    "anthropics/skills:skills/frontend-design:frontend-design"
-    "anthropics/skills:skills/skill-creator:skill-creator"
-    "anthropics/skills:skills/canvas-design:canvas-design"
-    "anthropics/skills:skills/algorithmic-art:algorithmic-art"
-    
-    # DevOps (3) - jeffallan/claude-skills
-    "jeffallan/claude-skills:skills/devops-engineer:devops-engineer"
-    "jeffallan/claude-skills:skills/cloud-architect:cloud-architect"
-    "jeffallan/claude-skills:skills/architecture-designer:architecture-designer"
-    
-    # Testing (2) - obra/superpowers
-    "obra/superpowers:skills/test-driven-development:test-driven-development"
-    "obra/superpowers:skills/receiving-code-review:receiving-code-review"
-    
-    # Frontend (1) - jeffallan/claude-skills
     "jeffallan/claude-skills:skills/typescript-pro:typescript-pro"
-    
-    # ━━━ TIER 2 Skills (14 nuevas) ━━━
-    
-    # Design/Frontend (3) - vercel-labs
+    "vercel-labs/agent-skills:skills/react-best-practices:vercel-react-best-practices"
+    "shadcn-ui/ui:skills/shadcn:shadcn"
+
+    # Design (3)
+    "anthropics/skills:skills/frontend-design:frontend-design"
     "vercel-labs/agent-skills:skills/web-design-guidelines:web-design-guidelines"
-    "vercel-labs/agent-skills:skills/composition-patterns:vercel-composition-patterns"
-    "vercel-labs/agent-browser:skills/agent-browser:agent-browser"
-    
-    # Brainstorming (1) - obra/superpowers
-    "obra/superpowers:skills/brainstorming:brainstorming"
-    
-    # PDF (1) - anthropics/skills
-    "anthropics/skills:skills/pdf:pdf"
-    
-    # DevOps/Infrastructure (2) - jeffallan/claude-skills
-    "jeffallan/claude-skills:skills/terraform-engineer:terraform-engineer"
-    "jeffallan/claude-skills:skills/monitoring-expert:monitoring-expert"
-    
-    # Mobile (2) - jeffallan/claude-skills
-    "jeffallan/claude-skills:skills/react-native-expert:react-native-expert"
-    "jeffallan/claude-skills:skills/flutter-expert:flutter-expert"
-    
-    # Documentation (1) - jeffallan/claude-skills
-    "jeffallan/claude-skills:skills/code-documenter:code-documenter"
-    
-    # Security (2) - jeffallan/claude-skills + alirezarezvani/claude-skills
+    "arvindrk/extract-design-system:skills/extract-design-system:extract-design-system"
+
+    # Security (2)
     "jeffallan/claude-skills:skills/security-reviewer:security-reviewer"
-    "alirezarezvani/claude-skills:ra-qm-team/gdpr-dsgvo-expert:gdpr-dsgvo-expert"
-    
-    # Testing Advanced (2) - jeffallan/claude-skills
-    "jeffallan/claude-skills:skills/playwright-expert:playwright-expert"
-    "jeffallan/claude-skills:skills/test-master:test-master"
+    "alirezarezvani/claude-skills:ra-qm-team/skills/gdpr-dsgvo-expert:gdpr-dsgvo-expert"
+
+    # Process (2)
+    "jeffallan/claude-skills:skills/code-reviewer:code-reviewer"
+    "obra/superpowers:skills/brainstorming:brainstorming"
 )
 
 TOTAL=${#SKILLS[@]}
@@ -120,9 +93,9 @@ echo ""
 for i in "${!SKILLS[@]}"; do
     IFS=':' read -r repo path name <<< "${SKILLS[$i]}"
     num=$((i + 1))
-    
+
     printf "  [%2d/%2d] %-40s " "$num" "$TOTAL" "$name"
-    
+
     # Skip si ya existe
     if [ -d "$SKILLS_DIR/$name" ]; then
         echo -e "${YELLOW}SKIP${NC} (already installed)"
@@ -142,7 +115,7 @@ for i in "${!SKILLS[@]}"; do
 
     # Verificar SKILL.md
     if [ ! -f "$repo_dir/$path/SKILL.md" ]; then
-        echo -e "${RED}FAIL${NC} (SKILL.md not found)"
+        echo -e "${RED}FAIL${NC} (SKILL.md not found at $path)"
         FAILED=$((FAILED + 1))
         continue
     fi
@@ -166,7 +139,7 @@ fi
 echo ""
 
 if [ $INSTALLED -eq 0 ] && [ $SKIPPED -eq $TOTAL ]; then
-    echo -e "${GREEN}All skills already installed!${NC}"
+    echo -e "${GREEN}All 20 skills already installed!${NC}"
     exit 0
 fi
 
@@ -176,4 +149,4 @@ if [ $FAILED -gt 0 ]; then
     exit 1
 fi
 
-echo -e "${GREEN}Agent Skills installation complete!${NC}"
+echo -e "${GREEN}Agent Skills installation complete (20 skills)!${NC}"
