@@ -69,7 +69,7 @@ bash setup.sh
 **Qué hace `setup.sh`:**
 - Selecciona idioma (Español/English)
 - Pide tokens GitHub y Asana
-- Instala los 34 Agent Skills en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
+- Instala los 20 Agent Skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
 - Configura CodeRabbit
 - Crea estructura base + archivos de configuración
 
@@ -143,7 +143,7 @@ Alternativa al workflow conversacional. Para equipos que requieren propuestas fo
 **⚠️ IMPORTANTE:** Estos NO son opcionales. SpecLeap requiere estos componentes para SDD profesional:
 - **Asana** — Gestión de backlog (comando `planificar`)
 - **CodeRabbit** — Code review automático en PRs
-- **Agent Skills** — Best practices automáticas (20 skills TIER 1)
+- **Agent Skills** — Best practices automáticas (20 skills curados)
 - **Git Hooks** — Validación pre-commit local
 - **GitHub** — Control de versiones y colaboración
 
@@ -223,7 +223,7 @@ git push origin main
 
 ---
 
-### 3. Agent Skills (34 profesionales)
+### 3. Agent Skills (20 curados)
 
 Extensiones para Claude/Cursor que aplican best practices automáticamente al contexto de cada tarea.
 
@@ -233,16 +233,14 @@ Instalación:
 bash scripts/install-skills.sh
 ```
 
-Se descargan e instalan 34 skills en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). 20 TIER 1 más 14 TIER 2:
+Se descargan e instalan 20 skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). La lista está enfocada en el stack real de SpecLeap (Laravel + React + TypeScript + PostgreSQL):
 
-- **Consistencia (6):** `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `code-reviewer`, `debugging-wizard`
-- **Backend (6):** `laravel-specialist`, `api-designer`, `database-optimizer`, `python-pro`, `react-expert`, `typescript-pro`
-- **Diseño y frontend (7):** `frontend-design`, `canvas-design`, `algorithmic-art`, `skill-creator`, `web-design-guidelines`, `vercel-composition-patterns`, `agent-browser`
-- **DevOps (5):** `devops-engineer`, `cloud-architect`, `architecture-designer`, `terraform-engineer`, `monitoring-expert`
-- **Mobile (2):** `react-native-expert`, `flutter-expert`
-- **Testing (3):** `test-driven-development`, `playwright-expert`, `test-master`
+- **Core / Quality (5):** `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development`
+- **Backend (4) — Laravel + PostgreSQL:** `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices`
+- **Frontend (4) — React + TS + shadcn:** `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn`
+- **Diseño (3):** `frontend-design`, `web-design-guidelines`, `extract-design-system`
 - **Seguridad (2):** `security-reviewer`, `gdpr-dsgvo-expert`
-- **Documentación y otros (3):** `code-documenter`, `brainstorming`, `pdf`
+- **Process (2):** `code-reviewer`, `brainstorming`
 
 Verificar lo instalado:
 
@@ -439,7 +437,7 @@ chmod +x .git/hooks/pre-commit
 - [ ] IDE abierto (VSCode/Cursor) y chat con Claude funcional
 - [ ] Comando `ayuda` ejecutado exitosamente
 - [ ] **Asana configurado en `.env`** (OBLIGATORIO)
-- [ ] **34 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
+- [ ] **20 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
 - [ ] **Git hooks instalados** (OBLIGATORIO)
 - [ ] **CodeRabbit configurado en GitHub** (OBLIGATORIO)
 - [ ] **Repositorio pusheado a GitHub** (OBLIGATORIO)
