@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-05-23
+
+### Changed (BREAKING)
+
+- **Lista de Agent Skills reducida de 34 a 20**, curada para el stack real de SpecLeap (Laravel + React + TypeScript + PostgreSQL + shadcn). Cada skill viene de un repo público mantenido por su autor, sin invenciones. Detalle:
+  - **Eliminados** (14 skills que no encajan con el público objetivo): `python-pro`, `flutter-expert`, `react-native-expert`, `algorithmic-art`, `canvas-design`, `pdf`, `skill-creator`, `terraform-engineer`, `monitoring-expert`, `cloud-architect`, `devops-engineer`, `architecture-designer`, `agent-browser`, `playwright-expert`, `test-master`, `debugging-wizard`, `code-documenter`, `vercel-composition-patterns`.
+  - **Añadidos** (4 skills nuevos que estaban prometidos pero nunca se instalaban): `supabase-postgres-best-practices` (supabase/agent-skills), `vercel-react-best-practices` (vercel-labs/agent-skills, antes path obsoleto), `shadcn` (shadcn-ui/ui), `extract-design-system` (arvindrk/extract-design-system).
+  - **Mantenidos** (16 skills): `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development`, `laravel-specialist`, `api-designer`, `database-optimizer`, `react-expert`, `typescript-pro`, `frontend-design`, `web-design-guidelines`, `security-reviewer`, `gdpr-dsgvo-expert`, `code-reviewer`, `brainstorming`.
+- **Validado end-to-end**: `bash scripts/install-skills.sh` ejecutado contra sandbox limpio descarga los 20 skills sin fallos.
+
+### Fixed
+
+- **CLAUDE.md ya no contiene skills "fantasma"**. Antes documentaba 16 skills que NO existían en ningún repo público (`backend-api-security`, `tailwind-design-system`, `shadcn-ui`, `responsive-design`, `code-review-excellence`, `api-design-principles`, `error-handling-patterns`, `postgresql-table-design`, `sast-configuration`, `stride-analysis-patterns`, `security-requirement-extraction`, `frontend-mobile-security`, `vercel-react-best-practices` con nombre incorrecto, `laravel-standards`, `react-standards`, `frontend-standards`). Esto causaba que el modelo "alucinara" nombres de skills cuando el contexto las invocaba. Ahora CLAUDE.md menciona SÓLO los 20 realmente instalados.
+- **Path de `gdpr-dsgvo-expert` corregido** en `install-skills.sh`. El path real en `alirezarezvani/claude-skills` es `ra-qm-team/skills/gdpr-dsgvo-expert`, no `ra-qm-team/gdpr-dsgvo-expert`. Sin este fix, el skill no se instalaba.
+
+### Documentation
+
+- `CLAUDE.md`, `README.md`, `SETUP.md`, `scripts/README.md` reescritos para reflejar los 20 skills curados con sus categorías reales (Core/Quality 5, Backend 4, Frontend 4, Diseño 3, Seguridad 2, Process 2).
+- LP (`specleap.com`) actualizada: hero "20 Agent Skills curados", desglose por 6 categorías con los nombres exactos de skills reales, sin TIER 1/TIER 2 (innecesario al curar la lista). Tanto ES como EN.
+
 ## [2.2.1] - 2026-05-22
 
 ### Fixed

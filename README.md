@@ -11,14 +11,14 @@
   <a href="https://www.npmjs.com/package/specleap-framework"><img src="https://img.shields.io/npm/v/specleap-framework.svg?color=22c55e&label=npm" alt="npm version" /></a>
   <img src="https://img.shields.io/badge/agents-3-6366f1" alt="3 agents" />
   <img src="https://img.shields.io/badge/commands-10-f97316" alt="10 commands" />
-  <img src="https://img.shields.io/badge/skills-34-22c55e" alt="34 Agent Skills" />
+  <img src="https://img.shields.io/badge/skills-20-22c55e" alt="20 Agent Skills" />
   <img src="https://img.shields.io/badge/hooks-1-ec4899" alt="1 hook" />
   <img src="https://img.shields.io/badge/rules-4-eab308" alt="4 rules" />
   <img src="https://img.shields.io/badge/built%20for-Claude%20Code-000000" alt="Built for Claude Code" />
   <a href="https://ko-fi.com/specleap"><img src="https://img.shields.io/badge/Ko--fi-Support%20SpecLeap-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
 </p>
 
-SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 34 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
+SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 20 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
 
 **Versión actual:** 2.1.14 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
 
@@ -96,7 +96,7 @@ bash setup.sh
 | **Trae los archivos** | npm los descarga | git los clona del repo |
 | **Ideal para** | Empezar rápido, no recordar el flujo de git | Devs que ya manejan git fluidamente |
 
-A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 34 Agent Skills en `~/.claude/skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
+A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 20 Agent Skills en `~/.claude/skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
 
 **Requisitos previos:**
 
@@ -139,30 +139,18 @@ El prefijo `/` está reservado por Claude Code para sus propios slash commands (
 
 ## Agent Skills
 
-SpecLeap instala **34 Agent Skills profesionales** en `~/.claude/skills/` (path canónico que Claude Code auto-descubre) durante el setup. Se activan automáticamente cuando el contexto lo requiere.
-
-### TIER 1 — 20 skills base
+SpecLeap instala **20 Agent Skills curados** en `~/.claude/skills/` (path canónico que Claude Code auto-descubre) durante el setup. Se activan automáticamente cuando el contexto lo requiere. Cada skill viene de un repo público mantenido por su autor original.
 
 | Categoría | Skills |
 |-----------|--------|
-| Consistencia | `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `code-reviewer`, `debugging-wizard` |
-| Backend | `laravel-specialist`, `api-designer`, `database-optimizer`, `python-pro`, `react-expert`, `typescript-pro` |
-| Diseño | `frontend-design`, `canvas-design`, `algorithmic-art`, `skill-creator` |
-| DevOps | `devops-engineer`, `cloud-architect`, `architecture-designer` |
-| Testing | `test-driven-development` |
-
-### TIER 2 — 14 skills añadidas en v2.1
-
-| Categoría | Skills |
-|-----------|--------|
-| Frontend web | `web-design-guidelines`, `vercel-composition-patterns`, `agent-browser` |
-| Mobile | `react-native-expert`, `flutter-expert` |
-| Testing avanzado | `playwright-expert`, `test-master` |
+| Core / Quality | `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development` |
+| Backend (Laravel + PostgreSQL) | `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices` |
+| Frontend (React + TS + shadcn) | `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn` |
+| Diseño | `frontend-design`, `web-design-guidelines`, `extract-design-system` |
 | Seguridad | `security-reviewer`, `gdpr-dsgvo-expert` |
-| Infraestructura | `terraform-engineer`, `monitoring-expert` |
-| Otras | `brainstorming`, `code-documenter`, `pdf` |
+| Process | `code-reviewer`, `brainstorming` |
 
-La skill `verification-before-completion` obliga al asistente a verificar si el código solicitado ya existe antes de crearlo, evitando duplicación de lógica.
+La skill `verification-before-completion` aplica el principio *"sin evidencia fresca no se cierra"*: el asistente debe ejecutar verificaciones reales (tests, lint, curl) y pegar la salida antes de marcar nada como completado.
 
 ---
 
