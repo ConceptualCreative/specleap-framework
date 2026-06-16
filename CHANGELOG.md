@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Instalación en Windows reparada (ambas vías).** El instalador dependía de comandos Unix (`cp -R`, `bash`) invocados desde PowerShell/cmd, donde no existen, lo que rompía la instalación en Windows:
+  - **Vía npx** fallaba en la copia con `"cp" no se reconoce como un comando…`. Ahora `bin/specleap` copia con `fs.cpSync` (API nativa de Node, multiplataforma), sin depender de `cp`.
+  - **Vía git clone** no llegaba a configurar idioma/tokens/skills porque `bash setup.sh` no encuentra `bash` en PowerShell. Ahora `npm run setup` localiza bash automáticamente (Git Bash en Windows) vía un nuevo modo `bin/specleap --here`.
+  - **Localizador de bash cross-platform** (`findBash`): en macOS/Linux usa `bash` (comportamiento idéntico al anterior); en Windows busca Git Bash en rutas estándar y lo deriva de `where git`. Si no hay bash, muestra instrucciones claras para instalar Git para Windows en lugar de fallar de forma opaca.
+  - La copia excluye `node_modules` y `.git` por seguridad.
+- **Conteo de skills corregido a 20 (era "34").** `setup.sh` (cabecera del Paso 4 y listado completo ES/EN) seguía anunciando "34 Agent Skills" con un desglose TIER 1/TIER 2 obsoleto (Python, Flutter, Canvas, Terraform, Playwright, PDF… eliminados en v2.3.0). Ahora muestra los 20 skills reales agrupados por categoría (Core/Calidad, Backend, Frontend, Diseño, Seguridad, Proceso). Misma corrección aplicada en `docs/faq.es.md` y `docs/faq.en.md`.
+
+### Documentation
+
+- README.md y SETUP.md: instrucciones de instalación actualizadas para Windows (Git Bash) y `npm run setup` como arranque cross-platform de la vía git clone.
+
 ## [2.3.0] - 2026-05-23
 
 ### Changed (BREAKING)

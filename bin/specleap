@@ -36,6 +36,69 @@ function resolveBasePath(input) {
   return path.resolve(process.cwd(), trimmed);
 }
 
+// Copia recursiva cross-platform usando la API nativa de Node (fs.cpSync,
+// estable desde Node 16.7; engines exige >=18). No depende de `cp` de Unix,
+// así que funciona igual en macOS, Linux y Windows. Excluimos node_modules
+// y .git por si el directorio del paquete los contuviera.
+function copyTree(srcDir, destDir) {
+  fs.cpSync(srcDir, destDir, {
+    recursive: true,
+    filter: (src) => {
+      const base = path.basename(src);
+      return base !== 'node_modules' && base !== '.git';
+    }
+  });
+}
+
+// Localiza un intérprete bash cross-platform para ejecutar setup.sh.
+// - macOS/Linux: `bash` del PATH (comportamiento de siempre).
+// - Windows: Git Bash (incluido en Git para Windows). NO usamos WSL como
+//   fallback a propósito: WSL traduce rutas a /mnt/c/... y romperíamos al
+//   pasarle una ruta Windows; es preferible un mensaje claro a un fallo opaco.
+// Devuelve la ruta/comando del binario bash, o null si no hay ninguno.
+function findBash() {
+  if (process.platform !== 'win32') {
+    return 'bash';
+  }
+
+  // Candidatos típicos de Git para Windows (incluye Git Bash).
+  const programFiles = [
+    process.env['ProgramW6432'],
+    process.env['ProgramFiles'],
+    process.env['ProgramFiles(x86)'],
+    'C:\\Program Files',
+    'C:\\Program Files (x86)'
+  ].filter(Boolean);
+
+  const candidates = [];
+  for (const pf of programFiles) {
+    candidates.push(path.join(pf, 'Git', 'bin', 'bash.exe'));
+    candidates.push(path.join(pf, 'Git', 'usr', 'bin', 'bash.exe'));
+  }
+
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
+
+  // Fallback: derivar la ruta de bash a partir de la ubicación de git.exe.
+  try {
+    const gitPath = execSync('where git', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .split(/\r?\n/)[0]
+      .trim();
+    if (gitPath) {
+      // git suele estar en <Git>/cmd/git.exe o <Git>/bin/git.exe
+      const gitRoot = path.dirname(path.dirname(gitPath));
+      const derived = path.join(gitRoot, 'bin', 'bash.exe');
+      if (fs.existsSync(derived)) return derived;
+    }
+  } catch (_) {
+    // git no está en PATH; no hay forma fiable de localizar bash.
+  }
+
+  return null;
+}
+
 // Crea una interfaz readline reutilizable; cerramos al final del flujo.
 function createPrompt() {
   return readline.createInterface({
@@ -102,7 +165,39 @@ async function main() {
   //   npx specleap-framework@latest <carpeta-base> [<nombre>]
   //   p.ej.  npx specleap-framework@latest ~/Downloads
   //          npx specleap-framework@latest ~/Downloads mi-app
-  const args = process.argv.slice(2).filter((a) => !a.startsWith('-'));
+  const rawArgs = process.argv.slice(2);
+
+  // Modo `--here`: ejecuta setup.sh en el directorio actual sin copiar nada.
+  // Lo usa `npm run setup` (vía git clone) para arrancar la configuración de
+  // forma cross-platform, localizando bash igual que el flujo npx.
+  if (rawArgs.includes('--here')) {
+    const setupPath = path.join(process.cwd(), 'setup.sh');
+    if (!fs.existsSync(setupPath)) {
+      console.error('\n❌ setup.sh no encontrado en el directorio actual.');
+      console.error('   setup.sh not found in the current directory.\n');
+      process.exit(1);
+    }
+    const bashBin = findBash();
+    if (!bashBin) {
+      console.error('\n❌ No se encontró bash / bash not found.');
+      console.error('   SpecLeap necesita bash para la configuración inicial.');
+      console.error('   SpecLeap needs bash to run the initial setup.\n');
+      console.error('   Windows: instala Git para Windows (incluye Git Bash):');
+      console.error('            install Git for Windows (includes Git Bash):');
+      console.error('            https://git-scm.com/download/win\n');
+      console.error('   Después / Then:  bash setup.sh\n');
+      process.exit(1);
+    }
+    const setup = spawn(bashBin, [setupPath], {
+      stdio: 'inherit',
+      cwd: process.cwd(),
+      env: { ...process.env, SPECLEAP_INSTALL_PATH: process.cwd() }
+    });
+    setup.on('close', (code) => process.exit(code));
+    return;
+  }
+
+  const args = rawArgs.filter((a) => !a.startsWith('-'));
   const argBase = args[0];
   const argName = args[1];
 
@@ -168,11 +263,10 @@ async function main() {
   console.log(`\n🚀 Copiando SpecLeap Framework a / Copying SpecLeap Framework to:`);
   console.log(`   ${targetDir}\n`);
 
-  // Crear destino y copiar archivos
+  // Crear destino y copiar archivos (copia cross-platform con Node, sin `cp`).
   try {
     fs.mkdirSync(targetDir, { recursive: true });
-    execSync(`cp -R "${packageDir}"/* "${targetDir}"/`, { stdio: 'inherit' });
-    execSync(`cp -R "${packageDir}"/.??* "${targetDir}"/ 2>/dev/null || true`, { stdio: 'ignore' });
+    copyTree(packageDir, targetDir);
     console.log(`✅ Archivos copiados / Files copied\n`);
   } catch (err) {
     console.error('❌ Error copiando archivos / Error copying files:', err.message);
@@ -183,7 +277,26 @@ async function main() {
   // para que setup.sh la use en el mensaje final.
   const setupPath = path.join(targetDir, 'setup.sh');
 
-  const setup = spawn('bash', [setupPath], {
+  // Localizar bash de forma cross-platform. En Windows esto resuelve a Git
+  // Bash; si no hay ninguno, los archivos ya están copiados pero no podemos
+  // ejecutar setup.sh, así que damos instrucciones claras.
+  const bashBin = findBash();
+  if (!bashBin) {
+    console.error('\n❌ No se encontró bash / bash not found.');
+    console.error('   Los archivos se copiaron en / Files were copied to:');
+    console.error(`   ${targetDir}\n`);
+    console.error('   SpecLeap necesita bash para la configuración inicial.');
+    console.error('   SpecLeap needs bash to run the initial setup.\n');
+    console.error('   Windows: instala Git para Windows (incluye Git Bash):');
+    console.error('            install Git for Windows (includes Git Bash):');
+    console.error('            https://git-scm.com/download/win\n');
+    console.error('   Después, en una terminal Git Bash / Then, in a Git Bash terminal:');
+    console.error(`     cd "${targetDir}"`);
+    console.error('     bash setup.sh\n');
+    process.exit(1);
+  }
+
+  const setup = spawn(bashBin, [setupPath], {
     stdio: 'inherit',
     cwd: targetDir,
     env: {

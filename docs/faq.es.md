@@ -56,14 +56,14 @@ Sí, funciona sin Claude Code. SpecLeap soporta 9+ asistentes y todos leen los m
 
 **Lo que pierdes sin Claude Code específicamente:**
 
-- **Integración nativa con los 34 Agent Skills.** Los Agent Skills son una feature concreta del runtime de Claude Code que carga conocimiento especializado (seguridad OWASP/STRIDE, diseño Vercel-style, TDD, Laravel/React best practices, etc.) cuando el contexto del prompt lo justifica. En otros asistentes los `.md` de las skills siguen siendo accesibles, pero no se cargan automáticamente — tienes que referenciarlos a mano cuando los necesites.
+- **Integración nativa con los 20 Agent Skills.** Los Agent Skills son una feature concreta del runtime de Claude Code que carga conocimiento especializado (seguridad OWASP/STRIDE, diseño Vercel-style, TDD, Laravel/React best practices, etc.) cuando el contexto del prompt lo justifica. En otros asistentes los `.md` de las skills siguen siendo accesibles, pero no se cargan automáticamente — tienes que referenciarlos a mano cuando los necesites.
 - **Hooks de validación local** (`spec-guard.sh`) que se enganchan al runtime de Claude Code para bloquear escrituras en ramas protegidas. En otros asistentes esa protección la cubre el `pre-push` git hook de SpecLeap, que es independiente.
 
 **Lo que NO pierdes:**
 
 - El CONTRATO inmutable, los agentes (`.agents/*.md`), los comandos (`.commands/*.md`), el memory-bank, las specs, la integración con Asana/CodeRabbit, el cuestionario, el CLI openspec — todo funciona igual.
 
-Si tu prioridad son los 34 Agent Skills, Claude Code es la mejor opción hoy. Si tu prioridad es flexibilidad y multi-modelo, Cursor + Continue.dev cubren el resto.
+Si tu prioridad son los 20 Agent Skills, Claude Code es la mejor opción hoy. Si tu prioridad es flexibilidad y multi-modelo, Cursor + Continue.dev cubren el resto.
 
 ---
 
@@ -102,7 +102,7 @@ Para algunos comandos sí, para el grueso del framework no.
 - Cuestionario de 58 preguntas + generación de CONTRATO.md
 - Agentes especializados (`.agents/backend.md`, `frontend.md`, `producto.md`)
 - Comandos `refinar`, `documentar`, `explicar`, `compliance`, `adoptar`
-- 34 Agent Skills
+- 20 Agent Skills
 - CLI openspec completo (proposals, deltas, verify, archive)
 - Memory-bank en `context/`
 - Standards globales en `rules/`

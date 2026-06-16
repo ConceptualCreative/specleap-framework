@@ -35,7 +35,7 @@
     "specleap": "bin/specleap"
   },
   "scripts": {
-    "setup": "bash setup.sh",
+    "setup": "node bin/specleap --here",
     "skills": "bash scripts/install-skills.sh",
     "generate": "bash scripts/generate-contrato.sh"
   },

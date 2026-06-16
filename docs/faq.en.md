@@ -56,14 +56,14 @@ Yes, it works without Claude Code. SpecLeap supports 9+ assistants and they all 
 
 **What you lose specifically without Claude Code:**
 
-- **Native integration with the 34 Agent Skills.** Agent Skills are a concrete Claude Code runtime feature that loads specialized knowledge (OWASP/STRIDE security, Vercel-style design, TDD, Laravel/React best practices, etc.) when the prompt context warrants it. In other assistants the skill `.md` files are still accessible, but they don't auto-load — you have to reference them by hand when needed.
+- **Native integration with the 20 Agent Skills.** Agent Skills are a concrete Claude Code runtime feature that loads specialized knowledge (OWASP/STRIDE security, Vercel-style design, TDD, Laravel/React best practices, etc.) when the prompt context warrants it. In other assistants the skill `.md` files are still accessible, but they don't auto-load — you have to reference them by hand when needed.
 - **Local validation hooks** (`spec-guard.sh`) that hook into the Claude Code runtime to block writes on protected branches. In other assistants that protection is covered by the SpecLeap `pre-push` git hook, which is independent.
 
 **What you DO NOT lose:**
 
 - The immutable CONTRACT, agents (`.agents/*.md`), commands (`.commands/*.md`), memory-bank, specs, Asana/CodeRabbit integration, the survey, the openspec CLI — everything works the same.
 
-If your priority is the 34 Agent Skills, Claude Code is the best option today. If your priority is flexibility and multi-model, Cursor + Continue.dev cover the rest.
+If your priority is the 20 Agent Skills, Claude Code is the best option today. If your priority is flexibility and multi-model, Cursor + Continue.dev cover the rest.
 
 ---
 
@@ -102,7 +102,7 @@ For some commands yes, for the bulk of the framework no.
 - 58-question survey + CONTRACT.md generation
 - Specialized agents (`.agents/backend.md`, `frontend.md`, `producto.md`)
 - Commands `refinar`, `documentar`, `explicar`, `compliance`, `adoptar`
-- 34 Agent Skills
+- 20 Agent Skills
 - Full openspec CLI (proposals, deltas, verify, archive)
 - Memory-bank in `context/`
 - Global standards in `rules/`

@@ -73,8 +73,12 @@ Nombre: mi-app-tienda
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git
 cd specleap-framework
-bash setup.sh
+npm run setup     # cross-platform (macOS, Linux y Windows)
 ```
+
+> `npm run setup` localiza bash automáticamente (en Windows usa Git Bash), así
+> que funciona igual en cualquier sistema. Si prefieres, en macOS/Linux o dentro
+> de una terminal **Git Bash** puedes ejecutar directamente `bash setup.sh`.
 
 Cuando arranque `setup.sh` lo primero que te preguntará es **cómo quieres que se llame la carpeta** del proyecto. Si pulsas Enter mantiene el nombre que tiene (`specleap-framework` por default de git clone). Si escribes otro nombre, **el setup renombra la carpeta automáticamente** y continúa desde ahí. Después sigue con idioma, tokens, skills y CodeRabbit.
 
@@ -83,7 +87,7 @@ Atajo: si ya sabes el nombre, lo pasas a `git clone` para evitar el rename:
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
 cd mi-proyecto
-bash setup.sh
+npm run setup
 # El setup pregunta el nombre igualmente; pulsa Enter para mantener "mi-proyecto".
 ```
 
@@ -92,7 +96,7 @@ bash setup.sh
 | | Vía npm | Vía git clone |
 |---|---|---|
 | **Pregunta carpeta y nombre** | ✅ Sí, interactivo | ❌ No, lo decides con `cd` y `git clone <url> <nombre>` |
-| **Requiere Node.js** | ✅ Sí (≥ 18) | ⛔ No, solo Git + Bash |
+| **Requiere Node.js** | ✅ Sí (≥ 18) | ✅ Sí (≥ 18), para `npm run setup` |
 | **Trae los archivos** | npm los descarga | git los clona del repo |
 | **Ideal para** | Empezar rápido, no recordar el flujo de git | Devs que ya manejan git fluidamente |
 
@@ -101,7 +105,8 @@ A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens 
 **Requisitos previos:**
 
 - Vía npm → Node.js ≥ 18, Git, Bash.
-- Vía git clone → Git, Bash.
+- Vía git clone → Node.js ≥ 18, Git, Bash.
+- **Windows** → instala [Git para Windows](https://git-scm.com/download/win), que incluye **Git Bash**. El instalador lo detecta automáticamente. (macOS y Linux ya traen Bash.)
 
 ---
 

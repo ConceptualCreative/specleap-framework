@@ -9,8 +9,10 @@ Hay **dos formas de instalar SpecLeap**. Elige la que prefieras según cómo te 
 | | Opción A: vía npx | Opción B: vía git clone |
 |---|---|---|
 | **Pregunta carpeta y nombre** | ✅ Sí, prompt interactivo | ❌ No (lo decides con `cd` y `git clone <url> <nombre>`) |
-| **Requiere** | Node.js ≥ 18, Git, Bash | Git, Bash |
+| **Requiere** | Node.js ≥ 18, Git, Bash | Node.js ≥ 18, Git, Bash |
 | **Cuándo usar** | Quieres setup guiado | Manejas git fluidamente |
+
+> **Windows:** instala [Git para Windows](https://git-scm.com/download/win) (incluye **Git Bash**). El instalador detecta y usa Git Bash automáticamente en ambas opciones — no necesitas abrir Git Bash a mano. macOS y Linux ya traen Bash.
 
 ---
 
@@ -48,8 +50,10 @@ Nombre: mi-app-tienda
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git
 cd specleap-framework
-bash setup.sh
+npm run setup     # cross-platform (macOS, Linux y Windows con Git Bash)
 ```
+
+> `npm run setup` localiza bash automáticamente. En macOS/Linux o dentro de una terminal Git Bash también puedes ejecutar `bash setup.sh` directamente.
 
 **El primer paso del setup pregunta cómo quieres llamar la carpeta** (Paso 0). Pulsas Enter para mantenerla con el nombre que tiene, o escribes otro nombre y el setup renombra la carpeta automáticamente antes de seguir con idioma/tokens.
 
@@ -58,7 +62,7 @@ Atajo: si ya sabes el nombre, pásaselo a `git clone` y luego pulsas Enter en el
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
 cd mi-proyecto
-bash setup.sh
+npm run setup
 # Paso 0: pulsa Enter para mantener "mi-proyecto"
 ```
 
