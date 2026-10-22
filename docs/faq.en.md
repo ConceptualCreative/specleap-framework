@@ -161,4 +161,52 @@ If you already use Agile + TDD, SpecLeap is the piece that brings consistency ac
 
 ---
 
+## 9. Does it cost anything? What license is it?
+
+SpecLeap is **free and open source (MIT)**. No account, no paid plan, no card. Clone the repo or install it with npm and the code is yours.
+
+The only cost is the assistant you already use — Claude, Cursor, Copilot or another. SpecLeap does not sit in the middle of that subscription or add one of its own.
+
+---
+
+## 10. What do I need installed? Does it work on Windows?
+
+You need **Node.js 18 or newer, Git and Bash**. Full setup takes 10-15 minutes. PHP, Composer, PostgreSQL or Docker only matter if the project you are about to build uses them.
+
+On Windows, install **Git for Windows**: it includes Git Bash and the installer finds it on its own. If Windows has the folder locked while renaming, setup continues with the current name. The reliable path is to clone with the final name (`git clone <url> my-project`). macOS and Linux already ship Bash.
+
+---
+
+## 11. Can I use it on a project that is already underway?
+
+Yes. The `adoptar` command reads the code you already have and writes a **retroactive CONTRACT**: what exists, what is out of scope, and which rules apply from now on.
+
+It does not rewrite the application. It documents what is already built so later changes stop drifting in silence.
+
+---
+
+## 12. What if I answer the survey wrong, or the scope changes?
+
+The survey saves progress **every 10 questions**. When you finish you can expand from MVP to Serious Project — adding governance, SLAs and compliance without repeating what you already said — or attach a free paragraph in Creative mode.
+
+Once the CONTRACT is approved, it is not edited. A scope change is recorded in `ANEXOS.md` with the `refinar` command. That keeps the original ask separate from what was added later.
+
+---
+
+## 13. Do I have to use Laravel, React and PostgreSQL?
+
+No. The standards and part of the skills are tuned for **Laravel, React, TypeScript, PostgreSQL and shadcn**, and the survey lets you declare a different stack. From then on the CONTRACT is what counts.
+
+Quality, process, security and design skills still apply. The Laravel or React skills help less if your project does not use that stack.
+
+---
+
+## 14. Does SpecLeap upload my code or my CONTRACT anywhere?
+
+It has no server and no account. The CONTRACT and the code **stay in your repository**. The framework does not call model APIs. During setup, the installer clones the 34 skills from public GitHub repos into `~/.claude/skills/`.
+
+What leaves your machine afterwards is what you connect: the AI assistant you already pay for, GitHub if you push, Asana if you paste the token, CodeRabbit if you install the app. Running the installer again only updates the catalog skills. A skill of yours, under another name, is left alone.
+
+---
+
 Have a question that's not covered here? Open an issue on [GitHub](https://github.com/ConceptualCreative/specleap-framework/issues) or email `info@specleap.com`.

@@ -172,7 +172,7 @@ Read and follow these standards for ALL code:
 
 ## Agent Skills (Progressive Disclosure)
 
-SpecLeap installs **20 curated Agent Skills** in `~/.claude/skills/` (the canonical path Claude Code auto-discovers). They activate automatically when the conversation context matches each skill's `description` frontmatter.
+SpecLeap installs **34 curated Agent Skills** in `~/.claude/skills/` (the canonical path Claude Code auto-discovers). They activate automatically when the conversation context matches each skill's `description` frontmatter.
 
 **Source repos:**
 - `obra/superpowers` — quality/process skills
@@ -183,6 +183,10 @@ SpecLeap installs **20 curated Agent Skills** in `~/.claude/skills/` (the canoni
 - `supabase/agent-skills` — PostgreSQL
 - `arvindrk/extract-design-system` — design-system extraction
 - `alirezarezvani/claude-skills` — GDPR
+- `nextlevelbuilder/ui-ux-pro-max-skill` — UI/UX design intelligence
+- `pbakaus/impeccable` — interface craft
+- `Leonxlnx/taste-skill` — anti-slop art direction (`design-taste-frontend`)
+- `emilkowalski/skills` — motion and interface polish
 
 ### Activation Triggers
 
@@ -222,7 +226,7 @@ Write the failing test first, then the minimal code to make it pass, then refact
 
 The three skills cover the full review cycle: self-review before requesting review, asking for review with focus areas, and reacting to review feedback constructively.
 
-### Skill Catalogue (20)
+### Skill Catalogue (34)
 
 **🔄 Core / Quality (5):**
 - verification-before-completion ⭐
@@ -243,18 +247,28 @@ The three skills cover the full review cycle: self-review before requesting revi
 - vercel-react-best-practices
 - shadcn
 
-**🎨 Design (3):**
+**🎨 Design (11):**
 - frontend-design
 - web-design-guidelines
 - extract-design-system
+- ui-ux-pro-max
+- impeccable
+- design-taste-frontend
+- emil-design-eng, animate, animation-performance, break-ui, mobile-native
 
 **🔒 Security (2):**
 - security-reviewer
 - gdpr-dsgvo-expert
 
-**🔁 Process (2):**
+**🔁 Process (8):**
 - code-reviewer
 - brainstorming
+- writing-plans
+- executing-plans
+- using-git-worktrees
+- subagent-driven-development
+- dispatching-parallel-agents
+- finishing-a-development-branch
 
 **See:** [SETUP.md](SETUP.md) for installation details.
 

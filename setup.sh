@@ -156,12 +156,13 @@ sleep 1
 # idioma elegido (no bilingües). Antes del Paso 2 (GitHub) para que el
 # rename sea visible en el resto de prompts y en el resumen final.
 #
-# Solo aplica cuando setup.sh se ejecuta directamente (`bash setup.sh`).
-# Si vienes desde `bin/specleap` (vía `npx`), ese script ya pidió nombre
-# y ya creó la carpeta — entonces SPECLEAP_INSTALL_PATH está set y
-# saltamos este bloque para no preguntar dos veces.
+# Solo se salta cuando bin/specleap (vía npx) ya pidió el nombre y creó
+# la carpeta. `npm run setup` (--here) sí pregunta: el clon todavía tiene
+# el nombre del repo. En Windows el directorio puede estar bloqueado por
+# el proceso que lanzó el script; si el rename falla, se sigue con el
+# nombre actual en lugar de abortar.
 
-if [ -z "${SPECLEAP_INSTALL_PATH:-}" ]; then
+if [ -z "${SPECLEAP_SKIP_FOLDER_PROMPT:-}" ]; then
     CURRENT_PATH="$(pwd)"
     CURRENT_FOLDER_NAME="$(basename "$CURRENT_PATH")"
     PARENT_PATH="$(dirname "$CURRENT_PATH")"
@@ -240,16 +241,36 @@ if [ -z "${SPECLEAP_INSTALL_PATH:-}" ]; then
             fi
             SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
         else
-            mv "$CURRENT_PATH" "$NEW_PATH"
-            cd "$NEW_PATH"
-            CURRENT_PATH="$NEW_PATH"
-            CURRENT_FOLDER_NAME="$NEW_NAME"
-            SPECLEAP_INSTALL_PATH="$NEW_PATH"
-            echo ""
-            if [ "$LANG" = "es" ]; then
-                echo -e "${GREEN}✅ Carpeta renombrada:${NC} $NEW_NAME"
+            # Salir de la carpeta antes de renombrarla. En Windows un proceso
+            # no puede renombrar su directorio actual; si además Node sigue
+            # con ese cwd, mv falla y no debemos tumbar la instalación.
+            cd "$PARENT_PATH"
+            if mv "$CURRENT_PATH" "$NEW_PATH"; then
+                cd "$NEW_PATH"
+                CURRENT_PATH="$NEW_PATH"
+                CURRENT_FOLDER_NAME="$NEW_NAME"
+                SPECLEAP_INSTALL_PATH="$NEW_PATH"
+                echo ""
+                if [ "$LANG" = "es" ]; then
+                    echo -e "${GREEN}✅ Carpeta renombrada:${NC} $NEW_NAME"
+                else
+                    echo -e "${GREEN}✅ Folder renamed:${NC} $NEW_NAME"
+                fi
             else
-                echo -e "${GREEN}✅ Folder renamed:${NC} $NEW_NAME"
+                cd "$CURRENT_PATH"
+                SPECLEAP_INSTALL_PATH="$CURRENT_PATH"
+                echo ""
+                if [ "$LANG" = "es" ]; then
+                    echo -e "${YELLOW}⚠️  No se pudo renombrar la carpeta (está en uso).${NC}"
+                    echo -e "${YELLOW}   Se mantiene:${NC} $CURRENT_FOLDER_NAME"
+                    echo "   En Windows, clona ya con el nombre final:"
+                    echo "   git clone <url> $NEW_NAME"
+                else
+                    echo -e "${YELLOW}⚠️  Could not rename the folder (it is in use).${NC}"
+                    echo -e "${YELLOW}   Keeping:${NC} $CURRENT_FOLDER_NAME"
+                    echo "   On Windows, clone with the final name:"
+                    echo "   git clone <url> $NEW_NAME"
+                fi
             fi
         fi
     fi
@@ -505,7 +526,7 @@ echo ""
 sleep 1
 
 # ============================================
-# PASO 4: Agent Skills (34 skills: 20 TIER 1 + 14 TIER 2)
+# PASO 4: Agent Skills (34 skills curados para el stack de SpecLeap)
 # ============================================
 
 echo -e "${CYAN}${LINE}${NC}"
@@ -516,48 +537,40 @@ echo ""
 if [ "$LANG" = "es" ]; then
     echo "SpecLeap incluye 34 Agent Skills profesionales:"
     echo ""
-    echo "  ${BOLD}TIER 1 (20 skills):${NC}"
-    echo "    • 3 Consistencia (verification-before-completion, code review)"
-    echo "    • 7 Backend/Dev (Laravel, React, Python, API, DB)"
-    echo "    • 4 Diseño (Vercel-style, UI/UX, Canvas)"
-    echo "    • 3 DevOps (Cloud, Architecture)"
-    echo "    • 2 Testing (TDD, Code Review)"
-    echo "    • 1 Frontend (TypeScript)"
+    echo "    • 5 Core/Calidad (verification-before-completion, systematic-debugging,"
+    echo "      requesting/receiving-code-review, test-driven-development)"
+    echo "    • 4 Backend (laravel-specialist, api-designer, database-optimizer,"
+    echo "      supabase-postgres-best-practices)"
+    echo "    • 4 Frontend (react-expert, typescript-pro, vercel-react-best-practices,"
+    echo "      shadcn)"
+    echo "    • 11 Diseño (ui-ux-pro-max, impeccable, design-taste-frontend,"
+    echo "      frontend-design, web-design-guidelines, extract-design-system,"
+    echo "      emil-design-eng, animate, animation-performance, break-ui, mobile-native)"
+    echo "    • 2 Seguridad (security-reviewer, gdpr-dsgvo-expert)"
+    echo "    • 8 Proceso (code-reviewer, brainstorming, writing-plans,"
+    echo "      executing-plans, using-git-worktrees, subagent-driven-development,"
+    echo "      dispatching-parallel-agents, finishing-a-development-branch)"
     echo ""
-    echo "  ${BOLD}TIER 2 (14 skills):${NC}"
-    echo "    • 3 Design/Frontend avanzado (Vercel agent-browser)"
-    echo "    • 2 Mobile (React Native, Flutter)"
-    echo "    • 2 Security (audits, GDPR/DSGVO)"
-    echo "    • 2 Testing avanzado (Playwright, Test Master)"
-    echo "    • 2 Infrastructure (Terraform, Monitoring)"
-    echo "    • 1 Brainstorming"
-    echo "    • 1 PDF"
-    echo "    • 1 Documentation"
-    echo ""
-    echo "⏱️  Tiempo: 2-3 minutos"
+    echo "⏱️  Tiempo: 3-5 minutos"
     echo ""
 else
     echo "SpecLeap includes 34 professional Agent Skills:"
     echo ""
-    echo "  ${BOLD}TIER 1 (20 skills):${NC}"
-    echo "    • 3 Consistency (verification-before-completion, code review)"
-    echo "    • 7 Backend/Dev (Laravel, React, Python, API, DB)"
-    echo "    • 4 Design (Vercel-style, UI/UX, Canvas)"
-    echo "    • 3 DevOps (Cloud, Architecture)"
-    echo "    • 2 Testing (TDD, Code Review)"
-    echo "    • 1 Frontend (TypeScript)"
+    echo "    • 5 Core/Quality (verification-before-completion, systematic-debugging,"
+    echo "      requesting/receiving-code-review, test-driven-development)"
+    echo "    • 4 Backend (laravel-specialist, api-designer, database-optimizer,"
+    echo "      supabase-postgres-best-practices)"
+    echo "    • 4 Frontend (react-expert, typescript-pro, vercel-react-best-practices,"
+    echo "      shadcn)"
+    echo "    • 11 Design (ui-ux-pro-max, impeccable, design-taste-frontend,"
+    echo "      frontend-design, web-design-guidelines, extract-design-system,"
+    echo "      emil-design-eng, animate, animation-performance, break-ui, mobile-native)"
+    echo "    • 2 Security (security-reviewer, gdpr-dsgvo-expert)"
+    echo "    • 8 Process (code-reviewer, brainstorming, writing-plans,"
+    echo "      executing-plans, using-git-worktrees, subagent-driven-development,"
+    echo "      dispatching-parallel-agents, finishing-a-development-branch)"
     echo ""
-    echo "  ${BOLD}TIER 2 (14 skills):${NC}"
-    echo "    • 3 Design/Frontend advanced (Vercel agent-browser)"
-    echo "    • 2 Mobile (React Native, Flutter)"
-    echo "    • 2 Security (audits, GDPR/DSGVO)"
-    echo "    • 2 Testing advanced (Playwright, Test Master)"
-    echo "    • 2 Infrastructure (Terraform, Monitoring)"
-    echo "    • 1 Brainstorming"
-    echo "    • 1 PDF"
-    echo "    • 1 Documentation"
-    echo ""
-    echo "⏱️  Time: 2-3 minutes"
+    echo "⏱️  Time: 3-5 minutes"
     echo ""
 fi
 

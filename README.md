@@ -11,14 +11,14 @@
   <a href="https://www.npmjs.com/package/specleap-framework"><img src="https://img.shields.io/npm/v/specleap-framework.svg?color=22c55e&label=npm" alt="npm version" /></a>
   <img src="https://img.shields.io/badge/agents-3-6366f1" alt="3 agents" />
   <img src="https://img.shields.io/badge/commands-10-f97316" alt="10 commands" />
-  <img src="https://img.shields.io/badge/skills-20-22c55e" alt="20 Agent Skills" />
+  <img src="https://img.shields.io/badge/skills-34-22c55e" alt="34 Agent Skills" />
   <img src="https://img.shields.io/badge/hooks-1-ec4899" alt="1 hook" />
   <img src="https://img.shields.io/badge/rules-4-eab308" alt="4 rules" />
   <img src="https://img.shields.io/badge/built%20for-Claude%20Code-000000" alt="Built for Claude Code" />
   <a href="https://ko-fi.com/specleap"><img src="https://img.shields.io/badge/Ko--fi-Support%20SpecLeap-FF5E5B?logo=ko-fi&logoColor=white" alt="Ko-fi" /></a>
 </p>
 
-SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 20 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
+SpecLeap convierte cualquier IDE con asistente de IA en un entorno de desarrollo spec-first. Combina un contrato de proyecto inmutable, agentes conversacionales especializados, 34 Agent Skills profesionales y un pipeline de validación en tres capas para entregar código consistente y probado sin improvisación.
 
 **Versión actual:** 2.1.14 · **Licencia:** MIT · **Autor:** Styng Arias ([ConceptualCreative](https://conceptualcreative.com))
 
@@ -73,17 +73,21 @@ Nombre: mi-app-tienda
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git
 cd specleap-framework
-bash setup.sh
+npm run setup     # cross-platform (macOS, Linux y Windows)
 ```
 
-Cuando arranque `setup.sh` lo primero que te preguntará es **cómo quieres que se llame la carpeta** del proyecto. Si pulsas Enter mantiene el nombre que tiene (`specleap-framework` por default de git clone). Si escribes otro nombre, **el setup renombra la carpeta automáticamente** y continúa desde ahí. Después sigue con idioma, tokens, skills y CodeRabbit.
+> `npm run setup` localiza bash automáticamente (en Windows usa Git Bash), así
+> que funciona igual en cualquier sistema. Si prefieres, en macOS/Linux o dentro
+> de una terminal **Git Bash** puedes ejecutar directamente `bash setup.sh`.
+
+Cuando arranque `setup.sh` pregunta **cómo quieres que se llame la carpeta**. Si pulsas Enter mantiene el nombre del clon. Si escribes otro, el setup la renombra y sigue. En Windows esa carpeta puede estar en uso por el propio instalador: si el rename falla, continúa con el nombre actual y no aborta. Lo fiable en Windows es clonar ya con el nombre final (`git clone <url> mi-proyecto`). Después sigue con idioma, tokens, skills y CodeRabbit.
 
 Atajo: si ya sabes el nombre, lo pasas a `git clone` para evitar el rename:
 
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
 cd mi-proyecto
-bash setup.sh
+npm run setup
 # El setup pregunta el nombre igualmente; pulsa Enter para mantener "mi-proyecto".
 ```
 
@@ -91,17 +95,18 @@ bash setup.sh
 
 | | Vía npm | Vía git clone |
 |---|---|---|
-| **Pregunta carpeta y nombre** | ✅ Sí, interactivo | ❌ No, lo decides con `cd` y `git clone <url> <nombre>` |
-| **Requiere Node.js** | ✅ Sí (≥ 18) | ⛔ No, solo Git + Bash |
+| **Pregunta carpeta y nombre** | ✅ Sí, antes de copiar | Pregunta el nombre al arrancar. En Windows, si la carpeta está en uso, se queda el nombre del clon |
+| **Requiere Node.js** | ✅ Sí (≥ 18) | ✅ Sí (≥ 18), para `npm run setup` |
 | **Trae los archivos** | npm los descarga | git los clona del repo |
 | **Ideal para** | Empezar rápido, no recordar el flujo de git | Devs que ya manejan git fluidamente |
 
-A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 20 Agent Skills en `~/.claude/skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
+A partir de aquí ambos flows son idénticos: el `setup.sh` solicita los tokens de GitHub y Asana, instala los 34 Agent Skills en `~/.claude/skills/` y genera la estructura base. Tiempo total: 10 a 15 minutos.
 
 **Requisitos previos:**
 
 - Vía npm → Node.js ≥ 18, Git, Bash.
-- Vía git clone → Git, Bash.
+- Vía git clone → Node.js ≥ 18, Git, Bash.
+- **Windows** → instala [Git para Windows](https://git-scm.com/download/win), que incluye **Git Bash**. El instalador lo detecta automáticamente. (macOS y Linux ya traen Bash.)
 
 ---
 
@@ -139,16 +144,16 @@ El prefijo `/` está reservado por Claude Code para sus propios slash commands (
 
 ## Agent Skills
 
-SpecLeap instala **20 Agent Skills curados** en `~/.claude/skills/` (path canónico que Claude Code auto-descubre) durante el setup. Se activan automáticamente cuando el contexto lo requiere. Cada skill viene de un repo público mantenido por su autor original.
+SpecLeap instala **34 Agent Skills curados** en `~/.claude/skills/` (path canónico que Claude Code auto-descubre) durante el setup. Se activan automáticamente cuando el contexto lo requiere. Cada skill viene de un repo público mantenido por su autor original.
 
 | Categoría | Skills |
 |-----------|--------|
-| Core / Quality | `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development` |
-| Backend (Laravel + PostgreSQL) | `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices` |
-| Frontend (React + TS + shadcn) | `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn` |
-| Diseño | `frontend-design`, `web-design-guidelines`, `extract-design-system` |
-| Seguridad | `security-reviewer`, `gdpr-dsgvo-expert` |
-| Process | `code-reviewer`, `brainstorming` |
+| Core / Quality (5) | `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development` |
+| Backend (4) | `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices` |
+| Frontend (4) | `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn` |
+| Diseño (11) | `frontend-design`, `web-design-guidelines`, `extract-design-system`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`, `emil-design-eng`, `animate`, `animation-performance`, `break-ui`, `mobile-native` |
+| Seguridad (2) | `security-reviewer`, `gdpr-dsgvo-expert` |
+| Proceso (8) | `code-reviewer`, `brainstorming`, `writing-plans`, `executing-plans`, `using-git-worktrees`, `subagent-driven-development`, `dispatching-parallel-agents`, `finishing-a-development-branch` |
 
 La skill `verification-before-completion` aplica el principio *"sin evidencia fresca no se cierra"*: el asistente debe ejecutar verificaciones reales (tests, lint, curl) y pegar la salida antes de marcar nada como completado.
 
