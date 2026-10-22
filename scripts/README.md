@@ -43,24 +43,24 @@ git commit --no-verify -m "mensaje"
 
 ### `install-skills.sh`
 
-**Propósito:** Instalar los 20 Agent Skills curados del framework en `~/.claude/skills/` (path canónico que Claude Code auto-descubre). Si existe `~/.skills/` de instalaciones previas (versiones ≤ 2.2.1), se crea un symlink desde el path canónico para mantener compatibilidad.
+**Propósito:** Instalar los 34 Agent Skills curados del framework en `~/.claude/skills/` (path canónico que Claude Code auto-descubre). Si existe `~/.skills/` de instalaciones previas (versiones ≤ 2.2.1), se crea un symlink desde el path canónico para mantener compatibilidad.
 
 **Uso:**
 ```bash
 bash scripts/install-skills.sh
 ```
 
-**Instala:** 20 skills curados para el stack de SpecLeap (Laravel + React + TypeScript + PostgreSQL).
+**Instala:** 34 skills curados para el stack de SpecLeap (Laravel + React + TypeScript + PostgreSQL) más diseño y motion.
 
 **Categorías:**
 - Core / Quality (5): `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development`
 - Backend (4) — Laravel + PostgreSQL: `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices`
 - Frontend (4) — React + TS + shadcn: `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn`
-- Diseño (3): `frontend-design`, `web-design-guidelines`, `extract-design-system`
+- Diseño (11): `frontend-design`, `web-design-guidelines`, `extract-design-system`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`, `emil-design-eng`, `animate`, `animation-performance`, `break-ui`, `mobile-native`
 - Seguridad (2): `security-reviewer`, `gdpr-dsgvo-expert`
-- Process (2): `code-reviewer`, `brainstorming`
+- Proceso (8): `code-reviewer`, `brainstorming`, `writing-plans`, `executing-plans`, `using-git-worktrees`, `subagent-driven-development`, `dispatching-parallel-agents`, `finishing-a-development-branch`
 
-El script detecta las skills ya instaladas y las salta. Puede volver a ejecutarse con seguridad.
+Si una skill del catálogo ya existe, el script la sustituye por la copia actual de upstream. Las skills propias con otro nombre no se tocan. Puede volver a ejecutarse con seguridad.
 
 ---
 

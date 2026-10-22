@@ -1,0 +1,5 @@
+# Git Bash en Windows rompe los scripts si el checkout los convierte a CRLF.
+* text=auto eol=lf
+*.sh text eol=lf
+bin/specleap text eol=lf
+*.py text eol=lf

@@ -9,8 +9,10 @@ Hay **dos formas de instalar SpecLeap**. Elige la que prefieras según cómo te 
 | | Opción A: vía npx | Opción B: vía git clone |
 |---|---|---|
 | **Pregunta carpeta y nombre** | ✅ Sí, prompt interactivo | ❌ No (lo decides con `cd` y `git clone <url> <nombre>`) |
-| **Requiere** | Node.js ≥ 18, Git, Bash | Git, Bash |
+| **Requiere** | Node.js ≥ 18, Git, Bash | Node.js ≥ 18, Git, Bash |
 | **Cuándo usar** | Quieres setup guiado | Manejas git fluidamente |
+
+> **Windows:** instala [Git para Windows](https://git-scm.com/download/win) (incluye **Git Bash**). El instalador detecta y usa Git Bash automáticamente en ambas opciones — no necesitas abrir Git Bash a mano. macOS y Linux ya traen Bash.
 
 ---
 
@@ -48,8 +50,10 @@ Nombre: mi-app-tienda
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git
 cd specleap-framework
-bash setup.sh
+npm run setup     # cross-platform (macOS, Linux y Windows con Git Bash)
 ```
+
+> `npm run setup` localiza bash automáticamente. En macOS/Linux o dentro de una terminal Git Bash también puedes ejecutar `bash setup.sh` directamente.
 
 **El primer paso del setup pregunta cómo quieres llamar la carpeta** (Paso 0). Pulsas Enter para mantenerla con el nombre que tiene, o escribes otro nombre y el setup renombra la carpeta automáticamente antes de seguir con idioma/tokens.
 
@@ -58,7 +62,7 @@ Atajo: si ya sabes el nombre, pásaselo a `git clone` y luego pulsas Enter en el
 ```bash
 git clone https://github.com/ConceptualCreative/specleap-framework.git mi-proyecto
 cd mi-proyecto
-bash setup.sh
+npm run setup
 # Paso 0: pulsa Enter para mantener "mi-proyecto"
 ```
 
@@ -69,7 +73,7 @@ bash setup.sh
 **Qué hace `setup.sh`:**
 - Selecciona idioma (Español/English)
 - Pide tokens GitHub y Asana
-- Instala los 20 Agent Skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
+- Instala los 34 Agent Skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
 - Configura CodeRabbit
 - Crea estructura base + archivos de configuración
 
@@ -143,7 +147,7 @@ Alternativa al workflow conversacional. Para equipos que requieren propuestas fo
 **⚠️ IMPORTANTE:** Estos NO son opcionales. SpecLeap requiere estos componentes para SDD profesional:
 - **Asana** — Gestión de backlog (comando `planificar`)
 - **CodeRabbit** — Code review automático en PRs
-- **Agent Skills** — Best practices automáticas (20 skills curados)
+- **Agent Skills** — Best practices automáticas (34 skills curados)
 - **Git Hooks** — Validación pre-commit local
 - **GitHub** — Control de versiones y colaboración
 
@@ -223,7 +227,7 @@ git push origin main
 
 ---
 
-### 3. Agent Skills (20 curados)
+### 3. Agent Skills (34 curados)
 
 Extensiones para Claude/Cursor que aplican best practices automáticamente al contexto de cada tarea.
 
@@ -233,14 +237,14 @@ Instalación:
 bash scripts/install-skills.sh
 ```
 
-Se descargan e instalan 20 skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). La lista está enfocada en el stack real de SpecLeap (Laravel + React + TypeScript + PostgreSQL):
+Se descargan e instalan 34 skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). Si una skill del catálogo ya existe, el instalador la sustituye por la copia actual de upstream. La lista está enfocada en el stack real de SpecLeap (Laravel + React + TypeScript + PostgreSQL) más diseño y motion:
 
 - **Core / Quality (5):** `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development`
 - **Backend (4) — Laravel + PostgreSQL:** `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices`
 - **Frontend (4) — React + TS + shadcn:** `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn`
-- **Diseño (3):** `frontend-design`, `web-design-guidelines`, `extract-design-system`
+- **Diseño (11):** `frontend-design`, `web-design-guidelines`, `extract-design-system`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`, `emil-design-eng`, `animate`, `animation-performance`, `break-ui`, `mobile-native`
 - **Seguridad (2):** `security-reviewer`, `gdpr-dsgvo-expert`
-- **Process (2):** `code-reviewer`, `brainstorming`
+- **Proceso (8):** `code-reviewer`, `brainstorming`, `writing-plans`, `executing-plans`, `using-git-worktrees`, `subagent-driven-development`, `dispatching-parallel-agents`, `finishing-a-development-branch`
 
 Verificar lo instalado:
 
@@ -357,7 +361,7 @@ Más info sobre markitdown: https://github.com/microsoft/markitdown
 - 💬 [docs/COMANDOS.md](docs/COMANDOS.md) — 8 comandos conversacionales explicados
 - 🛠️ [docs/CLI-OPENSPEC.md](docs/CLI-OPENSPEC.md) — OpenSpec CLI formal (enterprise)
 - 🤖 [docs/AGENTES.md](docs/AGENTES.md) — 3 agentes especializados
-- ⭐ [docs/SKILLS-REFERENCE.md](docs/SKILLS-REFERENCE.md) — Quick reference 20 Agent Skills
+- ⭐ [docs/SKILLS-REFERENCE.md](docs/SKILLS-REFERENCE.md) — Quick reference 34 Agent Skills
 - 🎯 [docs/SPEC-CUESTIONARIO-INTERACTIVO.md](docs/SPEC-CUESTIONARIO-INTERACTIVO.md) — Sistema 58 preguntas
 
 ### Prerequisitos del Sistema
@@ -437,7 +441,7 @@ chmod +x .git/hooks/pre-commit
 - [ ] IDE abierto (VSCode/Cursor) y chat con Claude funcional
 - [ ] Comando `ayuda` ejecutado exitosamente
 - [ ] **Asana configurado en `.env`** (OBLIGATORIO)
-- [ ] **20 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
+- [ ] **34 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
 - [ ] **Git hooks instalados** (OBLIGATORIO)
 - [ ] **CodeRabbit configurado en GitHub** (OBLIGATORIO)
 - [ ] **Repositorio pusheado a GitHub** (OBLIGATORIO)

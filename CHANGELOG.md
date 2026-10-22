@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-10-22
+
+### Changed
+
+- **Catálogo de Agent Skills de 20 a 34.** Se mantienen los 20 del stack y se añaden `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`, cinco skills de `emilkowalski/skills` (`emil-design-eng`, `animate`, `animation-performance`, `break-ui`, `mobile-native`) y seis de planes de `obra/superpowers`. El instalador vuelve a copiar las skills del catálogo que ya existían, en lugar de saltarlas.
+- **Copia de instalación limpia.** `bin/specleap` ya no arrastra `node_modules`, `.git`, `.env`, `.specleap/config.json`, cachés, `kofi-images`, evidencias de calidad ni proyectos locales al directorio del usuario.
+- **Bash en Windows cuando `git.exe` está en `bin`.** El localizador también prueba `bash.exe` junto a `git.exe`, no solo dos niveles por encima. Si el rename de la carpeta falla porque Windows la tiene en uso, el setup sigue con el nombre actual. `.gitattributes` fuerza LF en los scripts para que Git Bash no reciba CRLF.
+
+### Fixed
+
+- **Instalación en Windows reparada (ambas vías).** El instalador dependía de comandos Unix (`cp -R`, `bash`) invocados desde PowerShell/cmd, donde no existen, lo que rompía la instalación en Windows:
+  - **Vía npx** fallaba en la copia con `"cp" no se reconoce como un comando…`. Ahora `bin/specleap` copia con `fs.cpSync` (API nativa de Node, multiplataforma), sin depender de `cp`.
+  - **Vía git clone** no llegaba a configurar idioma/tokens/skills porque `bash setup.sh` no encuentra `bash` en PowerShell. Ahora `npm run setup` localiza bash automáticamente (Git Bash en Windows) vía un nuevo modo `bin/specleap --here`.
+  - **Localizador de bash cross-platform** (`findBash`): en macOS/Linux usa `bash` (comportamiento idéntico al anterior); en Windows busca Git Bash en rutas estándar y lo deriva de `where git`. Si no hay bash, muestra instrucciones claras para instalar Git para Windows en lugar de fallar de forma opaca.
+  - La copia excluye `node_modules`, `.git`, `.env`, `.specleap/config.json`, cachés, `kofi-images`, evidencias de calidad y proyectos locales.
+
+### Documentation
+
+- README.md y SETUP.md: instrucciones de instalación actualizadas para Windows (Git Bash) y `npm run setup` como arranque cross-platform de la vía git clone. El catálogo documentado pasa a 34 skills.
+- FAQ en español e inglés: seis preguntas nuevas (precio y licencia, requisitos y Windows, proyecto ya empezado, cambio de alcance, otro stack, y qué sale de la máquina).
+
 ## [2.3.0] - 2026-05-23
 
 ### Changed (BREAKING)
