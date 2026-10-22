@@ -37,16 +37,34 @@ function resolveBasePath(input) {
 }
 
 // Copia recursiva cross-platform usando la API nativa de Node (fs.cpSync,
-// estable desde Node 16.7; engines exige >=18). No depende de `cp` de Unix,
-// así que funciona igual en macOS, Linux y Windows. Excluimos node_modules
-// y .git por si el directorio del paquete los contuviera.
+// estable desde Node 16.7; engines exige >=18). No depende de `cp` de Unix.
+// La copia que recibe el usuario no incluye dependencias, secretos, cachés
+// ni proyectos locales: eso vive en el checkout de quien publica, no en
+// la instalación.
+const SKIP_DIR_NAMES = new Set([
+  'node_modules', '.git', '__pycache__', 'kofi-images', 'dist', 'build',
+  'coverage', 'tmp', 'temp'
+]);
+
+function shouldCopy(src) {
+  const base = path.basename(src);
+  if (SKIP_DIR_NAMES.has(base)) return false;
+  if (base === '.DS_Store' || base === 'Thumbs.db') return false;
+  if (base === 'NPM_PUBLISH.md' || base === 'test-install.sh' || base === '.npmignore') return false;
+  if (base.endsWith('.pyc') || base.endsWith('.log') || base.endsWith('.tgz')) return false;
+  if (base === '.env' || base.startsWith('.env.')) return false;
+
+  const norm = src.split(path.sep).join('/');
+  if (norm.endsWith('/.specleap/config.json')) return false;
+  if (norm.endsWith('/.quality/evidence') || norm.includes('/.quality/evidence/')) return false;
+  if (norm.includes('/proyectos/') && !norm.includes('/proyectos/_template')) return false;
+  return true;
+}
+
 function copyTree(srcDir, destDir) {
   fs.cpSync(srcDir, destDir, {
     recursive: true,
-    filter: (src) => {
-      const base = path.basename(src);
-      return base !== 'node_modules' && base !== '.git';
-    }
+    filter: shouldCopy
   });
 }
 
@@ -80,17 +98,27 @@ function findBash() {
     if (fs.existsSync(candidate)) return candidate;
   }
 
-  // Fallback: derivar la ruta de bash a partir de la ubicación de git.exe.
+  // Fallback: derivar bash a partir de git.exe.
+  // Git para Windows coloca git.exe en <Git>\cmd o en <Git>\bin.
+  // Si solo subimos dos niveles, el caso <Git>\bin\git.exe apunta al padre
+  // de Git y no encuentra bash.
   try {
     const gitPath = execSync('where git', { stdio: ['ignore', 'pipe', 'ignore'] })
       .toString()
       .split(/\r?\n/)[0]
-      .trim();
+      .trim()
+      .replace(/^"|"$/g, '');
     if (gitPath) {
-      // git suele estar en <Git>/cmd/git.exe o <Git>/bin/git.exe
-      const gitRoot = path.dirname(path.dirname(gitPath));
-      const derived = path.join(gitRoot, 'bin', 'bash.exe');
-      if (fs.existsSync(derived)) return derived;
+      const gitDir = path.dirname(gitPath);
+      const gitRoot = path.dirname(gitDir);
+      const derived = [
+        path.join(gitRoot, 'bin', 'bash.exe'),
+        path.join(gitRoot, 'usr', 'bin', 'bash.exe'),
+        path.join(gitDir, 'bash.exe')
+      ];
+      for (const candidate of derived) {
+        if (fs.existsSync(candidate)) return candidate;
+      }
     }
   } catch (_) {
     // git no está en PATH; no hay forma fiable de localizar bash.
@@ -301,7 +329,10 @@ async function main() {
     cwd: targetDir,
     env: {
       ...process.env,
-      SPECLEAP_INSTALL_PATH: targetDir
+      SPECLEAP_INSTALL_PATH: targetDir,
+      // El nombre ya se pidió antes de copiar. setup.sh no debe volver a
+      // preguntarlo ni intentar renombrar esta carpeta.
+      SPECLEAP_SKIP_FOLDER_PROMPT: '1'
     }
   });
 

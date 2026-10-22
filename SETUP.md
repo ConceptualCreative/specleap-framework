@@ -73,7 +73,7 @@ npm run setup
 **Qué hace `setup.sh`:**
 - Selecciona idioma (Español/English)
 - Pide tokens GitHub y Asana
-- Instala los 20 Agent Skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
+- Instala los 34 Agent Skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre)
 - Configura CodeRabbit
 - Crea estructura base + archivos de configuración
 
@@ -147,7 +147,7 @@ Alternativa al workflow conversacional. Para equipos que requieren propuestas fo
 **⚠️ IMPORTANTE:** Estos NO son opcionales. SpecLeap requiere estos componentes para SDD profesional:
 - **Asana** — Gestión de backlog (comando `planificar`)
 - **CodeRabbit** — Code review automático en PRs
-- **Agent Skills** — Best practices automáticas (20 skills curados)
+- **Agent Skills** — Best practices automáticas (34 skills curados)
 - **Git Hooks** — Validación pre-commit local
 - **GitHub** — Control de versiones y colaboración
 
@@ -227,7 +227,7 @@ git push origin main
 
 ---
 
-### 3. Agent Skills (20 curados)
+### 3. Agent Skills (34 curados)
 
 Extensiones para Claude/Cursor que aplican best practices automáticamente al contexto de cada tarea.
 
@@ -237,14 +237,14 @@ Instalación:
 bash scripts/install-skills.sh
 ```
 
-Se descargan e instalan 20 skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). La lista está enfocada en el stack real de SpecLeap (Laravel + React + TypeScript + PostgreSQL):
+Se descargan e instalan 34 skills curados en `~/.claude/skills/` (path canónico que Claude Code auto-descubre — desde v2.2.1; instalaciones legacy en `~/.skills/` siguen funcionando vía symlink automático). Si una skill del catálogo ya existe, el instalador la sustituye por la copia actual de upstream. La lista está enfocada en el stack real de SpecLeap (Laravel + React + TypeScript + PostgreSQL) más diseño y motion:
 
 - **Core / Quality (5):** `verification-before-completion`, `systematic-debugging`, `requesting-code-review`, `receiving-code-review`, `test-driven-development`
 - **Backend (4) — Laravel + PostgreSQL:** `laravel-specialist`, `api-designer`, `database-optimizer`, `supabase-postgres-best-practices`
 - **Frontend (4) — React + TS + shadcn:** `react-expert`, `typescript-pro`, `vercel-react-best-practices`, `shadcn`
-- **Diseño (3):** `frontend-design`, `web-design-guidelines`, `extract-design-system`
+- **Diseño (11):** `frontend-design`, `web-design-guidelines`, `extract-design-system`, `ui-ux-pro-max`, `impeccable`, `design-taste-frontend`, `emil-design-eng`, `animate`, `animation-performance`, `break-ui`, `mobile-native`
 - **Seguridad (2):** `security-reviewer`, `gdpr-dsgvo-expert`
-- **Process (2):** `code-reviewer`, `brainstorming`
+- **Proceso (8):** `code-reviewer`, `brainstorming`, `writing-plans`, `executing-plans`, `using-git-worktrees`, `subagent-driven-development`, `dispatching-parallel-agents`, `finishing-a-development-branch`
 
 Verificar lo instalado:
 
@@ -361,7 +361,7 @@ Más info sobre markitdown: https://github.com/microsoft/markitdown
 - 💬 [docs/COMANDOS.md](docs/COMANDOS.md) — 8 comandos conversacionales explicados
 - 🛠️ [docs/CLI-OPENSPEC.md](docs/CLI-OPENSPEC.md) — OpenSpec CLI formal (enterprise)
 - 🤖 [docs/AGENTES.md](docs/AGENTES.md) — 3 agentes especializados
-- ⭐ [docs/SKILLS-REFERENCE.md](docs/SKILLS-REFERENCE.md) — Quick reference 20 Agent Skills
+- ⭐ [docs/SKILLS-REFERENCE.md](docs/SKILLS-REFERENCE.md) — Quick reference 34 Agent Skills
 - 🎯 [docs/SPEC-CUESTIONARIO-INTERACTIVO.md](docs/SPEC-CUESTIONARIO-INTERACTIVO.md) — Sistema 58 preguntas
 
 ### Prerequisitos del Sistema
@@ -441,7 +441,7 @@ chmod +x .git/hooks/pre-commit
 - [ ] IDE abierto (VSCode/Cursor) y chat con Claude funcional
 - [ ] Comando `ayuda` ejecutado exitosamente
 - [ ] **Asana configurado en `.env`** (OBLIGATORIO)
-- [ ] **20 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
+- [ ] **34 Agent Skills instaladas en ~/.claude/skills/** (OBLIGATORIO)
 - [ ] **Git hooks instalados** (OBLIGATORIO)
 - [ ] **CodeRabbit configurado en GitHub** (OBLIGATORIO)
 - [ ] **Repositorio pusheado a GitHub** (OBLIGATORIO)

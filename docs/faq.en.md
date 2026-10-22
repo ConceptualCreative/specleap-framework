@@ -56,14 +56,14 @@ Yes, it works without Claude Code. SpecLeap supports 9+ assistants and they all 
 
 **What you lose specifically without Claude Code:**
 
-- **Native integration with the 20 Agent Skills.** Agent Skills are a concrete Claude Code runtime feature that loads specialized knowledge (OWASP/STRIDE security, Vercel-style design, TDD, Laravel/React best practices, etc.) when the prompt context warrants it. In other assistants the skill `.md` files are still accessible, but they don't auto-load — you have to reference them by hand when needed.
+- **Native integration with the 34 Agent Skills.** Agent Skills are a concrete Claude Code runtime feature that loads specialized knowledge (OWASP/STRIDE security, Vercel-style design, TDD, Laravel/React best practices, etc.) when the prompt context warrants it. In other assistants the skill `.md` files are still accessible, but they don't auto-load — you have to reference them by hand when needed.
 - **Local validation hooks** (`spec-guard.sh`) that hook into the Claude Code runtime to block writes on protected branches. In other assistants that protection is covered by the SpecLeap `pre-push` git hook, which is independent.
 
 **What you DO NOT lose:**
 
 - The immutable CONTRACT, agents (`.agents/*.md`), commands (`.commands/*.md`), memory-bank, specs, Asana/CodeRabbit integration, the survey, the openspec CLI — everything works the same.
 
-If your priority is the 20 Agent Skills, Claude Code is the best option today. If your priority is flexibility and multi-model, Cursor + Continue.dev cover the rest.
+If your priority is the 34 Agent Skills, Claude Code is the best option today. If your priority is flexibility and multi-model, Cursor + Continue.dev cover the rest.
 
 ---
 
@@ -102,7 +102,7 @@ For some commands yes, for the bulk of the framework no.
 - 58-question survey + CONTRACT.md generation
 - Specialized agents (`.agents/backend.md`, `frontend.md`, `producto.md`)
 - Commands `refinar`, `documentar`, `explicar`, `compliance`, `adoptar`
-- 20 Agent Skills
+- 34 Agent Skills
 - Full openspec CLI (proposals, deltas, verify, archive)
 - Memory-bank in `context/`
 - Global standards in `rules/`
@@ -158,6 +158,54 @@ SpecLeap is the missing layer in the methodology stack now that AI writes the co
 - Your Scrum Definition of Done is enriched by SpecLeap's 3-layer validation pipeline.
 
 If you already use Agile + TDD, SpecLeap is the piece that brings consistency across sprints without touching your current methodology.
+
+---
+
+## 9. Does it cost anything? What license is it?
+
+SpecLeap is **free and open source (MIT)**. No account, no paid plan, no card. Clone the repo or install it with npm and the code is yours.
+
+The only cost is the assistant you already use — Claude, Cursor, Copilot or another. SpecLeap does not sit in the middle of that subscription or add one of its own.
+
+---
+
+## 10. What do I need installed? Does it work on Windows?
+
+You need **Node.js 18 or newer, Git and Bash**. Full setup takes 10-15 minutes. PHP, Composer, PostgreSQL or Docker only matter if the project you are about to build uses them.
+
+On Windows, install **Git for Windows**: it includes Git Bash and the installer finds it on its own. If Windows has the folder locked while renaming, setup continues with the current name. The reliable path is to clone with the final name (`git clone <url> my-project`). macOS and Linux already ship Bash.
+
+---
+
+## 11. Can I use it on a project that is already underway?
+
+Yes. The `adoptar` command reads the code you already have and writes a **retroactive CONTRACT**: what exists, what is out of scope, and which rules apply from now on.
+
+It does not rewrite the application. It documents what is already built so later changes stop drifting in silence.
+
+---
+
+## 12. What if I answer the survey wrong, or the scope changes?
+
+The survey saves progress **every 10 questions**. When you finish you can expand from MVP to Serious Project — adding governance, SLAs and compliance without repeating what you already said — or attach a free paragraph in Creative mode.
+
+Once the CONTRACT is approved, it is not edited. A scope change is recorded in `ANEXOS.md` with the `refinar` command. That keeps the original ask separate from what was added later.
+
+---
+
+## 13. Do I have to use Laravel, React and PostgreSQL?
+
+No. The standards and part of the skills are tuned for **Laravel, React, TypeScript, PostgreSQL and shadcn**, and the survey lets you declare a different stack. From then on the CONTRACT is what counts.
+
+Quality, process, security and design skills still apply. The Laravel or React skills help less if your project does not use that stack.
+
+---
+
+## 14. Does SpecLeap upload my code or my CONTRACT anywhere?
+
+It has no server and no account. The CONTRACT and the code **stay in your repository**. The framework does not call model APIs. During setup, the installer clones the 34 skills from public GitHub repos into `~/.claude/skills/`.
+
+What leaves your machine afterwards is what you connect: the AI assistant you already pay for, GitHub if you push, Asana if you paste the token, CodeRabbit if you install the app. Running the installer again only updates the catalog skills. A skill of yours, under another name, is left alone.
 
 ---
 

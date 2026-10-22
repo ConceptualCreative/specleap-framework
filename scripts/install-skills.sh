@@ -1,5 +1,5 @@
 #!/bin/bash
-# SpecLeap — Instalador de Agent Skills (20 skills curados para el flujo SDD)
+# SpecLeap — Instalador de Agent Skills (34 skills curados para el flujo SDD)
 #
 # Path: instala en $HOME/.claude/skills/ (path canónico que Claude Code
 # auto-descubre). Si existe $HOME/.skills/ (path legacy de versiones previas
@@ -8,6 +8,8 @@
 #
 # La lista está curada para el stack de SpecLeap (Laravel + React + TypeScript
 # + PostgreSQL) y el flujo CONTRATO → tickets → implementar → verify.
+# Si una skill ya existe, se vuelve a copiar desde upstream: las copias
+# locales se quedan atrás cuando el autor reescribe el SKILL.md.
 
 set -e
 
@@ -17,7 +19,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo -e "${BLUE}━━━ Installing 20 curated Agent Skills ━━━${NC}"
+echo -e "${BLUE}━━━ Installing 34 curated Agent Skills ━━━${NC}"
 echo ""
 
 # Lista de skills (repo:path:name)
@@ -43,24 +45,42 @@ SKILLS=(
     "vercel-labs/agent-skills:skills/react-best-practices:vercel-react-best-practices"
     "shadcn-ui/ui:skills/shadcn:shadcn"
 
-    # Design (3)
+    # Design — base (3)
     "anthropics/skills:skills/frontend-design:frontend-design"
     "vercel-labs/agent-skills:skills/web-design-guidelines:web-design-guidelines"
     "arvindrk/extract-design-system:skills/extract-design-system:extract-design-system"
+
+    # Design — obligatorios (3): ui-ux-pro-max, impeccable, taste
+    "nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max:ui-ux-pro-max"
+    "pbakaus/impeccable:.claude/skills/impeccable:impeccable"
+    "Leonxlnx/taste-skill:skills/taste-skill:design-taste-frontend"
+
+    # Design — emilkowalski/skills (5, los que no se pisan entre sí)
+    "emilkowalski/skills:skills/emil-design-eng:emil-design-eng"
+    "emilkowalski/skills:skills/animate:animate"
+    "emilkowalski/skills:skills/animation-performance:animation-performance"
+    "emilkowalski/skills:skills/break-ui:break-ui"
+    "emilkowalski/skills:skills/mobile-native:mobile-native"
 
     # Security (2)
     "jeffallan/claude-skills:skills/security-reviewer:security-reviewer"
     "alirezarezvani/claude-skills:ra-qm-team/skills/gdpr-dsgvo-expert:gdpr-dsgvo-expert"
 
-    # Process (2)
+    # Process (8) — review cycle + planes de obra/superpowers
     "jeffallan/claude-skills:skills/code-reviewer:code-reviewer"
     "obra/superpowers:skills/brainstorming:brainstorming"
+    "obra/superpowers:skills/writing-plans:writing-plans"
+    "obra/superpowers:skills/executing-plans:executing-plans"
+    "obra/superpowers:skills/using-git-worktrees:using-git-worktrees"
+    "obra/superpowers:skills/subagent-driven-development:subagent-driven-development"
+    "obra/superpowers:skills/dispatching-parallel-agents:dispatching-parallel-agents"
+    "obra/superpowers:skills/finishing-a-development-branch:finishing-a-development-branch"
 )
 
 TOTAL=${#SKILLS[@]}
 INSTALLED=0
+UPDATED=0
 FAILED=0
-SKIPPED=0
 
 SKILLS_DIR="$HOME/.claude/skills"
 LEGACY_SKILLS_DIR="$HOME/.skills"
@@ -96,11 +116,9 @@ for i in "${!SKILLS[@]}"; do
 
     printf "  [%2d/%2d] %-40s " "$num" "$TOTAL" "$name"
 
-    # Skip si ya existe
+    updating=0
     if [ -d "$SKILLS_DIR/$name" ]; then
-        echo -e "${YELLOW}SKIP${NC} (already installed)"
-        SKIPPED=$((SKIPPED + 1))
-        continue
+        updating=1
     fi
 
     # Clonar repo si no existe
@@ -120,28 +138,31 @@ for i in "${!SKILLS[@]}"; do
         continue
     fi
 
-    # Copiar skill
+    # Copiar skill. Si ya estaba, se sustituye por la copia de upstream.
+    if [ "$updating" -eq 1 ]; then
+        rm -rf "$SKILLS_DIR/$name"
+    fi
     cp -r "$repo_dir/$path" "$SKILLS_DIR/$name"
-    echo -e "${GREEN}OK${NC}"
-    INSTALLED=$((INSTALLED + 1))
+    if [ "$updating" -eq 1 ]; then
+        echo -e "${GREEN}UPDATED${NC}"
+        UPDATED=$((UPDATED + 1))
+    else
+        echo -e "${GREEN}OK${NC}"
+        INSTALLED=$((INSTALLED + 1))
+    fi
 done
 
 echo ""
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 echo -e "${GREEN}✅ Installed:${NC} $INSTALLED"
-if [ $SKIPPED -gt 0 ]; then
-    echo -e "${YELLOW}⚠️  Skipped:${NC} $SKIPPED (already existed)"
+if [ $UPDATED -gt 0 ]; then
+    echo -e "${GREEN}✅ Updated:${NC} $UPDATED"
 fi
 if [ $FAILED -gt 0 ]; then
     echo -e "${RED}❌ Failed:${NC} $FAILED"
 fi
 echo ""
-
-if [ $INSTALLED -eq 0 ] && [ $SKIPPED -eq $TOTAL ]; then
-    echo -e "${GREEN}All 20 skills already installed!${NC}"
-    exit 0
-fi
 
 if [ $FAILED -gt 0 ]; then
     echo -e "${YELLOW}Warning: Some skills failed to install${NC}"
@@ -149,4 +170,4 @@ if [ $FAILED -gt 0 ]; then
     exit 1
 fi
 
-echo -e "${GREEN}Agent Skills installation complete (20 skills)!${NC}"
+echo -e "${GREEN}Agent Skills installation complete (34 skills)!${NC}"
